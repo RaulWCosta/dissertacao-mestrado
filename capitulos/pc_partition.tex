@@ -1,0 +1,69 @@
+\chapter{Prize Collecting Partition}
+\label{chapter:pc-partition}
+
+This chapter aims at proving the following Theorem, which allow us to break a Steiner Multi Cycle instance into simpler, smaller ones. The proof relies in a technique called Prize-Collecting Clustering, or PC-clustering, that will be presented in this chapter and can be seen in more details in \cite{Bateni}.
+
+\begin{theorem} \label{theoremBreakPartitions}
+Given an \(\epsilon > 0\), a graph \(G_{in}(V_{in}, E_{in})\), and a set \(\mathcal{D}\) of terminal pairs, we can compute in polynomial time a set of components \(\{C_1, \dots, C_k\}\), and a partition of the terminal pairs set \(\{\mathcal{D}_1, \dots, \mathcal{D}_k\}\), with the following properties:
+\begin{enumerate}
+    \item All the terminal pairs are connected, that is, \(\mathcal{D} = \cup_{i=1}^k \mathcal{D}_i\);
+    \item All the terminals in \(\mathcal{D}_i\) are spanned by the component \(C_i\);
+    \item The sum of the length of all the components \(C_i\) is no more than \((4/\epsilon + 4) OPT_{\mathcal{D}}(G_{in})\);
+    \item The sum of the lengths of the minimum Steiner Multi Cycle of all demand sets \(\mathcal{D}_i\) is no more than \(1 + \epsilon\) times the length of a minimum Steiner Multi Cycle of \(G_{in}\); that is, \(\sum_i OPT_{\mathcal{D}_i} (G_{in}) \leq (1 + \epsilon) OPT_{\mathcal{D}} (G_{in})\).
+\end{enumerate}
+\end{theorem}
+
+The last condition implies that we can solve the problem for the terminal pairs in \(\mathcal{D}_i\) separately and still guarantee an approximation with a small factor.
+
+In order to prove the theorem \ref{theoremBreakPartitions}, we apply a 4-approximation algorithm in \(G_{in}\) (for instance, the algorithm provided by \cite{Pereira2018TheSM}). Clearly this construction satisfies all properties but the last one. To guarantee the last property we employ the PC-clustering.
+
+% TODO citar artigos
+The algorithm as well as some parts of its analysis bears similarities to a primal-dual method due to Agrawal et al. [1991] and Goemans and Williamson [1995]. It is used by \citeauthor{Bateni} to break the set of terminal pairs in the Steiner Forest Problem.
+
+In this clustering, we build a graph where vertices have associated potentials (or prizes) and edges have a crossing cost. Each vertex of this construct begins as an individual cluster. Besides that, clusters can use the potential of it internals vertices to cross edges and merge with other clusters. The total potential of a cluster equals the sum of the potential of its vertices minus the cost to cross it internals edges. At each step, the algorithm spends the potential of the vertices of the graph until all the potential is spend, or there is not enough potential to merge more clusters.
+
+To present the Prize-Collecting Clustering Algorithm, \citeauthor{Bateni} makes an analogy to edge painting, where each vertex is associated with a color and its colors are used to paint edge in order to connect separated clusters; where an edge that is fully painted merges two clusters.
+
+The process of Prize-collecting Partition, or PC-partition, consists basically in given a graph \(G_{in}\) and a set of terminal pairs \(\mathcal{D}\), use the algorithm proposed for Steiner Multicycle by \cite{Pereira2018TheSM} to obtain a 4-approximate Steiner Multi Cycle \(M^\ast\). In the sequence, we contract each cycle \(C^\ast\) obtained and associate to each resulting vertex a potential \(\phi_v\) equal to \(\frac{1}{\epsilon} \cdot \ell(C^\ast)\). We set \(\phi_v = 0\) to the vertices that were not create by this process. We denote as \(G\) the resulting graph.
+
+A pseudo algorithm, proposed by \citeauthor{Bateni}, can be seen below.
+
+\begin{algorithm}[H]
+\caption{PC-Partition}
+\begin{algorithmic}[1]
+
+\Require Graph \(G_{in}(V_{in} , E_{in})\), and set of terminal pairs \(\mathcal{D}\)
+\Ensure Set of components \(C_i\) associated to \(\mathcal{D}_i\)
+\State Use the algorithm proposed by \cite{Pereira2018TheSM} to find a Steiner Multi Cycle 4-approximated \(M^\ast = \{C^\ast_1, \dots, C^\ast_k\}\) of \(\mathcal{D}\).
+\State Contract each cycle \(C_i^\ast\) in order to create a new graph \(G(V, E)\).
+\State For every \(v \in V\), let \(\phi_v\) be equal to \(\frac{1}{\epsilon}\) time the length of the cycle \(C_i^\ast\) related to \(v\), and \(0\) in case there is no such cycle.
+\State Let \(M_2\) be the return of the PC-clustering algorithm in \(G\) and \(\phi_v\).
+\State Build \(M\) from \(M_2\) by uncontracting all cycles \(C_i^\ast\). The components of \(M_2\) are \(C_i\).
+\State Return the set of components \(\{C_i\}\), with \(\mathcal{D}_i := \{(s, t) \in \mathcal{D}: s, t \in V(T_i)\}\).
+
+\end{algorithmic}
+\end{algorithm}
+
+In order to complete the algorithm presented above we need to detail the PC-clustering process. 
+
+\section{Prize-Collecting Clustering}
+
+We define informally \(\gamma_{S, v}\) as the potential that vertex \(v\) ``used'' in the set \(S\). Note that \(\gamma_{S, v}\) is defined for all \(v \in S \subseteq V(G)\).
+
+The PC-Clustering Algorithm is build up in two stages: \textit{growth} and \textit{pruning}. The follow inequalities must be respected throughout the whole process.
+
+\begin{align}
+&&\sum_{S: e \in \delta(S)} \sum_{v \in S} \gamma_{S, v} \leq \ell(e) && \forall e \in E \label{ineq:1} \\
+&&\sum_{S \ni v} \gamma_{S, v} \leq \phi_v && \forall v \in V \label{ineq:2} \\
+&&\gamma_{S, v} \geq 0 && \forall v \in S \subseteq V \label{ineq:3}
+\end{align}
+
+The main goal of the growth stage is to build a Multi Cycle \(M_1\) in such way that the vertices generated from the contraction of the components \(C^\ast\) are grouped. The intuition is to think of \(\phi_v\) as an amount \(v\) can spend in a set \(S\), which it belongs, in order to merge \(S\) with other sets of \(G\). However, that must be done in a way that the total spend to cross an edge is no more than the length of that edge (inequality~\eqref{ineq:1}) and that vertex \(v\) of \(S\) do not use more potential than it has available (inequality~\eqref{ineq:2}). The inequality~\eqref{ineq:3} ensures that the value that \(v\) contributes to \(S\) is never negative.
+
+We begin the building of \(M_1\) with an empty \(\gamma\) and a set \(M_1\) also empty. We keep a partition \(\mathcal{C}\) of the vertices of \(V(G)\) in clusters; initially each cluster is composed of a single vertex. We say that a cluster \(C \in \mathcal{C}\) is active if, and only if, \(\sum_{C' \subseteq C} \sum_{v \in C'} \gamma_{C', v} < \sum_{v \in C} \phi_v\). In other words, the set \(C\) still have vertices with remaining potential. There can be a situation where  \(v \in C_1 \subset C_2\), \(v\) might have spend \(\gamma_{v, C_1}\) to join \(C_1\) with another set to form \(C_2\), but this potential \(\gamma_{v, C_1}\) used, can not be used by \(C_2\). A vertex is active if it still has potential to spend.
+
+During the process, we grow all active clusters by \(\eta\) by iterations. So, for a given cluster \(C\), considering \(\kappa(C)\) as the number of active vertices in \(C\), and for each vertex of \(C\) we spend \(\eta/\kappa(C)\) of the available potential. \(\eta\) is selected to be the greatest value possible that still respects the restrictions presented above. That way, after a growth iteration, some restrictions might reach equality. In the case that the inequality~\eqref{ineq:2} reached equality for some cluster, this cluster becomes inactive. In the case of inequality~\eqref{ineq:1}, it means that an edge was entirely ``crossed'', or the potential spent by two neighboring clusters was enough to cover the length of the edge. In this situation we create a new cluster composed by the two former neighboring clusters. After a polynomial number of iterations (more precisely \(\mathcal{O}(n)\)) either all restrictions met in equality, or the potential of all vertices were spent.
+
+In the pruning stage we remove some edges from \(M_1\) to form \(M_2\), which corresponds to the output of the clustering process. Let \(\mathcal{S}\) be the set which contains all sets which were a cluster at some point during the growth stage. Let \(\mathcal{B} \subseteq \mathcal{S}\) be the set of all tight clusters, or \(\sum_{S' \subseteq \mathcal{S}} \sum_{v \in S'} \gamma_{S', v} = \sum_{v \in \mathcal{S}} \phi_v\). Let \(C\) be the set of maximal clusters. We initialize \(M_2\) as \(F_1\). While there is a cluster \(S \in \mathcal{B}\) such that \(F_2 \cap \delta(S) = \{e\}\), we remove \(e\) of \(F_2\).
+
+At the end of this process, \(M_2\) does not have edges of \(\delta(C)\), in another words, no convex set of \(M_2\) can have two vertices such that one belongs to \(C\) and the other not.

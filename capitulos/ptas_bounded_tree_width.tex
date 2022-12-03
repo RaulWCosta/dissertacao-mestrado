@@ -1,0 +1,330 @@
+\chapter{PTAS for Graphs of Bounded Treewidth}
+\label{chapter:ptas_bounded_tree}
+
+In this chapter we present the structure and proofs to generate a PTAS for \(\steinercycle\) in graphs of bounded treewidth. This framework is based on the structure proposed by \cite{Bateni} for the Steiner Forest Problem. 
+
+\section{Groups}
+
+Given a set of ``central'' vertices \(S\) and a set of vertices \(X\), such that \(S \subseteq X\), \citeauthor{Bateni} define a group \(\mathcal{G}_G(X, S, r)\), with respect to some graph \(G\), as the union of \(S\) and those vertices of \(X\) that are in a distance of at most \(r\) from some vertex in \(S\).
+
+\begin{lemma} \label{groupLemma}
+Let \(C\) be a \textit{Steiner Cycle} with terminals \(X \subseteq V(G)\) and with length \(W\). For all \(0 < \epsilon < 1\) there is a set \(S \subseteq X\) of \(O(1 + 1/\epsilon)\) vertices such that \(X = \mathcal{G}_G(X, S, \epsilon W)\), in other words the distance between all vertices of \(X\) and some vertex of \(S\) is at most \(\epsilon W\).
+\end{lemma}
+\begin{proof}
+
+Let \(S = \{s_1, s_2, \dots\} \subseteq X\) be a set of vertices. We build \(S\) iteratively. At first we pick a random vertex from \(X\) and add it to \(S\). Then we processed to add the maximum number of vertices from \(X\) into \(S\) such that the distance between \(s_i\) and \(s_j\) for \(j \in \{1, \dots, i-1\}\) is at least \((\epsilon W)/2\). Let \(s_t\) be the last vertex added to \(S\). Note that, in case \(t = 1\), all the vertices of \(X\) are within a maximum distance of \((t \epsilon W)/2\) from vertex \(s_1\), thus the result is valid.
+
+% Let us create a set \(S = \{s_1, s_2, \dots\}\) containing all the vertices from \(X\) such that the distance between \(s_i\) and \(s_j\) for \(j \in \{1, \dots, i-1\}\) is at least \((\epsilon W)/2\). Let \(s_t\) be the last vertex added to \(S\). Note that, in case \(t = 1\), all the vertices of \(X\) are within a maximum distance of \((t \epsilon W)/2\) from vertex \(s_1\), thus the result is valid.
+
+Considering that \(t > 1\), the shortest closed walk between the vertices in \(S = \{s_1, \dots, s_t\}\), not necessarily in order, has length of at least \((t \epsilon W)/2\). Thus \(t \leq 2/\epsilon\) is valid. So we conclude that all vertices of \(X\) are in a distance of at most \(\epsilon W\) from \(S = \{s_1, \dots, s_t\}\) with \(t = 2/\epsilon\).
+\end{proof}
+
+\begin{corollary} \label{groupCor}
+If \(S_1\), \(S_2\), \(X_1\), \(X_2\) are subsets of \(V(G)\) and \(r_1, r_2 \in \mathbb{R}\), then \[\mathcal{G}_G(X_1, S_1, r_1) \cup \mathcal{G}_G(X_2, S_2, r_2) \subseteq \mathcal{G}_G(X_1 \cup X_2, S_1 \cup S_2, \max\{r_1, r_2\})\]
+\end{corollary}
+\begin{proof}
+
+Let \(v \in \mathcal{G}_G(X_i, S_i, r_i)\) with $i \in \{1,2\}$. If \(v \in S_i\), the result is valid. Suppose \(v \in X_i\), but \(v \not\in S_i\). Note that \(v \in X_1 \cup X_2\), and there is \(x \in S_i\) such that the distance between \(v\) and \(x\) in \(G\) is at most \(r_i\). Therefore, we can conclude that \(v\) belongs to \(\mathcal{G}_G(X_1 \cup X_2, S_1 \cup S_2, \max\{r_1, r_2\})\).
+
+\end{proof}
+
+\section{Auxiliary Results}
+
+The following result will serve as a link between the proposed dynamic programming algorithm and the PTAS for graphs of bounded treewidth.
+
+\begin{lemma}\label{evenEdgesSubgraph}
+Let \(\mathcal{D}\) be a set of terminal pairs. Given a multigraph \(G\) such that all vertices have even degree and each terminal pair from \(\mathcal{D}\) belongs to the same component of \(G\), then the edges of \(G\) defines the multiset of a Steiner Multicycle with respect to \(\mathcal{D}\).
+\end{lemma}
+
+
+\begin{proof}
+
+Let \(\mathcal{D}\) be a set of terminals pairs. Let \(G\) be a multigraph such that all vertices have even degree and each terminal pair from \(\mathcal{D}\) belongs to the same component of \(G\).
+
+Let \(C\) be a component of \(G\). It is a well known result in Graph Theory that a connected graph has an Euler cycle if and only if every vertex has even degree. So we can conclude that \(C\) has an Euler cycle. Since \(G\) connects all terminal pairs, \(G\) is a valid Steiner Multicycle.
+
+\end{proof}
+
+\begin{corollary}\label{evenEdgesSubgraphCorollary}
+Given a Steiner Multicycle \(M\), for each edge \(e\) in \(M\), \(e\) only needs to be repeated at most twice.
+\end{corollary}
+\begin{proof}
+Suppose \(e\) is an edge that is repeated more than twice. In that case, we can simply remove recursively two copies of \(e\) from \(M\) until \(e\) has at most two copies, and the Lemma \ref{evenEdgesSubgraph} still holds.
+\end{proof}
+
+
+\section{Variables and Definitions}
+
+Let the tuple \((T, B)\) be a nice tree decomposition of \(G\) with treewidth \(\kappa\). Let \(I\) be the nodes of \(T\), and let \(\mathcal{B} = \{B_i \colon i \in I\}\) be the bags of the decomposition.
+
+For a given bag \(B_i\) we denote as \(V_i\) the set of vertices which belongs to \(B_i\) or any of its descendants in \(T\).
+
+We denote as \textbf{active} in \(B_i\) the set of terminals \(A_i \subseteq V_i\) such that for each \(t \in A_i\) there is a demand pair \(\{t, t'\} \in \mathcal{D}\) and \(t' \in V(G)\backslash V_i\).
+
+% We denote as \(A_i\) the set of active terminals in \(B_i\), or the terminals \(t \in V_i\) for which there is a demand pair \(\{t, t'\} \in \mathcal{D}\) such that \(t \in V_i\) and \(t' \in V(G)\backslash V_i\).
+
+Let \(G_i = G[V_i]\) and let \(M_i\) be a subgraph of \(G_i\). We denote as \(\pi_i(M_i)\) the partition of \(A_i\) induced by the components of \(M_i\).
+
+A partition \(\alpha\) of a set \(S\) can be considered an equivalence relation on \(S\). We denote \((x, y) \in \alpha\) to indicate that \(x\) and \(y\) are in the same class of \(\alpha\). \(x^\alpha\) denotes the class of \(\alpha\) that contains the element \(x\).
+
+If \(M\) is a subgraph of \(G\) and \(S \subseteq V(G)\), then \(M\) induce a partition \(\alpha\) of \(S\). We say that a partition \(\alpha\) is finer than a partition \(\beta\) if \((x, y) \in \alpha\) implies \((x, y) \in \beta\); in that case we say that \(\beta\) is coarser than \(\alpha\). We denote as \(\alpha_1 \vee \alpha_2\) the unique finest partition which is coarser than both \(\alpha_1\) and \(\alpha_2\).
+
+Let \(\beta_i\) be a partition of \(B_i\) for some \(i \in I\) and let \(M_i\) be a subgraph of \( G[V_i]\). We denote as \(M_i + \beta_i\) the graph obtained from $M_i$ by adding a new edge \(xy\) for each \((x, y) \in \beta_i\). Note that \(M_i + \beta_i\) is not necessarily a subgraph of \(G[V_i]\).
+
+We define the \textbf{top bag} of a vertex \(v\) as the bag that contains \(v\) and is the closest to the root.
+
+Given two vertices \(u\) and \(v\), we say that \(u < v\) when the top bag of \(u\) is a descendent of the top bag of \(v\). Note that in a nice tree decomposition, each bag is the top for at most one vertex, since a forget node can lose only one vertex when compared to its descendent node. Also note that if there is at least one bag that contains both \(u\) and \(v\), then \(u < v\) or \(v < u\) is valid.
+
+Let \(K_i\), for \(i \in \{1, 2\}\), be a set of vertices that induces a connected component in \(G\). Also consider that \(K_1\) and \(K_2\) are disjoint. We generalize the previous concept so that \(K_1 < K_2\) implies that there is a vertex \(v\) in \(K_2\) such that \(u < v\) for all vertices \(u \in K_1\). Also, for a given bag, at most one vertex can be forgotten, therefore there is always a vertex \(v \in K_1 \cup K_2\) such that all vertices from \(K_1 \cup K_2 \backslash \{v\}\) are decedents from it.
+
+Finally, note that, as consequence of the construction of the nice tree decomposition, if there is a bag containing vertices of \(K_1\) and \(K_2\), then \(K_1 < K_2\) or \(K_2 < K_1\) is valid.
+
+\section{Constructing the Partitions}
+
+
+A collection \(\Pi = (\Pi_i)_{i \in I}\) is a (polynomial-sized) set of partitions \(\Pi_i\) of the active vertices \(A_i\), for each \(i \in I\).
+
+We define \(S_j\) as a set of vertices of \(G_i\) with size \(\mathcal{O}((\kappa + 1)(1 + 1/\epsilon))\). We also define \(r_j\) as the nonnegative real number equals to the distance between any two vertices in \(G\). Think of it as fetching two random vertices from \(G\) and assigning the distance between them to \(r_j\), then repeating the process for each pair of vertices in \(G\).
+
+Each partition \(\pi\) of \(\Pi_i\) is defined by a sequence \(((S_1, r_1), \dots, (S_p, r_p))\) of \(p \le \kappa + 1\) pairs and a partition \(\rho\) of \(\{1, \dots, p\}\).
+
+Given a sequence of pairs \(S = ((S_1, r_1), \dots, (S_p, r_p))\) and a partition \(\rho\), we build the partition \(\pi\) in the following way. Each pair \((S_j, r_j)\) defines a group \(R_j = \mathcal{G}_G(A_i, S_j, r_j)\) of \(A_i\) where \(i\in I\). In order to ensure that the classes of \(\pi\) are disjoint, we define \(R'_j := R_j \backslash \bigcup^{j-1}_{j=1} R_j\) for each $j \in \{1, \ldots p\}$.
+
+For each class \(P \in \rho\), there is a class in \(\pi\) which corresponds to the union of~\(R'_j\) for \(j \in P\). Precisely, for each \(P \in \rho\),  let \(\bigcup_{j \in P} R'_j\) be a class of \(\pi\). If \(\pi\) covers all vertices in \(A_i\), then we put the resulting partition of \(A_i\) induced by \(\pi\) into \(\Pi_i\); otherwise, we ignore \(\pi\). This process is repeated considering all possible sequences \(S\) and all partitions \(\rho\) of the elements of the sequence.
+
+Now we will check that this process is indeed polynomial. Let \(n = |V(G)|\) and \(y = \mathcal{O}((\kappa + 1)(1 + 1/\epsilon))\), there are \(\frac{n!}{y! (n-y)!} \leq n^y\) possible sets \(S_j\) and, by consequence, \(n^y \cdot n^2\) pairs \((S_j, r_j)\). With that, there are \(n^{y + \kappa + 1} \cdot n^2\) possible sequences of size \(\kappa + 1\) created by pairs \((S_j, r_j)\) and partitioned by \(\rho\). Since we consider all those sequences in order to build \(\Pi_i\), the size of \(\Pi_i\) is polynomial in \(|V(G)|\) considering \(\kappa\) and \(\epsilon\) fixed.
+
+\begin{theorem}\label{conformingPi}
+
+There is a Steiner Multicycle solution \((1 + 2 \kappa \epsilon)\)-approximate conforming to \(\Pi\).
+
+\end{theorem}
+\begin{proof}
+
+Let \(G\) be a graph with treewidth \(\kappa - 1\), let \(\epsilon > 0\) be a constant and let \(M\) be the minimum-length Steiner Multicycle with respect to \(G\) and let \(\mathcal{D}\) be a set of terminal pairs \(\{\{t_1, t_1')\}, \dots, \{t_k, t_k'\}\}\).
+
+We will describe a procedure to add edges to \(M\) in such a way that the resulting Multicycle \(M'\) conforms to \(\Pi\) and has a maximum size of \((1 + 2\kappa \epsilon ) \cdot \ell(M)\).
+
+Let \(H\) be the subgraph of \(G\) induced by the edges in the Multicycle \(M\). Let \(H'\) be the equivalent to \(M'\). 
+
+Let \(H'\) be a super graph of \(H\). That way the components of \(H'\) defines a partition of the components of \(H\).
+
+For a given a component \(K_1\) of \(H\) , we have at most \(\kappa\) components \(K_j\) of \(H\) such that \(K_1\) and \(K_j\) intersects a bag \(B_i\) and \(K_1 < K_j\) holds.
+
+That is due to the fact that all components are disjoint and the topmost bag of \(K_1\) intersects at most \(\kappa\) other components. For each pair \((K_1, K_j)\) we charge a length increase of at most \(2 \epsilon \ell(K_1)\). Thus the total increase, after processing all components \(K_j\), is at most \(2 \epsilon \kappa \ell(M)\). We can then conclude that \(\ell(M') \leq (1 + 2 \kappa \epsilon) \cdot \ell(M)\) follows at the end of the process that will be described below.
+
+Initially we set \(H' = H\). Suppose there is a bag \(B_i\) such that the partition \(\pi_i(H')\) of \(A_i\) induced by \(H_i\) is not in \(\Pi_i\). Let \(K_1 < K_2 < \dots < K_p\) be the components of \(M\) that intersects \(B_i\), ordered by the relation \(<\). Let \(\rho\) be the partition of \({1, \dots, p}\) (the components of H that intersects \(B_i\)) induced by the components of \(H'\).
+
+Let \(A_{i, j}\) be the subset of \(A_i\) connected by \(K_j\). The intersection of component \(K_j\) with \(V_i\) can create at most \(\kappa + 1\) sub-components, each of length at most \(\ell(K_j)\). By Lemma \ref{groupLemma} and Corollary \ref{groupCor} there is a set \(S_j \subseteq K_j\) of at most \(O(1 + 1/\epsilon)\) vertices of \(K_j\) such that \(A_{i,j} = \mathcal{G}_G(A_{i,j}, S_j, r_j)\), for some \(r_j \leq \ell(K_j)\).
+
+If the sequence \(((S_1, r_1), \dots, (S_p, r_p))\) and the partition \(\rho\) generate a partition \(\pi_i(M')\) then \(\pi_i(M') \in \Pi_i\), by construction of \(\Pi_i\).
+
+Lets suppose that is not true, in another words, the sequence \(((S_1, r_1), \dots, (S_p, r_p))\) and the partition \(\rho\) does not induce \(\pi_i(M')\).
+
+Let \(R_j\) and \(R'_j\) as defined in \(\Pi_i\) construction. Clearly \(A_{i,j} \in R_j\) (by Lemma \ref{groupLemma}), thus the sequence defines a partition \(\pi\). We suppose that the partition \(\pi\) is not equal to the partition \(\pi_i(M')\).
+
+Let \(\rho(j)\) be the class of \(\rho\) that contains \(j\). If for all \(1 \leq j \leq p\) all the vertices of \(A_{i,j}\) are contained in \(\bigcup_{j' \in \rho(j)}R'_{j'}\) then \(\pi\) e \(\pi_i(M')\) are the same.
+
+So suppose that there is a vertex \(v \in A_{i,j}\) which is not in \(\bigcup_{j' \in \rho(j)}R'_{j'}\). As \(v \in R_j\) that implies \(v \in R_{j^\ast}\) for some \(j^\ast < j\) and \(j^\ast \not\in \rho(j)\).
+
+Therefore, there is a vertex \(u \in S^\ast\) such that \(d_{G_i}(u, v) \leq r_{j^\ast} \leq \epsilon \ell(K_{j^\ast})\). We modify \(H'\) by adding the smallest path connecting \(u\) and \(v\). Clearly that increases the size of \(H'\) in at most \(2 \epsilon \ell(K_{j^\ast})\), since the path must be covered twice, so it guaranties a cycle, which implies that each edge of the path will be added to \(M'\) twice. This increase is charged by the pair \((K_{j^\ast}, K_j)\). Notice that this pair of components of \(H\) respects the properties described in the beginning of the proof and is charged at most once.
+
+By the end of this process, each partition \(\pi_i(M')\) belongs to the corresponding \(\Pi_i\), thus the solution \(M'\) conforms to \(\Pi\) and has a maximum length of \((1 + 2\kappa\epsilon) \ell(M)\).
+
+\end{proof}
+
+\section{Conforming Solutions}
+
+The Theorem \ref{conformingPi} is presented in a similar fashion to what \citeauthor{Bateni} did for Steiner Forest. The main idea is to create a strategy aiming at constraining the number of subsolutions we need to evaluate at each bag of the decomposition.
+
+With that at hand, we proceed to the main result of this section.
+
+\begin{theorem}\label{dynamicProgramming}
+
+Let \(G\) be a graph with treewidth bounded by \(\kappa\). Let \(\epsilon > 0\) be a constant. Let \(\mathcal{D}\) be a set of terminal pairs \(\{\{t_1, t_1')\}, \dots, \{t_k, t_k'\}\}\).
+
+There is a polynomial-time algorithm that finds a multiset of edges \(M\) (i.e. a Steiner Multicycle), such that each vertex \(v \in G\) is an endpoint of an even number of edges in \(M\) and the subgraph induced by \(M\) connects the terminal pairs of \(\mathcal{D}\). Also, \(M\) conforms with \(\Pi\) and \(\ell(M) \leq (1 + 2 \kappa \epsilon) OPT\).
+
+\end{theorem}
+\begin{proof}
+
+The proof is based on a standard dynamic programming approach. Initially we make a simple transformation on the graph to make the process easier. For each terminal \(v\) of \(G\), we create a vertex \(v'\) and a 0 weight edge between \(v\) and \(v'\), then we replace \(v\) with \(v'\) as the new terminal. Thus after this transformation all terminals has degree 1 and the size of the minimum Steiner Multicycle stays unchanged.
+
+We can obtain a nice tree decomposition \((T, B)\) of \(G\) with width \(\kappa\) in polynomial time. All terminals first appear in leave nodes in the decomposition, that way join nodes do not introduce new terminals.
+
+For the dynamic programming, we define a sub-problem for each node \(i \in I\). The idea is that the solution of a sub-problem \(i\) generates a multiset \(M_i\) of edges of \(G_i\) in such a way that \(M_i\) is the final solution \(M\) restricted in \(G_i\).
+
+For simplicity, throughout the proof we can also observe a multiset \(M\) as the subgraph induced by its edges. That way we can talk about components of \(M\), i.e. the components of the subgraph induced by the edges in \(M\). Note however that \(\ell(M)\) is the sum of the cost of all the edges in the multiset \(M\) considering repetitions.
+
+By the definition of \(\pi_i(M) = \pi\), the solution \(M\) partition \(A_i\) in a coarser way than \(M_i\), i.e. it is possible that two components of \(M_i\) belongs to the same component in \(M\). Therefore it is not feasible that \(\pi_i(M_i) \in \Pi_i\). To work-around this problem, we introduce a partition \(\beta_i\) of \(B_i\) induced by the final solution \(M\). Since we obviously do not know \(M\) during the process, for each bag \(B_i\) we create a set of solutions considering \(\beta\) as all the possible combinations of the partitions of \(B_i\) induce by \(M_i\).
+
+% citar alguma referência para o números de Bell (https://en.wikipedia.org/wiki/Bell_number)
+That way, for each bag \(B_i\) the number of possible combinations of \(\beta_i\) is at most the \(\kappa\)-eth Bell number, thus a constant number of combinations, considering \(\kappa\) fixed.
+
+Given that, \(M_i\) does not partition \(A_i\), but \(M_i + \beta_i\) induces a partition that belongs to \(\Pi_i\).
+
+Formally, we define each subproblem \(P\) by a tuple \((i, H, \pi, \alpha, \beta, \mu)\), where 
+
+\begin{itemize}
+    \item[(S1)] \(i \in I\) is a node of \(T\);
+    \item[(S2)] \(H\) is an edges multiset that has an associated spanning subgraph of \(G[B_i]\) (i.e., contains all vertices of \(G[B_i]\)), in such a way that edges can be crossed multiple times;
+    \item[(S3)] \(\pi \in \Pi_i\) is a partition of \(A_i\);
+    \item[(S4)] \(\pi\), \(\beta\) are partitions of \(B_i\), \(\beta\) is coarser than \(\alpha\) and \(\alpha\) is coarser that the partition induced by the components of \(H\);
+    \item[(S5)] \(\mu\) is a injective mapping from the classes of \(\pi\) to the classes of \(\beta\). This relation maps which vertices of \(B_i\) belongs to the component connected to some vertex of \(A_i\), in order to guarantee that no vertex of \(A_i\) becomes ``lost'' and do not connect to its pair.
+\end{itemize}
+
+The solution \(c = (i, H, \pi, \alpha, \beta, \mu)\) of a subproblem \(P\) is the minimum length of a multiset \(M_i\) with edges of \(G[V_i]\), with an associated multiset \(H\), satisfying all of the following requirements:
+
+\begin{itemize}
+    \item[(C1)] \(M_i[B_i]\) = H (which implies \(B_i \subseteq V(M_i)\));
+    \item[(C2)] \(\alpha\) is the partition of \(B_i\) induced by \(M_i\);
+    \item[(C3)] \(\pi\) is the partition of \(A_i\) induced by \(M_i + \beta\);
+    \item[(C4)] For each descendent \(d\) of \(i\), (including \(d = i\)) the partition of \(A_d\) induced by \(M_i + \beta\) belongs to \(\Pi_d\);
+    \item[(C5)] If there is a terminal pair \((x_1, x_2)\), with \(x_1, x_2 \in V_i\), then they are connected in \(M_i + \beta\);
+    \item[(C6)] Every \(x \in A_i\) is in the component of \(M_i + \beta\) containing \(\mu(x^\pi)\).
+\end{itemize}
+
+We solve these subproblems by a bottom-up dynamic programming, considering different process for each type of node, as detailed below.
+
+Leaf Node \(i\). If \(i\) is a leaf node, then the value of the solution is trivially 0.
+
+Join Node \(i\) with children \(i_1\) and \(i_2\). \(A_{i_1}\) and \(A_{i_2}\) are disjoint and \(A_i\) is a subset of the union of \(A_{i_1} \cup A_{i_2}\). The value of the subproblem is:
+
+$$c(i, H, \pi, \alpha, \beta, \mu) = \min_{(J1), (J2), (J3), (J4)}(c(i_1, H, \pi^1, \alpha^1, \beta, \mu^1) + c(i_2, H, \pi^2, \alpha^2, \beta, \mu^2) - \ell(H))$$
+
+where the minimum is taken over all tuples satisfying, for \(p = 1, 2\), all the following:
+
+\begin{itemize}
+    \item[(J1)] \(\alpha^1 \vee \alpha^2 = \alpha\);
+    \item[(J2)] \(\pi\) and \(\pi^p\) are the same on \(A_{i_p} \cap A_i\);
+    \item[(J3)] For every \(v \in A_i \cap A_{i_p}\), \(\mu(v^\pi) = \mu^p(v^{\pi^p})\);
+    \item[(J4)] If there is a terminal pair \((x_1, x_2)\) with \(x_1 \in A_1\) and \(x_2 \in A_2\) then \(\mu^1(x_1^{\pi^1}) = \mu^2(x_2^{\pi^2})\), in other words, both terminals must be mapped to the same partition of \(\beta\).
+\end{itemize}
+
+Proof of left \(\leq\) right:
+Let \(P^1 = (i^1, H, \pi^1, \alpha^1, \beta, \mu^1)\) and \(P^2 = (i^2, H, \pi^2, \alpha^2, \beta, \mu^2)\) be subproblems minimizing the right-hand side of (8), and let \(M_1\) and \(M_2\) be optimal solutions of \(P^1\) and \(P^2\), respectively. Let \(M_i\) be the union of subgraphs \(M_1\) and \(M_2\). It is clear that the length of \(M_i\) is exactly the right-hand side of (8): the common edges of \(M_1\) and \(M_2\) are exactly the edges of \(H\). We show that \(M_i\) is a solution of \(P_i\), that is, \(M_i\) satisfies requirements (C1)–(C6).
+
+\begin{itemize}
+    \item[(C1)] Follows from \(M_1[B_i] = M_2[B_i] = M_i[B_i] = H\).
+    \item[(C2)] Follows from (J1) and from the fact that \(M_1\) and \(M_2\) intersect only in \(B_i\).
+    \item[(C3)] First consider two vertices \(x, y \in A_i^p \cap A_i\). Vertices \(x\) and \(y\) are connected in \(M_i + \beta\) if and only if they are connected in \(M_p + \beta\). By (C3) for \(M_p\), this is equivalent to \((x, y) \in \pi_p\), which is further equivalent to \((x, y) \in \pi\) by (J2). Now suppose that \(x \in A_i^1 \cap A_i\) and \(y \in A_i^2 \cap A_i\). In this case, \(x\) and \(y\) are connected in \(M_i + \beta\) if and only if there is a vertex of \(B_i\) reachable from \(x\) in \(M_1 + \beta\) and from y in \(M_2 + \beta\), or in other words, \(\mu_1(x^\pi_1) = \mu_2(x^\pi_2)\). By (J3), this is equivalent to \(\mu(x^\pi) = \mu(y^\pi)\), or \((x, y) \in \pi\) (as \(\mu\) is injective).
+    \item[(C4)] If \(d\) is a descendant of \(i_p\), then the statement follows using that (C4) holds for solution \(M_p\) of \(P_p\) and the fact that for every descendant \(d\) of \(i_p\), \(M_p + \beta\) and \(M_i + \beta\) induce the same partition of \(A_d\). For \(d = i\), the statement follows from the previous paragraph, that is, from the fact that \(M_i + \beta\) induces partition \(\pi \in \Pi_i\) on \(A_i\).
+    \item[(C5)] Consider a pair \((x_1, x_2)\). If \(x_1, x_2 \in V_{i_p}\), then the statement follows from (C5) on \(M_p\). Suppose now that \(x_1 \in V_{i_1}\) and \(x_2 \in V_{i_2}\); in this case, we have \(x_1 \in A_{i_1}\) and \(x_2 \in A_{i_2}\). By (C6) on \(M_1\) and \(M_2\), \(x_p\) is connected to \(\mu^p(x_p^{\pi^p})\) in \(M_p + \beta\). By (J4), we have \(\mu^1(x_1^{\pi^1}) = \mu^2(x_2^{\pi^2})\), hence \(x_1\) and \(x_2\) are connected to the same class of \(\beta\) in \(M_i + \beta\).
+    \item[(C6)] Consider an \(x \in A_i\) that is in \(A_{i_p}\). By condition (C6) on \(M_p\), we have that \(x\) is connected in \(M_p + \beta\) (and hence in \(M_i + \beta\)) to \(\mu^p(v^\pi_p)\), which equals \(\mu(v^\pi)\) by (J3).
+\end{itemize}
+
+% prova volta
+
+Proof of left \(\geq\) right:
+
+Let \(M_i\) be a solution of subproblem \((i, H, \pi, \alpha, \beta, \mu)\) and let \(M_p\) be the subgraph of \(M_i\) induced by \(V_{i_p}\). To prove the inequality, we need to show three things. First, we have to define two tuples \((i_1, H, \pi^1, \alpha^1,\beta,\mu^1)\) and \((i_2, H, \pi^2, \alpha^2,\beta,\mu^2)\) that are subproblems, that is, they satisfy (S1)–(S5). Second, we need to show that (J1)–(J4) hold for these subproblems. Third, we need to show that \(M_1\) and \(M_2\) are solutions for these subproblems (i.e., respects (C1)–(C6)), hence they can be used to give an upper bound on the right-hand side that matches the length of \(M_i\).
+
+Let \(\alpha^p\) be the partition of \(B_i\) induced by the components of \(M_p\); as \(M_1\) and \(M_2\) intersect only in \(B_i\), we have \(\alpha = \alpha^1 \vee \alpha^2\), ensuring (J1). Since \(\beta\) is coarser than \(\alpha\), it is coarser than both \(\alpha^1\) and \(\alpha^2\). Let \(\pi^p\) be the partition of \(A_{i_p}\) defined by \(M_i + \beta\); we have \(\pi^p \in \Pi_{i_p}\) by (C4) for \(M_i\). Furthermore, by (C3) for \(M_i\), \(\pi\) is the partition of \(A_i\) induced by \(M_i + \beta\), hence it is clear that \(\pi\) and \(\pi^p\) are the same on \(A_{i_p} \cap A_i\), so (J2) holds. This also means that \(M_i + \beta\) (or equivalently, \(M_p + \beta\)) connects a class of \(\pi^p\) to exactly one class of \(\beta\); let \(\mu^p\) be the corresponding mapping from the classes of \(\pi^p\) to \(\beta\). Now (J4) is immediate.
+
+It is clear that the tuple \((i_p, H, \pi^p, \alpha^p, \beta, \mu^p)\) satisfies (S1)–(S5), since it is a subproblem. We need to show that \(M_p\) is a solution of the subproblem \((i_p, H, \pi^p, \alpha^p, \beta, \mu^p)\). As the edges of \(H\) are shared by \(M_1\) and \(M_2\), it will follow that the right-hand side is not greater than the left-hand side.
+
+\begin{itemize}
+    \item[(C1)] Obvious from the definition of \(M_1\) and \(M_2\).
+    \item[(C2)] Follows from the definition of \(\alpha^p\).
+    \item[(C3)] Follows from the definition of \(\pi^p\), and from the fact that \(M_i + \beta\) and \(M_p + \beta\) induce the same partition on \(A_{i_p}\).
+    \item[(C4)] Follows from (C4) on \(M_i\) and from the fact that \(M_i + \beta\) and \(M_p + \beta\) induces the same partition on \(A_d\).
+    \item[(C5)] Suppose that \(x_1, x_2 \in V_{i_p}\). Then, by (C5) for \(M_i\), \(x_1 and x_2\) are connected in \(M_i + \beta\).
+    \item[(C6)] Follows from the definition of \(\mu^p\).
+\end{itemize}
+
+% TODO demonstrar que para uma solução uma aresta precisa ser atravessa no maximo duas vezes. Isso é para garantir que precisamos somente avaliar uma quantidade constante de conexões possiveis entre v e S
+
+Introduction Node \(i\) of vertex \(v\). Let \(j\) be the child of \(i\). Since \(v\) is not a terminal, \(A_i = A_j\). Let \(M'\) be a subgraph of \(G[V_j]\), let \(M_S\) be the subgraph obtained from \(M'\) by adding the vertex \(v\) to \(M'\), making \(v\) adjacent to \(S \subseteq B_j\). Note that from the result of the Corollary \ref{evenEdgesSubgraphCorollary}, for a given vertex \(s \in S\), the edge \(vs\) needs to be crossed at most twice.
+
+If \(\alpha'\) is the partition of \(B_j\) induced by the components of \(M'\), then we define the partition \(\alpha'[v, S]\) of \(B_i\) to be the partition obtained by joining all classes of \(\alpha'\) that intersects S and adding \(v\) to this new class. It is clear that \(\alpha'[v, S]\) is the partition of \(B_i\) induced by \(M_S\).
+
+The value of the subproblem is
+
+$$c(i, H, \pi, \alpha, \beta, \mu) = \min_{(I1), (I2), (I3)} c(j, H[B_j], \pi, \alpha', \beta', \mu') + \sum_{xv \in E(H)}\ell(xv)$$
+
+where the minimum is taken over all tuples satisfying the following conditions:
+
+\begin{itemize}
+    \item[(I1)] \(\alpha_i = \alpha_j[v, S]\) where \(S\) is the set of neighbors of \(v\) in \(H\);
+    \item[(I2)] \(\beta'\) is \(\beta\) restricted to \(B_j\);
+    \item[(I3)] For every \(x \in A_i\), \(\mu_i(x^\pi)\) is the class of \(\beta\) containing \(\mu'(x^\pi)\).
+\end{itemize}
+
+Proof of left \(\leq\) right:
+Let \(M'\) be an optimal solution of subproblem \(P' = (j , H[B_j], \pi, \alpha', \beta', \mu')\). Let \(M_i\) be the graph obtained from \(M'\) by adding to it the edges of \(H\) incident to \(v\); it is clear that the length of \(M_i\) is exactly the right-hand side. Let us verify that (C1)–(C6) hold for \(M_i\).
+
+\begin{itemize}
+    \item[(C1)] Immediate.
+    \item[(C2)] Holds because of (I1) and the way \(\alpha'[v, S]\) was defined.
+    \item[(C3)–(C5)] Observe that \(M_i + \beta\) connects two vertices of \(V_j\) if and only if \(M' + \beta'\) does. Indeed, if a path in \(M_i + \beta\) connects two vertices via vertex \(v\), then the two neighbors \(x\), \(y\) of \(v\) on the path are in the same class of \(\beta\) as \(v\) (using that \(\alpha\) and \(\beta\) are coarser than the partition induced by \(H\)); hence, (I2) implies that \(x\), \(y\) are in the same class of \(\beta'\) as well. In particular, for every descendant \(d\) of \(i\), the components of \(M_i + \beta\) and the components of \(M' + \beta\) give the same partition of \(A_d\).
+    \item[(C6)] Follows from (C6) for \(M'\) and from (I3).
+\end{itemize}
+
+% volta
+Proof of left \(\geq\) right:
+Let \(M_i\) be a solution of subproblem \((i, H, \pi, \alpha, \beta, \mu)\) and let \(M'\) be the subgraph of \(M_i\) induced by \(V_j\). We define a tuple \((j, H[B_j], \pi, \alpha', \beta', \mu')\) that is a subproblem, show that it satisfies (I1)–(I3), and that \(M'\) is a solution of this subproblem.
+
+Let \(\alpha'\) be the partition of \(V_j\) induced by \(M'\) and let \(\beta'\) be the restriction of \(\beta\) on \(B_j\); these definitions ensure that (I1) and (I2) hold. Let \(\mu'(x^\pi ) = \mu(x^\pi ) \backslash \{v\}\), which is a class of \(\beta'\); clearly, this ensures (I3). Note that this is well defined, as it is not possible that \(\mu(x^\pi)\) is a class of \(\beta\) consisting of only \(v\): by (C6) for \(M_i\), this would mean that \(v\) is the only vertex of \(B_i\) reachable from \(x\) in \(M_i\). Since \(v\) is not a terminal vertex, \(v = x\), thus if \(v\) is reachable from \(x\), then at least one neighbor of \(v\) has to be reachable from \(x\) as well.
+
+Let us verify that (S1)–(S5) hold for the tuple \((j, H[B_j], \pi, \alpha', \beta', \mu')\). (S1) and (S2) clearly hold. (S3) follows from the fact that (C4) holds for \(M_i\) and \(A_i = A_j\). To see that (S4) holds, observe that \((x, y) \in \alpha'\) implies \((x, y) \in \alpha\), which implies \((x, y) \in \beta\), which implies \((x, y) \in \beta'\). (S5) is clear from the definition of \(\mu'\).
+
+The difference between the length of \(M_i\) and the length of \(M'\) is exactly \(\sum_{xv \in H} \ell(xv)\). Thus, to show that the left-hand side is at most the right-hand side, it is sufficient to show that \(M'\) is a solution of subproblem \((j, H[B_j], \pi, \alpha', \beta', \mu')\).
+
+\begin{itemize}
+    \item[(C1)–(C2)] Obvious.
+    \item[(C3)–(C5)] As in the other direction, follow from the fact that \(M' + \beta'\) induces the same partition of \(V_j\) as \(M_i + \beta\).
+    \item[(C6)] By the definition of \(\mu'\), it is clear that \(\mu'(x^\pi\) is exactly the subset of \(B_j\) that is reachable from \(x\) in \(M_i + \beta\) and hence in \(M' + \beta'\).
+\end{itemize}
+
+% forget node
+
+Forget Node \(i\) of vertex \(v\). Let \(j\) be the child of \(i\). Thus \(V_i = V_j\) and \(A_i = A_j\).
+
+The value of the subproblem is
+
+$$c(i, H, \pi, \alpha, \beta, \mu) = \min_{(F1), (F2), (F3), (F4), (F5)} c(j, H', \pi, \alpha', \beta', \mu')$$
+
+where the minimum is taken over all tuples satisfying the following:
+
+\begin{itemize}
+    \item[(F1)] \(H'[B_i] = H\);
+    \item[(F2)] \(\alpha\) is the restriction of \(\alpha'\) to \(B_i\);
+    \item[(F3)] \(\beta\) is the restriction of \(\beta'\) to \(B_i\) and \((x, v) \in \beta'\) if, and only if, \((x, v) \in \alpha'\);
+    \item[(F4)] For every \(x \in A_i\), \(\mu_i(x^\pi)\) is the (nonempty) set \(\mu^j(x^\pi) \backslash \{v\}\) (which implies that \(\mu^j(x^\pi)\) contains at least one vertex of \(B_i\));
+    \item[(F5)] The degree of \(v\) in \(H_i\) must be even, considering multiple crossings in a single edge.
+
+\end{itemize}
+
+Proof of left \(\leq\) right:
+
+Let \(M'\) be a solution of \((j, H', \pi, \alpha', \beta', \mu')\). We show that \(M'\) is a solution of \((i, H, \pi, \alpha, \beta, \mu)\) as well.
+
+\begin{itemize}
+    \item[(C1)] Clear because of (F1).
+    \item[(C2)] Clear because of (F2).
+    \item[(C3)–(C5)] We only need to observe that \(M' + \beta\) and \(M' + \beta'\) have the same components: since by (F3), \((x, v) \in \beta'\) implies \((x, v) \in \alpha'\), the neighbors of \(v\) in \(M' + \beta'\) are reachable from \(v\) in \(M'\), thus \(M' + \beta'\) does not add any further connectivity compared to \(M' + \beta\).
+    \item[(C6)] Observe that if \(\mu'(x^\pi)\) are the vertices of \(B_j\) reachable from \(x\) in \(M' + \beta'\), then \(\mu(x^\pi) = \mu'(x^\pi) \backslash \{v\}\) are the vertices of \(B_i\) reachable from \(x\) in \(M' + \beta'\). We have already seen that \(M' + \beta\) and \(M' + \beta'\) have the same components, thus the nonempty set \(\mu(x^\pi)\) is indeed the subset of \(B_i\) reachable from \(x\) in \(M' + \beta\). Furthermore, by (F3), \(\beta\) is the restriction of \(\beta'\) on \(B_i\), thus if \(\mu'(x^\pi)\) is a class of \(\beta'\), then \(\mu(x^\pi)\) is a class of \(\beta\).
+\end{itemize}
+
+% volta
+Proof of left \(\geq\) right:
+
+Let \(M'\) be a solution of \((j, H, \pi, \alpha, \beta, \mu)\). We define a tuple \((j, H', \pi, \alpha', \beta', \mu')\) that is a subproblem, we show that (F1)–(F3) hold, and that \(M'\) is a solution of this subproblem.
+
+Let us define \(H' = M'[B_j]\) and let \(\alpha'\) be the partition of \(B_j\) induced by the components of \(M'\); these definitions ensure that (F1) and (F2) hold. We define \(\beta'\) as the partition obtained by extending \(\beta\) to \(B_j\) such that \(v\) belongs to the class of \(\beta\) that contains a vertex \(x \in B_i\) with \((x, v) \in \alpha'\) (as \(\beta\) is coarser than the partition induced by \(H\), there is at most one such class; if there is no such class, then we let \(\{v\}\) be a class of \(\beta'\)). It is clear that (F3) holds for this \(\beta'\). Let us note that \(M' + \beta\) and \(M' + \beta'\) have the same connected components: if \((x, v) \in \beta'\), then \(x\) and \(v\) are connected in \(M'\). 
+
+Let \(\mu'(x^\pi)\) be the subset of \(B_j\) reachable from \(x\) in \(M' + \beta'\) (or equivalently, in \(M' + \beta\)). It is clear that \(\mu(x^\pi) = \mu'(x^\pi) \backslash \{v'\}\) holds, hence (F4) is satisfied.
+
+Let us verify first that (S1)–(S5) hold for \((j, H', \pi, \alpha', \beta', \mu')\). (S1) and (S2) clearly holds. (S3) follows from the fact that (S3) holds for \((i, H, \pi, \alpha, \beta, \mu)\) and \(A_i = A_j\). To see that (S4) holds, observe that if \(x, y \in B_i\), then \((x, y) \in \alpha'\) implies \((x, y) \in \alpha\), which implies \((x, y) \in \beta\), which implies \((x, y) \in \beta'\). Furthermore, if \((x, y) \in \alpha'\), then \((x, y) \in \beta'\) by the definition of \(\beta\). (S5) is clear from the definition of \(\mu'\).
+
+We show that \(M'\) is a solution of \((j, H', \pi, \alpha', \beta', \mu')\).
+
+\begin{itemize}
+    \item[(C1)] Clear from the definition of \(H'\).
+    \item[(C2)] Clear from the definition of \(\alpha'\).
+    \item[(C3)–(C5)] Follow from the fact that \(M' + \beta\) and \(M' + \beta'\) have the same connected components.
+    \item[(C6)] Follows from the definition of \(\mu'\).
+\end{itemize}
+
+
+\end{proof}

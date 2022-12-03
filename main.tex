@@ -1,0 +1,261 @@
+% INFORMAÇÃO SOBRE A VERSÃO DESSE DOCUMENTO
+% VERSÃO DA CLASSE ppgccufmg 1.60 (de 2021-03-29) - http://vilarneto.com/ppgccufmg (ou https://web.archive.org/web/20210626223024/https://vilarneto.com/ppgccufmg/)
+
+\documentclass[msc]{ppgccufmg}    % ou [msc] para dissertações
+                                  % de mestrado. Para propostas ou
+                                  % projetos, usar [phd,project],
+                                  % [msc,proposal], etc.
+
+% \usepackage[brazil]{babel}        % se o documento for em português, OU
+\usepackage[english]{babel}      % se o documento for em inglês
+% \usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{type1ec}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[a4paper,
+  portuguese,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  linktocpage,
+  colorlinks,
+  citecolor=black,
+  urlcolor=black,
+  linkcolor=black,
+  filecolor=black,
+  ]{hyperref}
+\usepackage[square]{natbib}
+
+\usepackage{tikz, tikz-network}
+
+\usepackage{amsmath, amssymb, amsfonts, amsbsy, algorithmicx, algorithm}
+
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+% \def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{theorem}{Teorema}
+% \newtheorem{lemma}{Lema}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+%%%% operadores matemáticos
+\DeclareMathOperator{\opt}{\textrm{OPT}}
+\DeclareMathOperator{\val}{\textrm{val}}
+\DeclareMathOperator{\sol}{\textrm{Sol}}
+
+%%% Definições
+% \newcommand{\steinercycle}{\textsc{Steiner Multicycle}}
+
+
+
+
+% definicoes
+\newcommand{\steinercycle}{\textsc{SMCP}}
+\newcommand{\steinercyclerestricted}{\textsc{R-SMCP}}
+\newcommand{\steinerforest}{\textsc{SFP}}
+\newcommand{\ptas}{\textsc{PTAS}}
+\newcommand{\nonpoly}{\mathcal{NP}}
+\newcommand{\nonpolyopt}{\mathcal{NPO}}
+
+\newcommand{\poly}{\mathcal{P}}
+
+\usepackage{algpseudocode}
+
+
+
+
+\begin{document}
+
+% O comando a seguir, \ppgccufmg, provê todas as informações relevantes para a
+% classe ppgccufmg. Por favor, consulte a documentação para a descrição de
+% cada chave.
+
+% Um exemplo para documentos em português é apresentado a seguir:
+\ppgccufmg{
+%   title={Esquema de Aproximação em Tempo Polinomial para Multiciclos de Steiner em Grafos com Genus Limitado},
+  title={Estudo algorítmico do problema de multiciclos de Steiner},
+  authorrev={Martins Costa, Raul Wagner},
+  %cutter={D1234p},
+  %cdu={519.6*82.10},
+  university={Universidade Federal de Minas Gerais},
+  course={Ciência da Computação},
+  address={Belo Horizonte},
+  date={2022-05},
+  keywords={Algoritmos de Aproximação, Teoria de Grafos, Otimização, e Complexidade Computacional},
+  advisor=[male]{Prof. Dr. Phablo F. S. Moura},
+%   coadvisor=[female]{Maria Teresa Eleonora},
+%  approval={img/approvalsheet.eps},
+%  approval=[-2.5cm][1]{aprovalsheet},
+%   abstract={Resumo}{capitulos/resumo},
+%   abstract=[english]{Abstract}{capitulos/abstract},
+%   abstract={Resumo Estendido}{capitulos/resumoest},
+%   dedication={capitulos/dedicatoria},
+%   ack={capitulos/agradecimentos},
+%  ack=[Acknowledgments]{ack},
+%   epigraphtext={A verdade é o contrário da mentira, \\
+%     e a mentira é o oposto da verdade.}{Autor desconhecido},
+  indexkeys={1.~Computação --- Teses. 2.~Redes --- Teses. I.~Orientador.
+    II.~Título.},
+}
+
+% Um exemplo para documentos em inglês é apresentado a seguir (lembre-se de
+% usar \usepackage[english]{babel}):
+%\ppgccufmg{
+%  title={Protocol for Error-Verification inside\\Totally Error-Free
+%    Networks},
+%  authorrev={da Camara Neto, Vilar Fiuza},
+%  cutter={D1234p},
+%  cdu={519.6*82.10},
+%  university={Federal University of Minas Gerais},
+%  course={Computer Science},
+%  portuguesetitle={Protocolo para Verificação de Erros\\em Redes Totalmente
+%    Confiáveis},
+%  portugueseuniversity={Universidade Federal de Minas Gerais},
+%  portuguesecourse={Ciência da Computação},
+%  address={Belo Horizonte},
+%  date={2008-03},
+%  advisor={Adamastor Pompeu Setúbal},
+%  approval={img/approvalsheet.eps},
+%  abstract=[brazil]{Resumo}{resumo},
+%  abstract={Abstract}{abstract},
+%  dedication={dedicatoria},
+%  ack={agradecimentos},
+%  epigraphtext={Truth and lie are opposite things.}{Unknown},
+%}
+
+
+
+
+% \newcommand{\dummytxt}{\dummytxta\dummytxtb\dummytxtc}
+
+\include{capitulos/introduction}
+\include{capitulos/related_work}
+\include{capitulos/definitions}
+\include{capitulos/pc_partition}
+\include{capitulos/ptas_bounded_tree_width}
+
+% \chapter{Introdução}
+
+% Segundo \cite{horn86robot}, todo triângulo equilátero tem os lados iguais. Já
+% segundo \cite{shashua97photometric}, todo quadrado também tem.
+
+% Veja que o pacote \verb|natbib| permite uma série de formas diferentes para
+% fazer referências bibliográficas. O comando padrão, \verb|\cite|, realiza a
+% citação comum vista no parágrafo anterior. Outros comandos permitem, por
+% exemplo, citar somente o autor --- por exemplo, citar o trabalho de
+% \citeauthor{samaras99coupled} --- ou colocar automaticamente a citação entre
+% parênteses \citep{hougen93estimation, sato99illumination2, sato99illumination1,
+% sato01stability}. Os comandos usados foram, respectivamente, \verb|\citeauthor|
+% e \verb|\citep|. Veja a documentação do \verb|natbib| na Internet para conhecer
+% outros comandos e exemplos de uso.
+
+% Citações aleatórias para fazer com que as referências bibliográficas ocupem
+% mais de uma página: \cite{bichsel92simple, dror01statistics, guisser92new}.
+
+
+% \section{Motivação}
+
+% \dummytxtb\dummytxta
+
+% \subsection{Sub-motivação}
+
+
+% \dummytxtc\dummytxtb
+
+% \subsection{Mais uma sub-seção}
+
+% \dummytxta\dummytxtc
+
+% \subsubsection{Descendo mais um nível}
+
+% \dummytxtb\dummytxta
+
+
+% \chapter{Desenvolvimento}
+
+% \dummytxtb\dummytxta\dummytxtc
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[scale=0.6]{imgs/clustering.png}
+%     \caption{Uma figura de exemplo.}
+%     \label{fig:exemplo}
+% \end{figure}
+
+% \dummytxtb\dummytxta\dummytxtc\dummytxtb
+
+% \begin{table}[t]
+%     \caption{Uma tabela de exemplo.}
+%     {\centering
+%     \begin{tabular}{lcr} \toprule
+%     \emph{Left-aligned} & \emph{Centered} & \emph{Right-aligned} \\ \midrule
+%     Lorem ipsum & dolor sit & amet \\
+%     consectetur adipisicing & elit, sed do eiusmod & tempor \\
+%     incididunt ut & labore et dolore & magna aliqua. \\ \bottomrule
+%     \end{tabular}\par
+%     }
+% \end{table}
+
+
+% Aqui vem a parte da bibliografia: use o comando \ppgccbibliography indicando
+% apenas o nome do arquivo .bib (sem a extensão).
+\ppgccbibliography{bibfile}
+
+
+% Este comando encapsula o conjunto de apêndices. A sua função é fazer com que
+% a numeração dos apêndices seja feita com letras maiúsculas (A, B, C, etc.) e
+% a palavra "Apêndice" anteceda as entradas no Sumário.
+% \begin{appendices}
+
+% % Para cada apêndice, um \chapter
+% \chapter{Um apêndice}
+
+% \dummytxta
+% \dummytxtb
+% \dummytxtc
+% \dummytxta
+% \dummytxtb
+
+% \chapter{Outro apêndice}
+
+% \dummytxta
+% \dummytxtb
+% \dummytxtc
+% \dummytxta
+% \dummytxtb
+
+% % Fim dos apêndices (usar apenas depois do último apêndice)
+% \end{appendices}
+
+
+% Este comando encapsula o conjunto de anexos. A sua função é fazer com que a
+% numeração dos anexos seja feita com letras maiúsculas (A, B, C, etc.) e a
+% palavra "Anexo" anteceda as entradas no Sumário.
+% \begin{attachments}
+
+% % Para cada anexo, um \chapter
+% \chapter{Um anexo}
+
+% \dummytxta
+% \dummytxtb
+% \dummytxtc
+% \dummytxta
+% \dummytxtb
+
+% \chapter{Outro anexo}
+
+% \dummytxta
+% \dummytxtb
+
+% % Fim dos anexos (usar apenas depois do último anexo)
+% \end{attachments}
+
+
+\end{document}
