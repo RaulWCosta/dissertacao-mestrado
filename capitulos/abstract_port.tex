@@ -1,0 +1,30 @@
+
+% In the Steiner Multicycle Problem (SMCP), we are given a graph \(G = (V, E)\), and a collection of terminal sets \(\{T_1, \dots , T_k\}\), where for each \(a\) in \([k]\) we have a subset \(T_a\) of \(V\) and these terminal sets are pairwise disjoint. The problem consists in finding a set of vertex-disjoint cycles of minimum cost such that, for each \(a\) in \([k]\), all vertices of \(T_a\) belong to a same cycle. 
+% There exist applications related to routing problems that can be translated into instances of SMCP.
+% More precisely, the SMCP models a less-than-truckload scenario where multiple companies must periodically visit pickup and delivery locations.
+% To reduce their individuals costs, these companies can collaborate to create shared routes that visits multiple pickup and delivery locations in a way to reduce the total transportation costs.
+% Clearly, SMCP is a generalization of the Travelling Salesman Problem (TSP),  and thus does not admit a polynomial-time approximation scheme even in the metric case.
+% On the positive side, the literature for this problem describes a polynomial-time approximation scheme (PTAS) to Euclidean instances.
+% In this thesis, we generalize this result by showing a PTAS for SMCP on graphs of bounded genus.
+% The proposed algorithm is essentially an adaptation of the PTAS for the Steiner Forest Problem on graphs of bounded genus.
+% Furthermore, we implemented a 3-approximation algorithm for SMCP on complete metric graphs, and report on computational experiments using benchmark instances. 
+% The costs of the solutions produced by this algorithm  were on average \(34\%\) worse than the corresponding optimal solutions, which is considerably better than the theoretical guarantee. 
+% On the other hand, the running time of implementation is in general worse than the other heuristics presented in the literature.
+% \hfill\\
+
+% \noindent\textbf{Keywords:} Approximation algorithm, graph theory, bounded genus, Steiner Multicycle, computational experiments
+
+
+No Problema de Multiciclo de Steiner (SMCP), temos um grafo \(G = (V, E)\) e uma coleção de conjuntos de terminais \(\{T_1, \dots , T_k\}\), onde para cada \(a\) em \([k]\) temos um subconjunto \(T_a\) de \(V\) e esses conjuntos terminais são disjuntos. O problema consiste em encontrar um conjunto de custo mínimo de ciclos disjuntos em vértices tal que, para cada \(a\) em \([k]\), todos os vértices de \(T_a\) pertençam a um mesmo ciclo.
+Existem aplicações relacionadas a problemas de roteamento que podem ser traduzidas em instâncias do SMCP.
+Mais precisamente, o SMCP modela um cenário de transporte de cargas pequenas, onde diversas empresas devem visitar periodicamente os locais de coleta e entrega.
+Para reduzir seus custos individuais, essas empresas podem colaborar para criar rotas compartilhadas que visitem vários locais de coleta e entrega, de forma a reduzir os custos totais de transporte.
+Claramente, o SMCP é uma generalização do Problema do Caixeiro Viajante (TSP) e, portanto, não admite um esquema de aproximação em tempo polinomial, mesmo no caso métrico.
+Um ponto positivo é que a literatura para o SMCP descreve um esquema de aproximação em tempo polinomial (PTAS) para instâncias euclidianas. Nesse trabalho, generalizamos este resultado mostrando um PTAS para SMCP em grafos de genus limitado.
+O algoritmo proposto é essencialmente uma adaptação do PTAS para o Problema de Florestas de Steiner em grafos de genus limitado.
+Além disso, implementamos um algoritmo 3-aproximado para SMCP em grafos métricos completos e executamos experimentos computacionais usando instâncias de benchmark.
+Os custos das soluções produzidas por este algoritmo foram em média \(34\%\) piores do que as soluções ótimas correspondentes, o que é consideravelmente melhor do que a garantia teórica.
+Por outro lado, o tempo de execução da implementação é em geral pior do que as outras heurísticas apresentadas na literatura.
+\hfill\\
+
+\noindent\textbf{Palavras-chave:} Algoritmos de aproximação, teoria dos grafos, genus limitado, Multiciclos de Steiner, experimentos computacionais

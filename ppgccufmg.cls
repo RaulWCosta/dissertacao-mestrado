@@ -41,31 +41,31 @@
 
 \def\ppgcc@classname{ppgccufmg}
 
-%% Opções gerais:
+%% Op��es gerais:
 
 \newif\ifppgcc@phd                 % Tese de doutorado?
-\newif\ifppgcc@msc                 % Dissertação de mestrado?
-\newif\ifppgcc@proposal            % Opção de proposta/projeto?
+\newif\ifppgcc@msc                 % Disserta��o de mestrado?
+\newif\ifppgcc@proposal            % Op��o de proposta/projeto?
 \newif\ifppgcc@showcover           % Compor a falsa folha de rosto?
 \newif\ifppgcc@showtitle           % Compor a folha de rosto?
-\newif\ifppgcc@showfc              % Compor a Ficha Catalográfica?
-\newif\ifppgcc@showapproval        % Incluir a Folha de Aprovação?
-\newif\ifppgcc@showabstract        % Compor as páginas de resumo/abstract?
-\newif\ifppgcc@showdedication      % Compor a dedicatória?
+\newif\ifppgcc@showfc              % Compor a Ficha Catalogr�fica?
+\newif\ifppgcc@showapproval        % Incluir a Folha de Aprova��o?
+\newif\ifppgcc@showabstract        % Compor as p�ginas de resumo/abstract?
+\newif\ifppgcc@showdedication      % Compor a dedicat�ria?
 \newif\ifppgcc@showack             % Compor os agradecimentos?
-\newif\ifppgcc@showepigraph        % Compor a Epígrafe?
+\newif\ifppgcc@showepigraph        % Compor a Ep�grafe?
 \newif\ifppgcc@showlof             % Compor a Lista de Figuras?
 \newif\ifppgcc@showlot             % Compor a Lista de Tabelas?
-\newif\ifppgcc@showtoc             % Compor o Sumário?
-\newif\ifppgcc@extraporttitlepage  % Exibir também uma folha de título
-                                   % em português?
+\newif\ifppgcc@showtoc             % Compor o Sum�rio?
+\newif\ifppgcc@extraporttitlepage  % Exibir tamb�m uma folha de t�tulo
+                                   % em portugu�s?
 \newif\ifppgcc@putmainmatter       % Chamar automaticamente \mainmatter depois
-                                   % das páginas introdutórias?
-\newif\ifppgcc@hasapprovalpages    % Há pelo menos uma Folha de Aprovação?
-\newif\ifppgcc@isadvisorfemale     % Usar gênero feminino para Orientador(a)?
-\newif\ifppgcc@isadvisormale       % Usar gênero masculino para Orientador(a)?
-\newif\ifppgcc@iscoadvisorfemale   % Usar gênero feminino para Coorientador(a)?
-\newif\ifppgcc@iscoadvisormale     % Usar gênero masculino para Coorientador(a)?
+                                   % das p�ginas introdut�rias?
+\newif\ifppgcc@hasapprovalpages    % H� pelo menos uma Folha de Aprova��o?
+\newif\ifppgcc@isadvisorfemale     % Usar g�nero feminino para Orientador(a)?
+\newif\ifppgcc@isadvisormale       % Usar g�nero masculino para Orientador(a)?
+\newif\ifppgcc@iscoadvisorfemale   % Usar g�nero feminino para Coorientador(a)?
+\newif\ifppgcc@iscoadvisormale     % Usar g�nero masculino para Coorientador(a)?
 
 \newif\if@selfdoc
 \ifx\ppgcc@selfdoc\undefined\else\@selfdoctrue\fi
@@ -74,24 +74,24 @@
 \def\ppgcc@showall{%
   \ppgcc@showcovertrue
   \ppgcc@showtitletrue
- % \ifppgcc@proposal\ppgcc@showfcfalse\else\ppgcc@showfctrue\fi
-  \ppgcc@showapprovalfalse
-  \ppgcc@showabstractfalse
-  \ppgcc@showdedicationfalse
-  \ppgcc@showackfalse
-  \ppgcc@showepigraphfalse
+  \ifppgcc@proposal\ppgcc@showfcfalse\else\ppgcc@showfctrue\fi
+  \ppgcc@showapprovaltrue
+  \ppgcc@showabstracttrue
+  \ppgcc@showdedicationtrue
+  \ppgcc@showacktrue
+  \ppgcc@showepigraphtrue
   \ppgcc@showloftrue
   \ppgcc@showlottrue
   \ppgcc@showtoctrue
 }
 
 \def\ppgcc@hideall{%
-  \ppgcc@showcovertrue
-  \ppgcc@showtitletrue
-  \ppgcc@showfctrue
-  \ppgcc@showapprovaltrue
-  \ppgcc@showabstracttrue
-  \ppgcc@showdedicationtrue
+  \ppgcc@showcoverfalse
+  \ppgcc@showtitlefalse
+  \ppgcc@showfcfalse
+  \ppgcc@showapprovalfalse
+  \ppgcc@showabstractfalse
+  \ppgcc@showdedicationfalse
   \ppgcc@showackfalse
   \ppgcc@showepigraphfalse
   \ppgcc@showloffalse
@@ -104,10 +104,10 @@
 \ppgcc@putmainmattertrue
 \ppgcc@hasapprovalpagesfalse
 
-%% Opções das referências bibliográficas:
+%% Op��es das refer�ncias bibliogr�ficas:
 
 \newif\if@bibnorepauthor  % Substituir autorias repetidas por linha comprida?
-\newif\if@nobreakitems    % Impedir quebra de página no meio de um item?
+\newif\if@nobreakitems    % Impedir quebra de p�gina no meio de um item?
 
 \@bibnorepauthorfalse
 \@nobreakitemsfalse
@@ -163,29 +163,26 @@
 }
 \newcommand*{\university}[1]{\gdef\ppgcc@university{#1}}   % Nome da universidade
 \newcommand*{\course}[1]{\gdef\@course{#1}}                % Nome do curso
-\newcommand*{\address}[1]{\gdef\@address{#1}}              % Endereço (cidade/UF)
+\newcommand*{\address}[1]{\gdef\@address{#1}}              % Endere�o (cidade/UF)
 \newcommand*{\fcuniversity}[1]                             % Nome da universidade
   {\gdef\ppgcc@fcuniversity{#1}}                           % para a F.C.
-\newcommand*{\cutter}[1]{\gdef\ppgcc@cutter{#1}}           % Código "cutter"
-\newcommand*{\cdu}[1]{\gdef\ppgcc@cdu{#1}}                 % Código CDU
-\newcommand*{\authorfc}[1]{\gdef\ppgcc@authorfc{#1}}                 % Autor(a) da ficha catalográfica
-\newcommand*{\indexkeys}[1]{\gdef\ppgcc@indexkeys{#1}}     % Chaves para indexação
+\newcommand*{\cutter}[1]{\gdef\ppgcc@cutter{#1}}           % C�digo "cutter"
+\newcommand*{\cdu}[1]{\gdef\ppgcc@cdu{#1}}                 % C�digo CDU
+\newcommand*{\indexkeys}[1]{\gdef\ppgcc@indexkeys{#1}}     % Chaves para indexa��o
 
 \indexkeys{\ppgccexpandlistoffckeywords{} \ppgccexpandlistoffcpostkeywords}
 
-
 \fcuniversity{\ppgcc@university}
-
 
 \let\ppgcc@origdatecmd=\date
 \renewcommand{\date}[1]{%                                  % Data (aaaa-mm ou aaaa-mm-dd)
   \ppgcc@origdatecmd{#1}\ppgcc@parsedate#1---\relax}
 
-\newcommand*{\coursedegree}[1]{\gdef\@degree{#1}}          % Titulação
-\renewcommand*{\title}[1]                                  % Título
+\newcommand*{\coursedegree}[1]{\gdef\@degree{#1}}          % Titula��o
+\renewcommand*{\title}[1]                                  % T�tulo
   {\gdef\@title{#1}}
 
-\newcommand*{\portuguesetitle}[1]                          % Título em português
+\newcommand*{\portuguesetitle}[1]                          % T�tulo em portugu�s
   {\gdef\@portuguesetitle{#1}}
 \newcommand*{\portugueseuniversity}[1]                     % Nome da univers. em pt.
   {\gdef\@portugueseuniversity{#1}}
@@ -235,7 +232,7 @@
   \global\ppgcc@hasapprovalpagestrue
   }
 \newcommand{\ppgcc@doapprovallist}[1]{%
-  % Para cada folha de aprovação, define localmente as variáveis
+  % Para cada folha de aprova��o, define localmente as vari�veis
   % \ppgcc@approvalvertadjust, \ppgcc@approvalwidth e \ppgcc@approval e em
   % seguida chama o comando #1.
   \begingroup
@@ -333,7 +330,7 @@
 
 \def\ppgcc@setdoctype{%
   \ifppgcc@phd
-    % Esta é uma tese de doutorado
+    % Esta � uma tese de doutorado
     \coursedegree{\ppgcc@phd}
     \ifppgcc@proposal
       \gdef\@documenttype{\ppgcc@phddocproj}%
@@ -343,7 +340,7 @@
       \ppgcc@set@phddoc
     \fi
   \else
-    % Esta é uma dissertação de mestrado
+    % Esta � uma disserta��o de mestrado
     \coursedegree{\ppgcc@msc}
     \ifppgcc@proposal
       \gdef\@documenttype{\ppgcc@mscdocprop}%
@@ -357,12 +354,12 @@
 
 \LoadClass[\ppgcc@papersize,\ppgcc@ptsize]{memoir}
 
-\def\ppgcc@outermargin{2.0cm}
+\def\ppgcc@outermargin{2.5cm}
 \def\ppgcc@innermargin{3.0cm}
 \def\ppgcc@topmargin{2.0cm}
 \def\ppgcc@bottommargin{2.0cm}
-\def\ppgcc@toptextmargin{3.0cm}
-\def\ppgcc@bottomtextmargin{2.0cm}
+\def\ppgcc@toptextmargin{3.5cm}
+\def\ppgcc@bottomtextmargin{3.0cm}
 \def\ppgcc@headerheight{1.5cm}
 \def\ppgcc@footerheight{1.0cm}
 
@@ -440,7 +437,9 @@
 
 \newcommand{\ppgcc@formatdate}[1][]{%
   \begingroup
-    \@ifundefined{ppgcc@year}{\the\year}{\ppgcc@year}%
+    \def\ppgcc@templang{#1}%
+    \ifx\ppgcc@templang\empty\let\ppgcc@templang\ppgcc@langgroup\fi
+    \@ifundefined{ppgcc@year}{??}{\csname ppgcc@expanddate@\ppgcc@templang\endcsname}%
   \endgroup
 }
 \def\ppgcc@parsedate#1-#2-#3-#4\relax{%
@@ -482,7 +481,6 @@
   \def\@deflang@course{%
     \@ifundefined{@portuguesecourse}{\@course}{\@portuguesecourse}}
 
-  \def\ppgcc@version{Proposta de dissertação}
   \def\ppgcc@msc{Mestre}
   \def\ppgcc@phd{Doutor}
   \def\ppgcc@mscdoc{Disserta\c{c}\~{a}o}
@@ -496,11 +494,10 @@
   \def\ppgcc@malecoadvisor{Coorientador}
   \def\ppgcc@neutralcoadvisor{Coorientador(a)}
   \def\ppgcc@docdescription{%
-  	\textbf{\ppgcc@version}
-  	\vspace{3cm}
-  	
     \@documenttype{} apresentad\ppgcc@doctype@gender{} ao Programa de
-    P\'{o}s\discretionary{-}{-}{-}Gradua\c{c}\~{a}o em \@deflang@course{} da \@deflang@university{}, como requisito parcial à obten\c{c}\~{a}o do título de \@degree{} em \@deflang@course.}
+    P\'{o}s\discretionary{-}{-}{-}Gradua\c{c}\~{a}o em \@deflang@course{} do
+    Instituto de Ci\^{e}ncias Exatas da \@deflang@university{} como requisito
+    parcial para a obten\c{c}\~{a}o do grau de \@degree{} em \@deflang@course.}
   \def\ppgcc@acknowledgments{Agradecimentos}
   \def\ppgcc@keywordsname{Palavras-chave}
 
@@ -539,7 +536,6 @@
   \ifx\ppgcc@day\empty\else\ \ppgcc@day,\fi
   \ \ppgcc@year
 }
-
 \def\ppgcc@lang@english{%
   \ppgcc@extraporttitlepagetrue
 
@@ -547,12 +543,11 @@
   \def\@deflang@university{\ppgcc@university}
   \def\@deflang@course{\@course}
 
-  \def\ppgcc@version{Final version}
   \def\ppgcc@msc{Master}
   \def\ppgcc@phd{Doctor}
   \def\ppgcc@mscdoc{Thesis}
   \def\ppgcc@mscdocprop{Thesis proposal}
-  \def\ppgcc@phddoc{Thesis}
+  \def\ppgcc@phddoc{Dissertation}
   \def\ppgcc@phddocproj{Dissertation project}
   \def\ppgcc@femaleadvisor{Advisor}
   \def\ppgcc@maleadvisor{Advisor}
@@ -561,11 +556,9 @@
   \def\ppgcc@malecoadvisor{Co-Advisor}
   \def\ppgcc@neutralcoadvisor{Co-Advisor}
   \def\ppgcc@docdescription{%
-  	\textbf{\ppgcc@version}
-	\vspace{3cm}
-  	
-	\@documenttype{} presented to the Graduate Program in \@course{} of the \ppgcc@university{} in partial fulfillment of the requirements for the degree of \@degree{} in \@course.
-}
+    \@documenttype{} presented to the Graduate Program in \@course{} of the
+    \ppgcc@university{} in partial fulfillment of the requirements for the
+    degree of \@degree{} in \@course.}
   \def\ppgcc@acknowledgments{Acknowledgments}
   \def\ppgcc@keywordsname{Keywords}
 
@@ -608,19 +601,18 @@
   \fi
 }
 
-\def\ppgcc@docdescriptionwidth{\textwidth}
+\def\ppgcc@docdescriptionwidth{0.5\textwidth}
 
 \def\ppgcc@makedocdescription{%
   \begin{minipage}{\ppgcc@docdescriptionwidth}
-	\leftskip=5cm % Somado a 3cm da margem esquerda = 8cm
     \ppgcc@docdescription
   \end{minipage}%
 }
 
 \def\ppgcc@titpag@fmtauthor#1{\large\BreakableUppercase{#1}}
-\def\ppgcc@titpag@fmtadvisor{}
+\def\ppgcc@titpag@fmtadvisor{\large\scshape}
 \let\ppgcc@titpag@fmtcoadvisor\ppgcc@titpag@fmtadvisor
-\def\ppgcc@titpag@fmttitle#1{\textbf{#1}}
+\def\ppgcc@titpag@fmttitle#1{\Large\bfseries\BreakableUppercase{#1}}
 \def\ppgcc@titpag@fmtaddress{\large}
 \def\ppgcc@titpag@fmtdate{\large}
 
@@ -657,49 +649,30 @@
   \begin{ppgcctitlingpageodd}
   \begin{singlespace}
   {\centering
-  	\ifx#1\z@
-  		\MakeUppercase{\textbf{\@deflang@university{}}}
-  		
-  		\textbf{Instituto de Ci\^{e}ncias Exatas}
-  		
-  		\textbf{Programa de P\'{o}s-Gradua\c{c}\~{a}o em Ci\^{e}ncia da Computa\c{c}\~{a}o}
-  		
-  		\setbox0=\vbox{\ppgcc@maketitlepageoptionalpart}%
-  		\edef\ppgcc@textvspace{%
-  			\noexpand\vrule
-  			height4cm
-  			depth\the\dp0
-  			width0pt\noexpand\par}
-  		\ppgcc@textvspace
-  	\else
-  	\fi    
+    \vbox to3\baselineskip{%
+      \ifx#1\z@
+      \else
+        {\ppgcc@titpag@fmtauthor{\@author}\par}%
+        \vfil
+      \fi
+    }
 
-	\@author
-	
-	\ifx#1\z@
-	    \setbox0=\vbox{\ppgcc@maketitlepageoptionalpart}%
-	    \edef\ppgcc@textvspace{%
-	    	\noexpand\vrule
-	    	height4cm
-	    	depth\the\dp0
-	    	width0pt\noexpand\par}
-	    \ppgcc@textvspace
-	\else
-		\setbox0=\vbox{\ppgcc@maketitlepageoptionalpart}%
-		\edef\ppgcc@textvspace{%
-			\noexpand\vrule
-			height7cm
-			depth\the\dp0
-			width0pt\noexpand\par}
-		\ppgcc@textvspace
-	\fi
+    \vspace{\stretch{1}}
+
+    \setbox0=\vbox{\ppgcc@maketitlepageoptionalpart}%
+    \edef\ppgcc@textvspace{%
+      \noexpand\vrule
+      height\the\ht0
+      depth\the\dp0
+      width0pt\noexpand\par}
+    \ppgcc@textvspace
+
+    \vspace{1.5cm}
 
     \if@selfdoc
       \setbox0=\vbox{%
     \fi
-    
-    {\ppgcc@titpag@fmttitle{\@deflang@title}\par}%
-    
+    {\DoubleSpacing\ppgcc@titpag@fmttitle{\@deflang@title}\par}%
     \if@selfdoc
       }%
       \begin{tikzpicture}[overlay,remember picture]
@@ -708,18 +681,11 @@
       \end{tikzpicture}\box0
     \fi
 
-	\setbox0=\vbox{\ppgcc@maketitlepageoptionalpart}%
-	\edef\ppgcc@textvspace{%
-		\noexpand\vrule
-		height3cm
-		depth\the\dp0
-		width0pt\noexpand\par}
-	\ppgcc@textvspace
+    \vspace{1.5cm}
 
     \ifx#1\z@
       \ppgcc@textvspace
     \else
-    		    
       \hspace*{\stretch{1}}%
       \if@selfdoc
         \setbox0=\hbox{%
@@ -749,22 +715,23 @@
       \fi
 
       \vspace{1.5cm}
-	  
-	  \begin{minipage}{\textwidth}
-	  	\leftskip=5cm
-	  	{\ppgcc@titpag@fmtadvisor{\ppgcc@advisor: \ppgcc@advisorname}\par}%
-	  	\ifx\ppgcc@coadvisorname\empty\else
-		  {\ppgcc@titpag@fmtcoadvisor{\ppgcc@coadvisor: \ppgcc@coadvisorname}\par}%
-	  	\fi
-	  \end{minipage}
+
+      {\ppgcc@titpag@fmtadvisor{\ppgcc@advisor: \ppgcc@advisorname}\par}%
+      \ifx\ppgcc@coadvisorname\empty\else
+        {\ppgcc@titpag@fmtcoadvisor{\ppgcc@coadvisor: \ppgcc@coadvisorname}\par}%
+      \fi
     \fi
 
     \vspace{\stretch{1}}
 
     \vbox to3\baselineskip{%
-	    \vfil
-	    {\ppgcc@titpag@fmtaddress{\@address}\par}%
-	    {\ppgcc@titpag@fmtdate{\ppgcc@formatdate\par}}%
+      \ifx#1\z@
+      \else
+        \vfil
+        {\ppgcc@titpag@fmtaddress{\@address}\par}%
+        \medskip
+        {\ppgcc@titpag@fmtdate{\ppgcc@formatdate\par}}%
+      \fi
     }\par
   }
   \if@selfdoc\global\let\ppgcc@selfdoc@fg\ppgcc@selfdoc@drawtitlepage\fi
@@ -800,7 +767,7 @@
 
 \AtBeginDocument{\ppgccaddilenv{figure}}
 
-\def\ppgcc@fc@width{14cm}
+\def\ppgcc@fc@width{12.5cm}
 
 \def\ppgcc@fc@sep{1em}
 \def\ppgcc@fc@rule{.8pt}
@@ -812,16 +779,12 @@
 \def\ppgcc@fc@colsep{1em}
 
 \newcounter{ppgcc@fc@frontpages}
-\newcounter{bibliographypagesbeg}
-\newcounter{bibliographypagesend}
 
 \let\ppgcc@mainmatter=\mainmatter
 \def\mainmatter{
   \clearpage
   \setcounter{ppgcc@fc@frontpages}{\c@page}%
-
-  % Não entendi o motivo de subtrair 1 do contador page. Comando comentado pois o número da página da Introdução estava errado (-1 do que deveria ser).
-  %\addtocounter{ppgcc@fc@frontpages}{-1}%
+  \addtocounter{ppgcc@fc@frontpages}{-1}%
   \immediate\write\@auxout{%
     \string\setcounter{ppgcc@fc@frontpages}{\the\c@ppgcc@fc@frontpages}^^J
   }%
@@ -852,9 +815,8 @@
 \def\ppgcc@fc@check{%
   \ppgcc@fc@checkparamerr{ppgcc@authorrev}{o nome reverso do autor}{authorrev}
     {\authorrev}
-  \ppgcc@fc@checkparamwarn{ppgcc@cutter}{o código ``cutter''}{cutter}{\cutter}
-  \ppgcc@fc@checkparamwarn{ppgcc@cdu}{o código CDU}{cdu}{\cdu}
-  \ppgcc@fc@checkparamwarn{ppgcc@authorfc}{Texto de autoria da ficha catalográfica}{authorfc}{\authorfc}
+  \ppgcc@fc@checkparamwarn{ppgcc@cutter}{o c�digo ``cutter''}{cutter}{\cutter}
+  \ppgcc@fc@checkparamwarn{ppgcc@cdu}{o c�digo CDU}{cdu}{\cdu}
 }
 
 \def\ppgcc@titlenobreak{%
@@ -925,45 +887,34 @@
         \\[\ppgcc@fc@bigsep]
       \@ifundefined{ppgcc@cutter}{}{\ppgcc@cutter}%
       & \hspace*{\ppgcc@fc@parindent}%
-        \ppgcc@titlenobreak{} [manuscrito] / \@author.\space --- \ppgcc@year.
+        \ppgcc@titlenobreak{} / \@author.\space --- \@address, \ppgcc@year
         \\[\ppgcc@fc@smallsep]
       & \hspace*{\ppgcc@fc@parindent}%
-        \roman{ppgcc@fc@frontpages}, \arabic{lastpage} f.
+        \roman{ppgcc@fc@frontpages}, \arabic{lastpage} f.~%
+        \if@fc@hasil : il.~\fi
+        ; 29cm
         \\[\ppgcc@fc@bigsep]
-	  & \hspace*{\ppgcc@fc@parindent}%
-	  Orientador(a): \ppgcc@advisorname
-	  \\[\ppgcc@fc@smallsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \ifppgcc@phd
-          Tese (Doutorado)
+          Tese (doutorado)
         \else
           Disserta\c{c}\~{a}o (mestrado)
         \fi
-        --- \ppgcc@fcuniversity, Instituto de Ciências Exatas, Departamento de Ciência da Computação
+        --- \ppgcc@fcuniversity
         \\[\ppgcc@fc@smallsep]
       & \hspace*{\ppgcc@fc@parindent}%
-        Referências: f. \thebibliographypagesbeg-\thebibliographypagesend.;
+        Orientador(a): \ppgcc@advisorname
         \\[\ppgcc@fc@bigsep]
       & \hspace*{\ppgcc@fc@parindent}%
         \ppgcc@indexkeys
     \end{tabular}
     \@ifundefined{ppgcc@cdu}{}{%
       \vspace{\ppgcc@fc@bigsep}\par
-      {\raggedleft
+      {\centering
         CDU \ppgcc@cdu
       \par}%
     }%
   \end{minipage}}%
-
-  \begin{minipage}{\ppgcc@l@fc@width}
-	\@ifundefined{ppgcc@authorfc}{}{%
-		\vspace{\ppgcc@fc@bigsep}\par
-		{\raggedright
-			\ppgcc@authorfc
-			\par}%
-	}%
-  \end{minipage}  
-
   \if@selfdoc
     }\begingroup
       \edef\@ht{\the\ht0}\edef\@dp{\the\dp0}%
@@ -1022,7 +973,7 @@
         Se a imagem da folha de aprova\c{c}\~ao precisar ser ajustada, use:\par
         \texttt{approval=[}\emph{ajuste}\texttt{][}\emph{escala}\texttt{]\{}%
         \emph{nome do arquivo}\texttt{\}}\par
-        onde \emph{ajuste} é uma dist\^ancia para deslocar a imagem para baixo\par
+        onde \emph{ajuste} � uma dist\^ancia para deslocar a imagem para baixo\par
         e \emph{escala} \'e um fator de escala para a imagem. Por exemplo:\par
         \texttt{approval=[-2cm][0.9]\{}\emph{nome do arquivo}\texttt{\}}\par
         desloca a imagem 2cm para cima e a escala em 90\%.\par
@@ -1107,15 +1058,12 @@
 }
 
 \newcommand{\includededication}[1]{%
-  \ifppgcc@showdedication  
-  	\begingroup
-	  \pagestyle{empty}
-	  \cleardoublepage
-	  \leftskip=5cm % Somado a 3cm da margem esquerda = 8cm
-	  \vspace*{\fill}    
-	  \noindent \textit{\input{#1}}
-	  \clearpage
-	\endgroup    
+  \ifppgcc@showdedication
+    \cleardoublepage
+    \vspace*{\stretch{1}}
+    \textit{\input{#1}}
+    \vspace*{\stretch{1}}
+    \clearpage
   \fi
 }
 
@@ -1164,7 +1112,6 @@
 
 \newcommand{\makeepigraph}{%
   \ifppgcc@showepigraph
-    \pagestyle{empty}
     \@ifundefined{ppgcc@epigraphtext}{}{%
       \cleardoublepage
       \vspace*{\stretch{1}}
@@ -1193,11 +1140,6 @@
   \copypagestyle{bibliography}{headings}
   \makeoddhead{bibliography}{\textsc{\bibname}}{}{\thepage}
   \makeevenhead{bibliography}{\thepage}{}{\textsc{\bibname}}
-  
-  % para que a primeira página de cada capítulo tenha paginação no alto à direita
-  \copypagestyle{chapter}{plain}
-  \makeoddhead{chapter}{}{}{}
-  \makeoddfoot{chapter}{}{}{}
 \else
   \makeheadrule{headings}{\textwidth}{0pt}
   \makeoddhead{headings}{\textsc{\leftmark}}{}{\thepage}
@@ -1210,11 +1152,6 @@
 
   \copypagestyle{bibliography}{headings}
   \makeoddhead{bibliography}{\textsc{\bibname}}{}{\thepage}
-  
-  % para que a primeira página de cada capítulo tenha paginação no alto à direita
-  \copypagestyle{chapter}{plain}
-  \makeoddhead{chapter}{}{}{}
-  \makeoddfoot{chapter}{}{}{}
 \fi
 
 \def\ppgcc@chaptermark#1{%
@@ -1293,7 +1230,6 @@
 \define@key{ppgcc}{authorrev}{\authorrev{#1}}
 \define@key{ppgcc}{cutter}{\cutter{#1}}
 \define@key{ppgcc}{cdu}{\cdu{#1}}
-\define@key{ppgcc}{authorfc}{\authorfc{#1}}
 \define@key{ppgcc}{indexkeys}{\indexkeys{#1}}
 \define@key{ppgcc}{university}{\university{#1}}
 \define@key{ppgcc}{fcuniversity}{\fcuniversity{#1}}
@@ -1314,57 +1250,46 @@
 \define@key{ppgcc}{ack}{\ppgcc@addack#1\relax}
 \define@key{ppgcc}{beforetoc}{\ppgcc@addbeforetoc{#1}}
 
-\fcpostkeywords{Título}
+\fcpostkeywords{T�tulo}
 
 \newcommand{\ppgccufmg}[1]{%
   \setkeys{ppgcc}{#1}
-  
+
   \pagestyle{plain}
-  
-  % Alterado para contar as páginas de forma continua em todo o documento e, para que os numeros de página apareçam sempre como arábicos.
-  \frontmatter*
-  
+
+  \frontmatter
+
   % Falsa folha de rosto
   \makecoverpage
-  % As duas linhas foram acrescentadas para que a capa não conte na numeração das páginas
-  \cleardoublepage
-  \setcounter{page}{1}
-  
   % Folha(s) de rosto
   \maketitlepage
-  % Ficha Catalográfica
+  % Ficha Catalogr�fica
   \makefc
-  % Folha de aprovação
+  % Folha de aprova��o
   \makeapproval
-  % Dedicatória
+  % Dedicat�ria
   \ppgcc@includededicationlist
   % Agradecimentos
   \ppgcc@includeacklist
-  % Epígrafe
+  % Ep�grafe
   \makeepigraph
   % Resumo, Abstract, etc.
   \ppgcc@includeabstractlist
-  
-  % Sumário e lista de figuras e de tabelas
+
+  % Sum�rio e lista de figuras e de tabelas
   \listoffigures
   \listoftables
   \ppgcc@beforetoc
   \tableofcontents
-  
-  % ***** ATENÇÃO *****
+
+  % ***** ATEN��O *****
   %
   % Se precisar incluir outras listas, como a Lista de Algoritmos ou de
-  % Símbolos, NÃO ALTERE ESTE ARQUIVO PARA COLOCAR O COMANDO AQUI, senão o
-  % documento será gerado com problemas! Veja o exemplo da seção "Para os
+  % S�mbolos, N�O ALTERE ESTE ARQUIVO PARA COLOCAR O COMANDO AQUI, sen�o o
+  % documento ser� gerado com problemas! Veja o exemplo da se��o "Para os
   % impacientes", que descreve esse caso.
-  
+
   \ifppgcc@putmainmatter\mainmatter\fi
-  
-  % Atribui o valor do contador ppgcc@fc@frontpages para o contador de páginas (page). Dentro de \mainmatter parece que o valor atual de page é copiado para o novo contador ppgcc@fc@frontpages, e então page é zerado.s
-  \setcounter{page}{\theppgcc@fc@frontpages}
-  
-  % Colocar a enumeração de página no canto superior direito nas páginas que contém o título de um capítulo.
-  \makeoddhead{chapter}{}{}{\thepage}
 }
 
 \def\ppgcc@bibauthorformat{}
@@ -1409,27 +1334,16 @@
 
 \newcommand{\ppgccbibliography}[2][]{%
   \setkeys{ufmgbib}{#1}
-  
+
   \cleardoublepage
-  \pagestyle{bibliography}  
+  \pagestyle{bibliography}
   \bibliographystyle{ppgccufmg}
-  
-  \setcounter{bibliographypagesbeg}{\c@page}%
-  \immediate\write\@auxout{%
-  	\string\setcounter{bibliographypagesbeg}{\the\c@bibliographypagesbeg}^^J
-  }%
-  
   \begingroup
     \ppgcc@redefchaptitlefont
     \if@nobreakitems\raggedbottom\interlinepenalty=10000\relax\fi
     \bibliography{#2}
   \endgroup
-  
-  \setcounter{bibliographypagesend}{\c@page}%
-  \immediate\write\@auxout{%
-  	\string\setcounter{bibliographypagesend}{\the\c@bibliographypagesend}^^J
-  }%
-  
+
   \clearpage
   \pagestyle{headings}
   \ppgccrestoremarks
@@ -1475,13 +1389,13 @@
     \def\Hy@chapapp{attachment}%
   }{%
     \ppgcc@endappendices
-%    \immediate\write\@auxout{%
-%      \string\@writefile{toc}{\string\ppgcc@toc@recover}}
+    \immediate\write\@auxout{%
+      \string\@writefile{toc}{\string\ppgcc@toc@recover}}
   }
 
 \sloppy
 
-\setlength{\parindent}{1.25cm}
+\setlength{\parindent}{1cm}
 
 
 \makechapterstyle{ppgccufmgsf}{%
@@ -1502,18 +1416,11 @@
     \paraheadstyle\sffamily}%
   \expandafter\def\expandafter\subparaheadstyle\expandafter{%
     \subparaheadstyle\sffamily}%
-  \setlength{\beforechapskip}{0cm}%
+  \setlength{\beforechapskip}{20mm}%
   \setlength{\midchapskip}{7mm}%
-  \setlength{\afterchapskip}{1.5cm}%
+  \setlength{\afterchapskip}{15mm}%
 }
 \chapterstyle{ppgccufmgsf}
-
-\setbeforesecskip{1.5cm}
-\setaftersecskip{1.5cm}
-\setbeforesubsecskip{1.5cm}
-\setaftersubsecskip{1.5cm}
-\setbeforesubsubsecskip{1.5cm}
-\setaftersubsubsecskip{1.5cm}
 
 \captionnamefont{\bfseries\small}
 \captiondelim{. }

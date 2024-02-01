@@ -1,7 +1,7 @@
 % INFORMAÇÃO SOBRE A VERSÃO DESSE DOCUMENTO
 % VERSÃO DA CLASSE ppgccufmg 1.60 (de 2021-03-29) - http://vilarneto.com/ppgccufmg (ou https://web.archive.org/web/20210626223024/https://vilarneto.com/ppgccufmg/)
 
-\documentclass[msc]{ppgccufmg}    % ou [msc] para dissertações
+\documentclass[msc,project]{ppgccufmg}    % ou [msc] para dissertações
                                   % de mestrado. Para propostas ou
                                   % projetos, usar [phd,project],
                                   % [msc,proposal], etc.
@@ -14,6 +14,7 @@
 \usepackage{type1ec}
 \usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage{pgfplots}
 \usepackage[a4paper,
   portuguese,
   bookmarks=true,
@@ -41,9 +42,11 @@
 % \newtheorem{theorem}{Teorema}
 % \newtheorem{lemma}{Lema}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}[chapter]
+% \newtheorem{lemma}{Lemma}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
 
 %%%% operadores matemáticos
 \DeclareMathOperator{\opt}{\textrm{OPT}}
@@ -52,9 +55,6 @@
 
 %%% Definições
 % \newcommand{\steinercycle}{\textsc{Steiner Multicycle}}
-
-
-
 
 % definicoes
 \newcommand{\steinercycle}{\textsc{SMCP}}
@@ -68,7 +68,9 @@
 
 \usepackage{algpseudocode}
 
-
+% muda nomes de comandos do algorithmicx 
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
 
 
 \begin{document}
@@ -80,21 +82,26 @@
 % Um exemplo para documentos em português é apresentado a seguir:
 \ppgccufmg{
 %   title={Esquema de Aproximação em Tempo Polinomial para Multiciclos de Steiner em Grafos com Genus Limitado},
-  title={Estudo algorítmico do problema de multiciclos de Steiner},
+  title={An Algorithmic study of the Steiner Multicycle Problem},
   authorrev={Martins Costa, Raul Wagner},
   %cutter={D1234p},
   %cdu={519.6*82.10},
-  university={Universidade Federal de Minas Gerais},
-  course={Ciência da Computação},
+  university={Federal University of Minas Gerais},
+  course={Computer Science},
+  portuguesetitle={Um estudo algorítmico do Problema de Multiciclos de Steiner},
+  portugueseuniversity={Universidade Federal de Minas Gerais},
+  portuguesecourse={Ciência da Computação},
   address={Belo Horizonte},
-  date={2022-05},
-  keywords={Algoritmos de Aproximação, Teoria de Grafos, Otimização, e Complexidade Computacional},
+  date={2024-01},
+  % keywords={Algoritmos de Aproximação,Teoria de Grafos,Otimização,Complexidade Computacional},
+  % postkeywords={Algoritmos de Aproximação,Teoria de Grafos,Otimização,Complexidade Computacional},
+  % indexkeys={},
   advisor=[male]{Prof. Dr. Phablo F. S. Moura},
 %   coadvisor=[female]{Maria Teresa Eleonora},
 %  approval={img/approvalsheet.eps},
 %  approval=[-2.5cm][1]{aprovalsheet},
-%   abstract={Resumo}{capitulos/resumo},
-%   abstract=[english]{Abstract}{capitulos/abstract},
+  abstract={Resumo}{capitulos/abstract_port},
+  abstract={Abstract}{capitulos/abstract},
 %   abstract={Resumo Estendido}{capitulos/resumoest},
 %   dedication={capitulos/dedicatoria},
 %   ack={capitulos/agradecimentos},
@@ -103,7 +110,12 @@
 %     e a mentira é o oposto da verdade.}{Autor desconhecido},
   indexkeys={1.~Computação --- Teses. 2.~Redes --- Teses. I.~Orientador.
     II.~Título.},
+  beforetoc={\listofalgorithms}
 }
+
+% \keywords{}
+% \keywords{Algoritmos de Aproximação, Teoria de Grafos, Otimização, e Complexidade Computacional}
+
 
 % Um exemplo para documentos em inglês é apresentado a seguir (lembre-se de
 % usar \usepackage[english]{babel}):
@@ -136,10 +148,13 @@
 % \newcommand{\dummytxt}{\dummytxta\dummytxtb\dummytxtc}
 
 \include{capitulos/introduction}
-\include{capitulos/related_work}
 \include{capitulos/definitions}
+\include{capitulos/related_work}
 \include{capitulos/pc_partition}
-\include{capitulos/ptas_bounded_tree_width}
+\include{capitulos/mortar_graph}
+\include{capitulos/ptases_for_smcp}
+\include{capitulos/experiments}
+\include{capitulos/conclusion}
 
 % \chapter{Introdução}
 
