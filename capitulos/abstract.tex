@@ -1,15 +1,14 @@
 
-In the Steiner Multicycle Problem (SMCP), we are given a graph \(G = (V, E)\), and a collection of terminal sets \(\{T_1, \dots , T_k\}\), where for each \(a\) in \([k]\) we have a subset \(T_a\) of \(V\) and these terminal sets are pairwise disjoint. The problem consists in finding a set of vertex-disjoint cycles of minimum cost such that, for each \(a\) in \([k]\), all vertices of \(T_a\) belong to a same cycle. 
-There exist applications related to routing problems that can be translated into instances of SMCP.
-More precisely, the SMCP models a less-than-truckload scenario where multiple companies must periodically visit pickup and delivery locations.
-To reduce their individuals costs, these companies can collaborate to create shared routes that visits multiple pickup and delivery locations in a way to reduce the total transportation costs.
-Clearly, SMCP is a generalization of the Travelling Salesman Problem (TSP),  and thus does not admit a polynomial-time approximation scheme even in the metric case.
-On the positive side, the literature for this problem describes a polynomial-time approximation scheme (PTAS) to Euclidean instances.
-In this thesis, we generalize this result by showing a PTAS for SMCP on graphs of bounded genus.
-The proposed algorithm is essentially an adaptation of the PTAS for the Steiner Forest Problem on graphs of bounded genus.
-Furthermore, we implemented a 3-approximation algorithm for SMCP on complete metric graphs, and report on computational experiments using benchmark instances. 
-The costs of the solutions produced by this algorithm  were on average \(34\%\) worse than the corresponding optimal solutions, which is considerably better than the theoretical guarantee. 
-On the other hand, the running time of implementation is in general worse than the other heuristics presented in the literature.
+In the Steiner Multicycle Problem (SMCP), we have a graph \(G\), a cost function $\ell \colon E(G) \to \mathbb{R}_\ge$ and a collection of terminal sets \(\{T_1, \dots , T_k\}\), where for each \(a\) in \([k]\) \(T_a\) is a subset of \(V(G)\) and these terminal sets are pairwise disjoint. The problem consists of finding a minimum cost set of vertex-disjoint cycles such that, for each \(a\) in \([k]\), all vertices of \(T_a\) belong to the same cycle.
+There are applications related to routing problems that can be translated into SMCP instances.
+More precisely, SMCP models a less-than-truckload scenario, where multiple companies must periodically visit pickup and delivery locations.
+To reduce their individual costs, these companies can collaborate to create shared routes that visit multiple pickup and delivery locations to reduce total transportation costs.
+Clearly, SMCP is a generalization of the Traveling Salesman Problem and thus does not admit a polynomial-time approximation scheme (PTAS), even in the metric case.
+On the positive side, the literature for this problem describes a PTAS for Euclidean instances. In this work, we generalize this result by showing a PTAS for SMCP in graphs of bounded treewidth and, from this, we derive a PTAS for graphs of bounded \textit{genus}.
+The proposed algorithm is essentially an adaptation of the PTAS for the Steiner Forest Problem on graphs of bounded \textit{genus}.
+Furthermore, we implemented the 3-approximate algorithm for SMCP proposed by \cite{smcp_3apx} on complete metric graphs and performed computational experiments.
+The solution costs produced by this algorithm are on average \(34\%\) worse than the corresponding optimal solutions, which is considerably better than the theoretical guarantee.
+On the other hand, the running time of the implementation is generally worse than other heuristics presented in the literature.
 \hfill\\
 
 \noindent\textbf{Keywords:} Approximation algorithm, graph theory, bounded genus, Steiner Multicycle, computational experiments
