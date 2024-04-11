@@ -1,0 +1,18 @@
+- minuto que  parei da gravação: 40:55
+
+TODO?
+- titulo na primeira pagina em ingles
+- mudar função de custo para \ell
+- reestruturar ordem da dissertação
+
+- criar PR separado para reordenar os capítulos
+
+gravação:
+- no abstract, ressaltar resultado em bounded treewidth.
+- na introdução, o problema eh tal, dado um grafo, com arestas, quero fazer tal coisa
+- colocar `1.1 algorithm overview` para frente, talvez na introdução da explicação do algoritmos PTAS?
+
+- no geral nao foi mencionado que o grafo tem custos nas arestas!!!
+
+- padronizar o nome que voce da para os "custos" nas arestas.
+Escolha `weight` ou `cost`, padronizar em todo texto.
