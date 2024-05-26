@@ -86,7 +86,7 @@ The \(\steinercycle\) was also studied in a more restricted variant, where we mu
 \cite{LeSubsetTspPTAS_H_MinorFree} proposed a PTAS for the SCP in H-minor-free graphs, expanding on \cite{eptas-tsp-h-minor-free} work. Their main contribution is the concept of a nearly light subset spanner construction based on sparse spanner oracles. They show that spanner oracles with weak sparsity are necessary and sufficient to construct light subset spanners, even for general graphs.
 
 This result is interesting for several reasons. First, despite the many advances in meta-algorithms related to PTAS in H-minor-free graphs, a PTAS for SCP on this class of graphs was still unknown. Second, there is evidence that a PTAS for this problem is impossible in more general graphs than H-minor-free. 
-The problem was proved to be MAXSNP-hard \cite{subset-tsp-is-maxsnp-hard} in topologically minor-closed graphs containing H-minor-free graphs. It is even MAXSNP-hard in 1-planar graphs, which generalize planar graphs by allowing at most one crossing per edge on the embedding.
+The problem was proved to be MAXSNP-hard~\cite{subset-tsp-is-maxsnp-hard} in topologically minor-closed graphs containing H-minor-free graphs. It is even MAXSNP-hard in 1-planar graphs, which generalize planar graphs by allowing at most one crossing per edge on the embedding.
 
 
 \subsection{Multiple Steiner Traveling Salesman Problem}
@@ -110,6 +110,8 @@ Besides that, considering \(\mathcal{D}_i\) as a set of terminals that must be c
 In simpler terms, the union of optimal solutions for each demand set forms an \(\epsilon\)-approximated solution for the input graph. Finally, for each tree \(T_i\) obtained by the clustering, the authors applied the framework proposed by \cite{KleinTSP}, and expanded by \cite{Borradaile2009b, Borradaile2012}.
 
 \subsection{Steiner Multicycle Problem}
+
+// TODO reescrever para ficar diferente da introdução
 
 \cite{LINTZMAYER2020134} proposed the first PTAS for the \(\steinercycle\). The algorithm is a randomized PTAS restricted to the Euclidean plane. In this context, the Euclidean \(\steinercycle\) encompasses a set of terminal pairs distributed across a plane and aim to calculate the line segments that connect the points with the least cost, considering that the same line segment might be crossed more than once in the cost function.
 

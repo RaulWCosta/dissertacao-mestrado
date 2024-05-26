@@ -1,4 +1,4 @@
-- minuto que  parei da gravação: 40:55
+- minuto que parei da gravação: 56:23
 
 TODO?
 - titulo na primeira pagina em ingles
@@ -16,3 +16,29 @@ gravação:
 
 - padronizar o nome que voce da para os "custos" nas arestas.
 Escolha `weight` ou `cost`, padronizar em todo texto.
+
+capitulo definicoes
+- padronizar V(G) e E(G)
+- renomear spanning property om outra coisa
+- definição de passeio e ciclo nao ficou boa
+- nao redefinir ciclo no capitulo de definicoes
+- mais para frente explicar o que eh um ciclo para esse problema
+    colocar a figura que exemplifica uma solução nessa parte
+
+- definir o que eh conexo
+- definir o que eh contracao OK
+
+- no paragrafo 2 da pag 7 definir o custo de um ciclo normal como a soma dos custos das arestas
+    ao inves disso pode so trocar a definicao de ciclo para passeio
+
+- padronizar usar negrito para termos novos
+
+- **tirar definição do NPO-hard** OK
+
+- definir max-np-hard
+
+
+-------
+
+- checar se tem alguma referencia bibliografica que nao eh usada
+- definir ciclos

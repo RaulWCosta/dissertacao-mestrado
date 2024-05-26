@@ -1,6 +1,25 @@
 \chapter{Approximation Schemes for Steiner Multicycle Problem}
 \label{chapter:apx_schemes_for_smcp}
 
+// TODO ver onde colocar isso
+// Tambem realizar solicitados
+
+\section{Algorithm Overview}
+
+As we shall see, the proposed PTAS for \steinercycle\ is inspired by the PTAS for the Steiner Tree Problem due to \cite{Bateni}. Put briefly, the proposed algorithm for \steinercycle\ consists of the following steps:
+
+\begin{enumerate}
+    \item The algorithm receives as input a graph \(G_{in}\) with bounded-genus, and a set \(\mathcal{D} = \{T_1, \dots, T_k\}\) of terminal pairs.
+
+    \item It begins by creating a spanner subgraph (i.e., a subgraph whose size is bounded by a constant time \(\opt\) and has a valid solution with a cost at most \((1 + \epsilon) \opt\) of \(G_{in}\). This is done with an auxiliary clustering algorithm provided by Theorem~\ref{chapter:pc-partition}.
+    
+    \item The edges of the spanner are split into \(k\)-disjoint sets, then the edges in the smallest set are contracted. After the contraction, the algorithm applies \citeauthor{Demaine2010}'s Theorem (\cite{Demaine2010} Theorem~1.1) to convert the spanner subgraph to a bounded treewidth graph.
+
+    \item A dynamic programming algorithm is used to solve the SMCP in the bounded treewidth graph generated in the previous step. During this process, the algorithm only considers a subset of the possible solutions that organize the set of unpaired terminals (from the bottom-up in the dynamic programming tree) in valid ways.
+
+    \item Finally, it constructs the final solution, i.e., the PTAS for bounded genus, by leveraging the solution in bounded-treewidth and the set of edges contracted in the previous step.
+\end{enumerate}
+
 In the next section, we present the framework and proofs for designing a PTAS for \(\steinercycle\) on graphs with limited treewidth. This will serve as the basis for the PTAS on graphs with bounded genera (which will also be presented in this chapter).
 
 The algorithm is based on the one proposed by \cite{Bateni} for the Steiner Forest Problem.
