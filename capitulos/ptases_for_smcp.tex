@@ -497,14 +497,14 @@ The proposed PTAS algorithm is presented below.
 \end{theorem}
 \begin{proof}
 
-    Tn the line~\ref{alg_smcp_ptas:SpannerCall} of the Algorithm, we construct a spanner \(H\) of \(G_{in}\), which respects the properties described in Lemma~\ref{spanner_spanning_property} and Lemma~\ref{spanner_shortness_property}. That is:
+    Tn the line~\ref{alg_smcp_ptas:SpannerCall} of the Algorithm, we construct a spanner \(H\) of \(G_{in}\), which respects the properties described in Lemma~\ref{spanner_quasi_optimality_property} and Lemma~\ref{spanner_shortness_property}. That is:
 
     \begin{itemize}
         \item \(\ell(H) \leq f(g, \epsilon) G_{in}\), with \(f(g, \epsilon)\) being a constant that depends on \(\epsilon\) and the genus \(g\) of \(G_{in}\)
         \item \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}} (G_{in})\)
     \end{itemize}
 
-    Note that Lemma~\ref{spanner_spanning_property} implies that there is a feasible solution for the SMCP contained in \(H\).
+    Note that Lemma~\ref{spanner_quasi_optimality_property} implies that there is a feasible solution for the SMCP contained in \(H\).
 
     In line~\ref{alg_smcp_ptas:partDemaine}, we proceed to partition \(H\) using Theorem~\ref{demaineResult}. We chose \(k\) such that \(k = \max( \frac{f(g, \epsilon)}{\epsilon}, 2)\) where \(f(g, \epsilon)\) is the constant from Lemma~\ref{spanner_shortness_property}. 
     

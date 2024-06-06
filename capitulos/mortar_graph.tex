@@ -4,9 +4,11 @@
 Given a graph \(G\) with a genus of at most \(g\), a set of pairs of terminals \(\mathcal{D}\), and a constant \(\epsilon > 0\), we aim to generate a subgraph \(H\) of \(G\) with the following properties. 
 
 \begin{itemize}
-    \item Spanning Property: There is a collection of cycles in \(H\) that connects all pairs of terminals in \(\mathcal{D}\) and has a maximum length of \((1 + c \epsilon) \opt_{\mathcal{D}}(G)\) (with \(c\) constant), in particular \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}}(G)\);
+    \item Quasi-optimality Property: There is a collection of cycles in \(H\) that connects all pairs of terminals in \(\mathcal{D}\) and has a maximum length of \((1 + c \epsilon) \opt_{\mathcal{D}}(G)\) (with \(c\) constant), in particular \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}}(G)\);
     \item Shortness Property: The total length of \(H\) is at most \(f(\epsilon, g) \cdot \opt_{\mathcal{D}}(G)\), where \(f(\epsilon, g)\) is a constant dependent on \(\epsilon\) and the genus \(g\) of \(G\).
 \end{itemize}
+
+It is worth mentioning that the Quasi-optimatily property is also know in the literature as Spanning property.
 
 We formalize the concept of a \textbf{spanner} graph with the following Theorem.
 
@@ -323,7 +325,7 @@ For any collection of cycles \(M\) in a brick \(B\), there is a collection of cy
     To get the second and third properties, we can directly apply Lemma~\ref{bateni_4_1_forest} (Structural properties of Bricks) on \(M_1\). 
 \end{proof}
 
-Considering the final spanner \(H\) to be the union of all \(H_i\)'s, we proceed to prove that \(H\) indeed respects both properties of \textbf{spanning} and \textbf{shortness}.
+Considering the final spanner \(H\) to be the union of all \(H_i\)'s, we proceed to prove that \(H\) indeed respects both properties of \textbf{quasi-optimality} and \textbf{shortness}.
 
 \begin{lemma}{{(Shortness property).}}\label{spanner_shortness_property} Given a graph \(G\) and a subgraph \(H\) of \(G\) constructed with the process above, the length of \(H\) is at most \(f(\epsilon, g) \opt\) for a certain function
 \(f(\epsilon, g)\).
@@ -335,8 +337,8 @@ By Theorem~\ref{theoremClustering}, the sum of the length of all \(T_i\) is no m
 This implies that the sum of the length of all \(H_i\) is no more than \(f(\epsilon, g) (16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\).
 \end{proof}
 
-\begin{lemma}\label{spanner_spanning_property}
-    Spanning property. \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}}(G_{in})\) with \(c\) and \(\epsilon\) constants.
+\begin{lemma}\label{spanner_quasi_optimality_property}
+    Quasi-optimality property.~\(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}}(G_{in})\) with \(c\) and \(\epsilon\) constants.
 \end{lemma}
 \begin{proof}
 
