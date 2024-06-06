@@ -30,9 +30,6 @@ capitulo definicoes
 - no paragrafo 2 da pag 7 definir o custo de um ciclo normal como a soma dos custos das arestas
     ao inves disso pode so trocar a definicao de ciclo para passeio
 
-- padronizar usar negrito para termos novos
-
-
 # trabahos relacionados
 - definir Minor
 - H-minor-free -> explicar quem é o H
@@ -40,11 +37,7 @@ capitulo definicoes
 # spanner
 - explicação de strips esta fora de ordem
 
-
-
 -------
 
 - checar se tem alguma referencia bibliografica que nao eh usada
-- definir ciclos
-
-
+- definir ciclos que serao usados no trabalho
