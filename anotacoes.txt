@@ -33,12 +33,9 @@ capitulo definicoes
 - padronizar usar negrito para termos novos
 
 
-- definir max-np-hard
-
 # trabahos relacionados
 - definir Minor
 - H-minor-free -> explicar quem é o H
-- definir MAXSNP-hard
 
 # spanner
 - explicação de strips esta fora de ordem
