@@ -1,4 +1,4 @@
-- minuto que parei da gravação: 56:23
+- minuto que parei da gravação: 1:10:30
 
 TODO?
 - titulo na primeira pagina em ingles
@@ -26,19 +26,29 @@ capitulo definicoes
     colocar a figura que exemplifica uma solução nessa parte
 
 - definir o que eh conexo
-- definir o que eh contracao OK
 
 - no paragrafo 2 da pag 7 definir o custo de um ciclo normal como a soma dos custos das arestas
     ao inves disso pode so trocar a definicao de ciclo para passeio
 
 - padronizar usar negrito para termos novos
 
-- **tirar definição do NPO-hard** OK
 
 - definir max-np-hard
+
+# trabahos relacionados
+- substituir spanning property por outro termo
+    quasi-optimizality, preserving, optimality
+- definir Minor
+- H-minor-free -> explicar quem é o H
+
+# spanner
+- explicação de strips esta fora de ordem
+
 
 
 -------
 
 - checar se tem alguma referencia bibliografica que nao eh usada
 - definir ciclos
+
+
