@@ -40,6 +40,7 @@ capitulo definicoes
     quasi-optimizality, preserving, optimality
 - definir Minor
 - H-minor-free -> explicar quem é o H
+- definir MAXSNP-hard
 
 # spanner
 - explicação de strips esta fora de ordem
