@@ -31,7 +31,6 @@ capitulo definicoes
     ao inves disso pode so trocar a definicao de ciclo para passeio
 
 # trabahos relacionados
-- definir Minor
 - H-minor-free -> explicar quem é o H
 
 # spanner

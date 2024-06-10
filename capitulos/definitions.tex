@@ -41,6 +41,8 @@ We denote the graph obtained from \(G\) by \textbf{contracting} the edge \(e \in
 
 Given a graph \(G\) and a subgraph \(H\) of \(G\), we \textbf{contract} \(H\) into a single vertex \(v\), generating a new graph \(G^\ast := G / H\). All vertices of \(G - H\) adjacent to at least two vertices from \(H\) are connected to \(v\) in \(G^\ast\) with multiple edges. We also define the process of \textbf{uncontracting} \(v\) as replacing it with the original subgraph \(H\) and reconstructing the previous connections with the neighboring vertices of \(H\) in \(G\).
 
+Given a graph \(G\) and a graph \(H\), we say that \(H\) is a minor of \(G\) if, and only if, \(H\) can be obtained by a series of edges contractions on \(G\).
+
 A collection \(\mathcal{S}\) is said to be \textbf{laminar} if and only if for any two sets \(C_1, C_2 \in \mathcal{S}\) we have \(C_1 \subseteq C_2\), or \(C_2 \subseteq C_1\), or \(C_1 \cap C_2 = \emptyset\). Suppose \(\mathcal{C}\) is a partition of a ground set \(V\). Then, \(\mathcal{C}(v)\) denotes, for each \(v \in V\), the set \(C \in \mathcal{C}\) that contains \(v\).
 
 We define \(\ell \colon E(G) \to \mathbb{R}_\ge\), for \(e \in E(G)\) as the \textbf{length} (or cost) of \(e\). Naturally, \(\ell(H)\), for \(H \subseteq G\), is the sum of the cost of the edges of the subgraph \(H\). Let \(C = \{(v_1, v_2, \dots, v_k)\}\) be a cycle of \(G\). We define \(\ell(C) = \sum_{i=1}^{k-1} \ell(v_i v_{i+1})\).
