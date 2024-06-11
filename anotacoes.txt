@@ -12,11 +12,6 @@ gravação:
 - na introdução, o problema eh tal, dado um grafo, com arestas, quero fazer tal coisa
 - colocar `1.1 algorithm overview` para frente, talvez na introdução da explicação do algoritmos PTAS?
 
-- no geral nao foi mencionado que o grafo tem custos nas arestas!!!
-
-- padronizar o nome que voce da para os "custos" nas arestas.
-Escolha `weight` ou `cost`, padronizar em todo texto.
-
 capitulo definicoes
 - padronizar V(G) e E(G)
 - renomear spanning property om outra coisa
