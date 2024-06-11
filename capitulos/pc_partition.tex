@@ -130,7 +130,7 @@ We aim at proving that the cost of \(F_2\) is at most \(2 \sum_{S \subseteq V : 
 
 Let \(t_j\) be the time at which the \(j^{th}\) event point occurs in the growth step. So the \(j^{th}\) epoch is the time interval between \(t_{j-1}\) to \(t_j\). For each cluster \(C\) let \(\gamma_{C}^{(j)}\) be the amount \(\gamma_{C}:= \sum_{v \in C} \gamma_{C, v}\) that the cluster grew during epoch \(j\), which is  \(t_j - t_{j-1}\) if it was active during this epoch, or zero otherwise. Thus, \(\gamma_C = \sum_j \gamma_C^{(j)}\).
 
-Since each edge \(e\) of \(F_2\) was added at some point by the growth stage when its edge packing Constraint~\eqref{ineq:1} became tight, we can exactly apportion the cost \(c (e)\) amongst the collection of clusters \(\{K: e \in \delta(K)\}\) whose variables ``paid for'' the edge, and can divide this up further by epoch. In other words, \(c (e) = \sum_j \sum_{K : e \in \delta (K)} \gamma_K^{(j)}\). Summing over the epochs yields the desired conclusion.
+Since each edge \(e\) of \(F_2\) was added at some point by the growth stage when its edge packing Constraint~\eqref{ineq:1} became tight, we can exactly apportion the cost \(c(e)\) amongst the collection of clusters \(\{K: e \in \delta(K)\}\) whose variables ``paid for'' the edge, and can divide this up further by epoch. In other words, \(c(e) = \sum_j \sum_{K : e \in \delta (K)} \gamma_K^{(j)}\). Summing over the epochs yields the desired conclusion.
 
 We will now prove that, for an arbitrary epoch \(j\), the total edge cost of \(F_2\) that is apportioned from epoch \(j\) is at most \(2 \sum_C \gamma_C^{(j)}\). In other words, the total rate at which all active clusters pay for edges of \(F_2\) is at most twice the available potential of the active clusters during the epoch.
 
@@ -153,7 +153,7 @@ $$(t_j - t_{j - 1}) \sum_{C \in \mathcal{C}_{act}} \mathrm{deg}_H(C) \leq 2 (t_j
 
 Since the left-hand side of the inequality is the total amount being paid to edges of \(F_2\) during epoch \(j\), by summing through all epochs, we get:
 
-$$c (F_2) \leq 2 \sum_j \sum_C \gamma_C^{(j)} = 2 \sum_{S \subseteq V : v \in S} \gamma_{S, v} \leq 2 \sum_{v \in V} \phi_v.$$
+$$c(F_2) \leq 2 \sum_j \sum_C \gamma_C^{(j)} = 2 \sum_{S \subseteq V : v \in S} \gamma_{S, v} \leq 2 \sum_{v \in V} \phi_v.$$
 
 \end{proof}
 
@@ -343,7 +343,7 @@ Let \(Z_{in}^\ast\) be optimal solution for SMCP on \(G_{in}\), and let \(L\) be
 
 Let \(Q\) be the set of vertices of \(G\) given by the Condition~\eqref{condition:4} of Theorem~\ref{theoremClustering_Bateni_3_1}. The set \(Q\) might contain (or not) vertices from \(G\) that are a result of the contraction of components of \(M^\ast\). It is important to note that there is no need to compute \(Q\) and \(L\) to execute the algorithm. 
 
-Let \(Q_{in}\) be the subgraph of \(G_{in}\) composed of the components of \(M^\ast\) whose contracted vertices in \(G\) belongs to \(Q\). From Condition~\eqref{condition:4a} of Theorem~\ref{theoremClustering_Bateni_3_1}, we have \(c(Q_{in}) = \epsilon \sum_{v \in Q} \phi_v \leq \epsilon c (L) \leq \epsilon \opt\).
+Let \(Q_{in}\) be the subgraph of \(G_{in}\) composed of the components of \(M^\ast\) whose contracted vertices in \(G\) belongs to \(Q\). From Condition~\eqref{condition:4a} of Theorem~\ref{theoremClustering_Bateni_3_1}, we have \(c(Q_{in}) = \epsilon \sum_{v \in Q} \phi_v \leq \epsilon c(L) \leq \epsilon \opt\).
 
 To show that the last condition holds, for every \(\mathcal{D}_i\) (i.e., the set of demand pairs connected by \(C_i\)), we construct a subgraph \(H_i\) that satisfies the demands in \(\mathcal{D}_i\). Initially, \(H_i\) is empty. For each demand pair in \(\mathcal{D}_i\), if the component \(K\) of \(M^\ast\) that satisfies the demand belongs to \(Q_{in}\), then we add \(K\) to \(H_i\). Otherwise, we add the component of \(Z_{in}^\ast\) that satisfies the demand into \(H_i\). It is worth mentioning that the algorithm does not actually compute \(H_i\), because that would require to know \(Z_{in}^\ast\) and \(Q_{in}\).
 
