@@ -1,15 +1,15 @@
 \chapter{Prize Collecting Partition}
 \label{chapter:pc-partition}
 
-This chapter aims to prove the Prize Collecting Partition Theorem (Theorem~\ref{theoremClustering}) presented below, allowing us to break a Steiner Multicycle instance into simpler, smaller ones. The proof relies upon an algorithm called Prize-Collecting Clustering, or PC-clustering, which will be presented in this chapter.
+This chapter aims to prove the Prize Collecting Partition Theorem (Theorem~\ref{theoremClustering}) presented below, allowing us to break a Steiner Multicycle instance into simpler, smaller ones. The proof relies upon an algorithm called Prize-Collecting Clustering, or PC-clustering, which will be presented later in this chapter.
 
 \begin{theorem} \label{theoremClustering}
-Given an \(\epsilon > 0\), a graph \(G_{in}=(V_{in}, E_{in})\), and a set \(\mathcal{D}\) of terminal pairs, we can compute in polynomial time a set of disjoint components \(\{C_1, \dots, C_k\}\) (i.e., a set of subgraphs of \(G_{in}\)) with an associated partition of the set of terminal pairs \(\{\mathcal{D}_1, \dots, \mathcal{D}_k\}\) with the following properties:
+Given an \(\epsilon > 0\), a graph \(G_{in}\), a cost function associated with each edge in \(E(G_{in})\), and a set \(\mathcal{D}\) of terminal pairs, we can compute in polynomial time a set of disjoint components \(\{C_1, \dots, C_k\}\) (i.e., a set of subgraphs of \(G_{in}\)) with an associated partition of the set of terminal pairs \(\{\mathcal{D}_1, \dots, \mathcal{D}_k\}\) with the following properties:
 \begin{enumerate}
     \item All demands are covered, that is, \(\mathcal{D} = \bigcup_{i=1}^k \mathcal{D}_i\); \label{condition_t_clust:1}
     \item All the terminals pairs in \(\mathcal{D}_i\) are covered by the component \(C_i\); \label{condition_t_clust:2}
-    \item The sum of the length of all the components \(C_i\) is no more than \((16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\); \label{condition_t_clust:3}
-    \item The sum of the lengths of the minimum collection of cycles for each set of terminal pairs \(\mathcal{D}_i\) is no more than \(1 + \epsilon\) times the length of a minimum solution of the SMCP in \(G_{in}\); that is, \(\sum_i \opt_{\mathcal{D}_i} (G_{in}) \leq (1 + \epsilon) \opt_{\mathcal{D}} (G_{in})\). \label{condition_t_clust:4}
+    \item The sum of the cost of all the components \(C_i\) is no more than \((16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\); \label{condition_t_clust:3}
+    \item The sum of the costs of the minimum collection of cycles for each set of terminal pairs \(\mathcal{D}_i\) is no more than \(1 + \epsilon\) times the cost of a minimum solution of the SMCP in \(G_{in}\); that is, \(\sum_i \opt_{\mathcal{D}_i} (G_{in}) \leq (1 + \epsilon) \opt_{\mathcal{D}} (G_{in})\). \label{condition_t_clust:4}
 \end{enumerate}
 \end{theorem}
 
@@ -23,16 +23,16 @@ The PC-Clustering algorithm is used in the proof of the following theorem - whic
 It is worth mentioning that the Theorem~\ref{theoremClustering_Bateni_3_1} is based on \cite{Bateni} (see Theorem 3.1 (Prize-Collecting Clustering)).
 
 \begin{theorem} \label{theoremClustering_Bateni_3_1}
-Let \(G=(V, E)\) be a graph with a nonnegative edge length \(\ell(e)\) for each edge \(e\) and a potential \(\phi_v\) for each vertex \(v \in V\). 
+Let \(G=(V, E)\) be a graph with a nonnegative edge cost \(c(e)\) for each edge \(e\) and a potential \(\phi_v\) for each vertex \(v \in V\). 
 There is a polynomial-time algorithm that computes a subgraph \(Z\) of \(G\) such that:
 
 \begin{enumerate}
-    \item the length of \(Z\) is at most \(4 \sum \limits_{v \in V} \phi_v\), and \label{condition:1}
+    \item the cost of \(Z\) is at most \(4 \sum \limits_{v \in V} \phi_v\), and \label{condition:1}
     \item \(Z\) is a spanning subgraph of \(G\), and \label{condition:2}
     \item all vertices in \(Z\) have even degree, and \label{condition:3}
     \item for any subgraph \(L\) of \(G\), there is a set  of vertices \(Q\) such that: \label{condition:4}
     \begin{enumerate}
-        \item \(\sum \limits_{v \in Q} \phi_v\) is at most the length of \(L\), and \label{condition:4a}
+        \item \(\sum \limits_{v \in Q} \phi_v\) is at most the cost of \(L\), and \label{condition:4a}
         \item if two vertices \(v_1, v_2 \notin Q\) are connected by \(L\), then they are  in the same component of \(Z\) \label{condition:4b}
     \end{enumerate}
 \end{enumerate}
@@ -55,7 +55,7 @@ The algorithm consists of two stages: \textit{growth} and \textit{pruning}. At t
 Noticeably, the following inequalities must be respected throughout the whole process.
 
 \begin{align}
-&&\sum_{S\subseteq V: e \in \delta(S)} \sum_{v \in S} \gamma_{S, v} \leq \ell(e) && \forall e \in E \label{ineq:1} \\
+&&\sum_{S\subseteq V: e \in \delta(S)} \sum_{v \in S} \gamma_{S, v} \leq c(e) && \forall e \in E \label{ineq:1} \\
 &&\sum_{S \subseteq V: S \ni v} \gamma_{S, v} \leq \phi_v && \forall v \in V \label{ineq:2} \\
 &&\gamma_{S, v} \geq 0 && \forall S \subseteq V, v \in S \label{ineq:3}
 \end{align}
@@ -119,20 +119,20 @@ For the Algorithm~\ref{algorithm:pc-clustering}, we define \(\mathcal{C}(v)\) as
 \end{algorithm}
 
 \begin{lemma}[\cite{Bateni} - Lemma 3.3] \label{clustering_bound_bateni_3_3}
-    The length of \(F_2\) is at most \(2 \sum_{v \in V} \phi_v\).
+    The cost of \(F_2\) is at most \(2 \sum_{v \in V} \phi_v\).
 \end{lemma}
 \begin{proof}
 The PC-Clustering algorithm has a notion of time. At each discrete step of the algorithm (i.e., at each iteration of line~\ref{alg:line-while}), one of two events happens: a cluster becomes inactive, or an edge becomes tight. We call the ``time'' between two event points \textbf{epochs}. 
 
 Notice that, during each epoch, each cluster is either active or inactive, and each active cluster \(C\) increases its \(\gamma_C\) value, while all other \(\gamma\)'s remain unchanged. At time \(0\), all (singleton) clusters with a strictly positive penalty are active.
 
-We aim at proving that the length of \(F_2\) is at most \(2 \sum_{S \subseteq V : v \in S} \gamma_{S, v} \leq 2 \sum_{v \in V} \phi_v\), where the inequality follows from Constraint~\eqref{ineq:2}.
+We aim at proving that the cost of \(F_2\) is at most \(2 \sum_{S \subseteq V : v \in S} \gamma_{S, v} \leq 2 \sum_{v \in V} \phi_v\), where the inequality follows from Constraint~\eqref{ineq:2}.
 
 Let \(t_j\) be the time at which the \(j^{th}\) event point occurs in the growth step. So the \(j^{th}\) epoch is the time interval between \(t_{j-1}\) to \(t_j\). For each cluster \(C\) let \(\gamma_{C}^{(j)}\) be the amount \(\gamma_{C}:= \sum_{v \in C} \gamma_{C, v}\) that the cluster grew during epoch \(j\), which is  \(t_j - t_{j-1}\) if it was active during this epoch, or zero otherwise. Thus, \(\gamma_C = \sum_j \gamma_C^{(j)}\).
 
-Since each edge \(e\) of \(F_2\) was added at some point by the growth stage when its edge packing Constraint~\eqref{ineq:1} became tight, we can exactly apportion the length \(\ell (e)\) amongst the collection of clusters \(\{K: e \in \delta(K)\}\) whose variables ``paid for'' the edge, and can divide this up further by epoch. In other words, \(\ell (e) = \sum_j \sum_{K : e \in \delta (K)} \gamma_K^{(j)}\). Summing over the epochs yields the desired conclusion.
+Since each edge \(e\) of \(F_2\) was added at some point by the growth stage when its edge packing Constraint~\eqref{ineq:1} became tight, we can exactly apportion the cost \(c (e)\) amongst the collection of clusters \(\{K: e \in \delta(K)\}\) whose variables ``paid for'' the edge, and can divide this up further by epoch. In other words, \(c (e) = \sum_j \sum_{K : e \in \delta (K)} \gamma_K^{(j)}\). Summing over the epochs yields the desired conclusion.
 
-We will now prove that, for an arbitrary epoch \(j\), the total edge length of \(F_2\) that is apportioned from epoch \(j\) is at most \(2 \sum_C \gamma_C^{(j)}\). In other words, the total rate at which all active clusters pay for edges of \(F_2\) is at most twice the available potential of the active clusters during the epoch.
+We will now prove that, for an arbitrary epoch \(j\), the total edge cost of \(F_2\) that is apportioned from epoch \(j\) is at most \(2 \sum_C \gamma_C^{(j)}\). In other words, the total rate at which all active clusters pay for edges of \(F_2\) is at most twice the available potential of the active clusters during the epoch.
 
 Let \(\mathcal{C}_j\) be the set of clusters that existed during epoch \(j\) (either active or inactive). Consider the graph \(F_2\) and then collapse each cluster \(C \in \mathcal{C}_j\) into a supernode. Let \(H\) be the resulting graph. We will continue to refer to each supernode as a ``cluster'' during the rest of the proof. Let us denote the active and inactive clusters in \(\mathcal{C}_j\) by \(\mathcal{C}_{act}\) and \(\mathcal{C}_{dead}\), respectively.
 
@@ -153,14 +153,14 @@ $$(t_j - t_{j - 1}) \sum_{C \in \mathcal{C}_{act}} \mathrm{deg}_H(C) \leq 2 (t_j
 
 Since the left-hand side of the inequality is the total amount being paid to edges of \(F_2\) during epoch \(j\), by summing through all epochs, we get:
 
-$$\ell (F_2) \leq 2 \sum_j \sum_C \gamma_C^{(j)} = 2 \sum_{S \subseteq V : v \in S} \gamma_{S, v} \leq 2 \sum_{v \in V} \phi_v.$$
+$$c (F_2) \leq 2 \sum_j \sum_C \gamma_C^{(j)} = 2 \sum_{S \subseteq V : v \in S} \gamma_{S, v} \leq 2 \sum_{v \in V} \phi_v.$$
 
 \end{proof}
 
-Let \(M_2\) be the graph created by duplicating each edge on \(F_2\). Notice that all vertices in \(M_2\) have even degrees, and besides that \(\ell(M_2) \leq 4 \sum_{v \in V} \phi_v\), which is formalized in the following result.
+Let \(M_2\) be the graph created by duplicating each edge on \(F_2\). Notice that all vertices in \(M_2\) have even degrees, and besides that \(c(M_2) \leq 4 \sum_{v \in V} \phi_v\), which is formalized in the following result.
 
 \begin{corollary} \label{corollary_1}
-The length of the graph \(M_2\) is at most \(4 \sum_{v \in V} \phi_v\)
+The cost of the graph \(M_2\) is at most \(4 \sum_{v \in V} \phi_v\)
 \end{corollary}
 \begin{proof}
     The result follows immediately from Lemma~\ref{clustering_bound_bateni_3_3}.
@@ -191,13 +191,13 @@ As mentioned before, \citeauthor{Bateni} associate a color to each vertex so tha
     Given that \(H\) connects \(u\) and \(v\), suppose that \(H\) exhausts neither \(u\) nor \(v\): there is a set \(S\) containing \(u\) and a set \(S'\) containing \(v\) such that \(\gamma_{S, v} > 0\) and \(\gamma_{S', u} > 0\) and \(E' \cap \delta(S) = E' \cap \delta(S') = \emptyset\). Since \(H\) connects \(u\) and \(v\), this is only possible if \(u\) and \(v\) are both in \(S\) and \(S'\). By Lemma~\ref{clustering_connecting_bateni_3_4}, this implies that \(F_2\) connects \(u\) and \(v\), a contradiction.
 \end{proof}
 
-We can relate the length of a subgraph to the potential value of the colors it exhausts.
+We can relate the cost of a subgraph to the potential value of the colors it exhausts.
 
 \begin{lemma}[\cite{Bateni} Lemma 3.6] \label{clustering_bateni_3_6}
-    Let \(Q\) be the set of colors exhausted by subgraph \(G'\) of \(G\). The length of \(G'(V, E')\) is at least \(\sum_{v \in Q} \phi_v\).
+    Let \(Q\) be the set of colors exhausted by subgraph \(G'\) of \(G\). The cost of \(G'(V, E')\) is at least \(\sum_{v \in Q} \phi_v\).
 \end{lemma}
 \begin{proof}
-    This is quite intuitive. Recall that vertices have associated ``colors'' which are used to ``color'' the edges of \(G\) during cluster growth. Consider a segment on edges corresponding to cluster \(S\) with color \(v\). At least one edge of \(G'\) passes through the cut \((S, \overline{S})\). Thus, a portion of the length of \(G'\) can be charged from \(\gamma_{S, v}\). Hence, the total length of the graph \(G'\) is at least as large as the total amount of colors paid for by \(Q\).
+    This is quite intuitive. Recall that vertices have associated ``colors'' which are used to ``color'' the edges of \(G\) during cluster growth. Consider a segment on edges corresponding to cluster \(S\) with color \(v\). At least one edge of \(G'\) passes through the cut \((S, \overline{S})\). Thus, a portion of the cost of \(G'\) can be charged from \(\gamma_{S, v}\). Hence, the total cost of the graph \(G'\) is at least as large as the total amount of colors paid for by \(Q\).
 \end{proof}
 
 
@@ -225,7 +225,7 @@ The proof of the PC-Partition Theorem (Theorem~\ref{theoremClustering}) induces 
 \Ensure Set of components \(\{C_i\}_{i=1}^k\); such that \(C_i\) covers the terminals in \(\mathcal{D}_i\)
 \State Use the algorithm proposed by \cite{Pereira2018TheSM} to find a Steiner Multicycle 4-approximated \(M^\ast = \{C^\ast_1, \dots, C^\ast_k\}\) of \(\mathcal{D}\).
 \State Contract each cycle \(C_i^\ast\) in order to create a new graph \(G = (V, E)\).
-\State For every \(v \in V\), let \(\phi_v\) be equal to \(\frac{1}{\epsilon}\) times the length of the cycle \(C_i^\ast\) that was contracted into \(v\), and \(0\) in case there is no such cycle.
+\State For every \(v \in V\), let \(\phi_v\) be equal to \(\frac{1}{\epsilon}\) times the cost of the cycle \(C_i^\ast\) that was contracted into \(v\), and \(0\) in case there is no such cycle.
 \State Let \(M_2\) be the solution produced by the PC-Clustering algorithm on \(G\) and \(\phi_v\).
 \State Build \(M\) from \(M_2\) by \emph{uncontracting} all cycles \(C_i^\ast\).
 \State Return the set of components \(\{C_i\}_{i=1}^k\), with \(\mathcal{D}_i := \{(s, t) \in \mathcal{D}: s, t \in V(C_i)\}\).
@@ -235,13 +235,13 @@ The proof of the PC-Partition Theorem (Theorem~\ref{theoremClustering}) induces 
 
 \begin{proof}[Proof of Theorem~\ref{theoremClustering}]
 
-Let \(G\) be the graph resulting from the contraction of the components of the 4-approximation \(M^\ast\) (as shown in Algorithm~\ref{algorithm:pc-partition}). For each component \(C\) of \(M^\ast\) contracted, resulting in a vertex \(v\), we define a potential \(\phi_v := \frac{1}{\epsilon} \cdot \ell(C)\) if \(v\) is the result of the contraction of a component of \(M^\ast\) and zero otherwise. 
+Let \(G\) be the graph resulting from the contraction of the components of the 4-approximation \(M^\ast\) (as shown in Algorithm~\ref{algorithm:pc-partition}). For each component \(C\) of \(M^\ast\) contracted, resulting in a vertex \(v\), we define a potential \(\phi_v := \frac{1}{\epsilon} \cdot c(C)\) if \(v\) is the result of the contraction of a component of \(M^\ast\) and zero otherwise. 
 
 Let \(Z\) be the subgraph of \(G\) given by Theorem~\ref{theoremClustering_Bateni_3_1}. Let \(Z_{in}\) be the subgraph of \(G_{in}\) obtained from \(Z\) by uncontracting the components of \(M^\ast\) and adding \(M^\ast\) to \(Z_{in}\). Note that \(Z_{in}\) is a spanning subgraph of \(G_{in}\), since \(Z\) is a spanning subgraph of \(G\) (Condition~\eqref{condition:2}).
 
 Considering that \(M^\ast\) is a valid solution, and each vertex in \(Z\) has an even degree (Condition~\eqref{condition:3}), we have that \(Z_{in}\) is a valid solution for the SMCP as well. Let \(\{C_1, \dots, C_k\}\) be the components of \(Z_{in}\), and let \(\mathcal{D}_1, \dots, \mathcal{D}_k\) be the set of demand pairs covered by those components. It is clear that \(Z_{in}\) satisfies the Conditions~\eqref{condition_t_clust:1} and \eqref{condition_t_clust:2}.
 
-To prove that \(Z_{in}\) satisfies Condition~\eqref{condition_t_clust:3}, note that the length of \(Z_{in}\) is the length of \(M^\ast\) (which is at most \(4 \cdot \opt\)) plus the length of \(Z\) (which by Theorem~\ref{theoremClustering_Bateni_3_1} is at most \( 4 \sum_{v \in V} \phi_v = \frac{4}{\epsilon} \ell(M^\ast) \leq \frac{16}{\epsilon} \opt \) by construction ).
+To prove that \(Z_{in}\) satisfies Condition~\eqref{condition_t_clust:3}, note that the cost of \(Z_{in}\) is the cost of \(M^\ast\) (which is at most \(4 \cdot \opt\)) plus the cost of \(Z\) (which by Theorem~\ref{theoremClustering_Bateni_3_1} is at most \( 4 \sum_{v \in V} \phi_v = \frac{4}{\epsilon} c(M^\ast) \leq \frac{16}{\epsilon} \opt \) by construction ).
 
 
 \begin{figure}[H]
@@ -343,7 +343,7 @@ Let \(Z_{in}^\ast\) be optimal solution for SMCP on \(G_{in}\), and let \(L\) be
 
 Let \(Q\) be the set of vertices of \(G\) given by the Condition~\eqref{condition:4} of Theorem~\ref{theoremClustering_Bateni_3_1}. The set \(Q\) might contain (or not) vertices from \(G\) that are a result of the contraction of components of \(M^\ast\). It is important to note that there is no need to compute \(Q\) and \(L\) to execute the algorithm. 
 
-Let \(Q_{in}\) be the subgraph of \(G_{in}\) composed of the components of \(M^\ast\) whose contracted vertices in \(G\) belongs to \(Q\). From Condition~\eqref{condition:4a} of Theorem~\ref{theoremClustering_Bateni_3_1}, we have \(\ell(Q_{in}) = \epsilon \sum_{v \in Q} \phi_v \leq \epsilon \ell (L) \leq \epsilon \opt\).
+Let \(Q_{in}\) be the subgraph of \(G_{in}\) composed of the components of \(M^\ast\) whose contracted vertices in \(G\) belongs to \(Q\). From Condition~\eqref{condition:4a} of Theorem~\ref{theoremClustering_Bateni_3_1}, we have \(c(Q_{in}) = \epsilon \sum_{v \in Q} \phi_v \leq \epsilon c (L) \leq \epsilon \opt\).
 
 To show that the last condition holds, for every \(\mathcal{D}_i\) (i.e., the set of demand pairs connected by \(C_i\)), we construct a subgraph \(H_i\) that satisfies the demands in \(\mathcal{D}_i\). Initially, \(H_i\) is empty. For each demand pair in \(\mathcal{D}_i\), if the component \(K\) of \(M^\ast\) that satisfies the demand belongs to \(Q_{in}\), then we add \(K\) to \(H_i\). Otherwise, we add the component of \(Z_{in}^\ast\) that satisfies the demand into \(H_i\). It is worth mentioning that the algorithm does not actually compute \(H_i\), because that would require to know \(Z_{in}^\ast\) and \(Q_{in}\).
 
@@ -351,6 +351,6 @@ Observe that each component of \(Q_{in}\) is used in at most one of the \(H_i\)â
 
 Furthermore, we claim that each component of \(Z_{in}^\ast\) is used in at most one of the \(H_i\)'s. Suppose that a component \(K\) of \(Z_{in}^\ast\) was used in both \(H_i\) and \(H_j\), i.e., \(K\) satisfies a demand pair in \(\mathcal{D}_i\) and a demand pair in \(\mathcal{D}_j\). The components of \(M^\ast\) satisfying these two demands are not in \(Q_{in}\) (otherwise we would have put these components into \(H_i\) or \(H_j\) instead of \(K\)), thus they correspond to nodes \(v_1, v_2 \notin Q\) in the contracted graph \(G\). Thus \(L\), the contracted version of \(Z_{in}^\ast\), connects two nodes \(v_1, v_2 \notin Q\). In this situation, Condition~\eqref{condition:4b} of Theorem~\ref{theoremClustering_Bateni_3_1} implies that \(v_1\) and \(v_2\) are in the same component of \(Z\) and hence the two demands are satisfied by the same component of \(Z_{in}\). This contradicts that the two demands are in two different sets \(\mathcal{D}_i\) and \(\mathcal{D}_j\), since each component \(C_i\) of \(Z_{in}\) attends all demand pairs in each \(\mathcal{D}_i\).
 
-Since every component of \(Q_{in}\) and every component of \(Z_{in}^\ast\) is used by at most one of the \(H_i\)'s, we have \(\sum_{i=1}^k \ell(H_i) \leq \opt + \ell(Q_{in}) \leq (1 + \epsilon) \opt\). Each \(H_i\) was constructed from components of \(Q_{in}\) and \(Z_{in}^\ast\), which establishes the last condition of the theorem.
+Since every component of \(Q_{in}\) and every component of \(Z_{in}^\ast\) is used by at most one of the \(H_i\)'s, we have \(\sum_{i=1}^k c(H_i) \leq \opt + c(Q_{in}) \leq (1 + \epsilon) \opt\). Each \(H_i\) was constructed from components of \(Q_{in}\) and \(Z_{in}^\ast\), which establishes the last condition of the theorem.
 
 \end{proof}

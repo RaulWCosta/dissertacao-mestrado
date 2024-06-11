@@ -4,8 +4,8 @@
 Given a graph \(G\) with a genus of at most \(g\), a set of pairs of terminals \(\mathcal{D}\), and a constant \(\epsilon > 0\), we aim to generate a subgraph \(H\) of \(G\) with the following properties. 
 
 \begin{itemize}
-    \item Quasi-optimality Property: There is a collection of cycles in \(H\) that connects all pairs of terminals in \(\mathcal{D}\) and has a maximum length of \((1 + c \epsilon) \opt_{\mathcal{D}}(G)\) (with \(c\) constant), in particular \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}}(G)\);
-    \item Shortness Property: The total length of \(H\) is at most \(f(\epsilon, g) \cdot \opt_{\mathcal{D}}(G)\), where \(f(\epsilon, g)\) is a constant dependent on \(\epsilon\) and the genus \(g\) of \(G\).
+    \item Quasi-optimality Property: There is a collection of cycles in \(H\) that connects all pairs of terminals in \(\mathcal{D}\) and has a maximum cost of \((1 + c \epsilon) \opt_{\mathcal{D}}(G)\) (with \(c\) constant), in particular \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}}(G)\);
+    \item Shortness Property: The total cost of \(H\) is at most \(f(\epsilon, g) \cdot \opt_{\mathcal{D}}(G)\), where \(f(\epsilon, g)\) is a constant dependent on \(\epsilon\) and the genus \(g\) of \(G\).
 \end{itemize}
 
 It is worth mentioning that the Quasi-optimatily property is also know in the literature as Spanning property.
@@ -43,7 +43,7 @@ Given a graph \(G\) of genus \(g\) embedded in a surface of same genus and a con
 
 From that, we define a \textbf{cut graph} \(CG\) as a subgraph of \(G\) that when used to cut \(G\) results in a planar graph.
 
-The goal of this section is to find a \textbf{cut graph} \(CG\) of \(G\) that contains all terminals and whose length is bounded by a constant times \(\opt\). Cutting \(G\) using \(CG\) results in a planar graph with a cycle \(\sigma\) as the boundary, where \(\sigma\) is twice the length of \(CG\).
+The goal of this section is to find a \textbf{cut graph} \(CG\) of \(G\) that contains all terminals and whose cost is bounded by a constant times \(\opt\). Cutting \(G\) using \(CG\) results in a planar graph with a cycle \(\sigma\) as the boundary, where \(\sigma\) is twice the cost of \(CG\).
 
 Figure~\ref{fig:mortar5} illustrates the process of cutting a graph of genus greater than 0.  Figure~\ref{fig:mortar5}(a) shows a cut graph drawn on a torus, while Figure~\ref{fig:mortar5}(b) shows the result of cutting the surface along the graph: the shaded area is homeomorphic to a disk, and the light area is the additional face of the planarized surface.
 
@@ -117,7 +117,7 @@ We then find a shortest-path tree \(SPT\) rooted at \(r\), uncontract \(r\) back
 
 Let \(X := E(G) - E(T) - E(T^\ast)\). As the output cut graph we return \(CG := T_i \cup \{loop(T, e): e \in X\}\).
 
-We proceed to cut \(G\) using \(CG\) and duplicate each edge and vertex of \(CG\). Thus, generating a cycle \(\sigma\) internal to the clipping of \(CG\). After this process, let \(G_1\) be the planar graph obtained from \(G\). Finally, we invert the face \(\sigma\) in such a way that \(\sigma\) becomes the new external face of \(G_1\). From construction and Theorem~\ref{theoremClustering}, \(\ell(\sigma)\) is at most \(c \cdot \opt\) where \(c\) is a constant.
+We proceed to cut \(G\) using \(CG\) and duplicate each edge and vertex of \(CG\). Thus, generating a cycle \(\sigma\) internal to the clipping of \(CG\). After this process, let \(G_1\) be the planar graph obtained from \(G\). Finally, we invert the face \(\sigma\) in such a way that \(\sigma\) becomes the new external face of \(G_1\). From construction and Theorem~\ref{theoremClustering}, \(c(\sigma)\) is at most \(c \cdot \opt\) where \(c\) is a constant.
 
 \citeauthor{Borradaile2012} refers to the algorithm presented above as \textbf{Planarize algorithm} and formalizes the result with the Lemma:
 
@@ -127,7 +127,7 @@ We proceed to cut \(G\) using \(CG\) and duplicate each edge and vertex of \(CG\
     \begin{enumerate}
         \item is a simple cycle,
         \item contains all terminals (some terminals might appear more than once as multiple copies might be created during the cutting process); and
-        \item has length \(\ell(\sigma) \leq c \opt\) for \(c > 0\) constant.
+        \item has cost \(c(\sigma) \leq c \opt\) for \(c > 0\) constant.
     \end{enumerate}
 \end{lemma}
 
@@ -137,7 +137,7 @@ To continue with the algorithm, we need to present the following definition. Giv
 
 We proceed to decompose the planar graph \(G_1\) into \textit{strips}. Let \(\sigma[x, y]\) be the path between \(x\) and \(y\) in \(\sigma\) in the counterclockwise direction of the \textit{planar embedding} of \(G_1\) into a sphere. If \(x = y\), by convention \(\sigma[x, y] = \sigma\).
 
-In order to segment \(G_1\) into strips, we find vertices \(x\) and \(y\) in \(\sigma\) such that \(\sigma[x, y]\) is the shortest path of \(\sigma\) which is not \(\epsilon\)-\textit{short} in \(\sigma\). Such a pair of vertices always exists since \(\sigma[x, y]\), with \(x = y\), is not \(\epsilon\)-\textit{short}. Let \(N\) be the shortest path between \(x\) and \(y\) in \(G_1\). Certainly \(\ell(N) < \ell(\sigma[x, y])\). We call \textbf{strip} the subgraph covered by \(N \cup \sigma[x, y]\). This process is performed recursively on the subgraph of \(G_1\) covered by \(N \cup (\sigma - \sigma[x, y])\). As a result, we have \(G_1\) segmented by strips. Items~(a) and (b) of Figure~\ref{fig:mortar2} illustrate this process.
+In order to segment \(G_1\) into strips, we find vertices \(x\) and \(y\) in \(\sigma\) such that \(\sigma[x, y]\) is the shortest path of \(\sigma\) which is not \(\epsilon\)-\textit{short} in \(\sigma\). Such a pair of vertices always exists since \(\sigma[x, y]\), with \(x = y\), is not \(\epsilon\)-\textit{short}. Let \(N\) be the shortest path between \(x\) and \(y\) in \(G_1\). Certainly \(c(N) < c(\sigma[x, y])\). We call \textbf{strip} the subgraph covered by \(N \cup \sigma[x, y]\). This process is performed recursively on the subgraph of \(G_1\) covered by \(N \cup (\sigma - \sigma[x, y])\). As a result, we have \(G_1\) segmented by strips. Items~(a) and (b) of Figure~\ref{fig:mortar2} illustrate this process.
 
 \begin{figure}[h]
     \centering
@@ -149,7 +149,7 @@ In order to segment \(G_1\) into strips, we find vertices \(x\) and \(y\) in \(\
 In Figure~\ref{fig:mortar2}, Item~(a) shows the first track is created by a path (dashed) connecting \(x\) and \(y\). The distance between every pair of vertices \(x'\) and \(y'\), between \(x\) and \(y\) on the boundary, is well approximated by the distance on the boundary. We use recursion in the shaded area; Item~(b) shows how a graph is divided into bands (by the dashed lines). A strip is increased in Item~(c). Columns (vertical lines) are taken from the set of shortest paths between the ``low'', or south boundary (dashed line) and the ``up'', or north boundary (solid line).
 
 \begin{lemma}[\cite{klein2006}, inequality (10)] \label{strip_length}
-The total length of the boundary of all strips is at most \((\frac{1}{\epsilon} + 1)\) times the length of \(\sigma\).
+The total cost of the boundary of all strips is at most \((\frac{1}{\epsilon} + 1)\) times the cost of \(\sigma\).
 \end{lemma}
 
 \citeauthor{klein2006} also showed that the strip decomposition of a planar graph with \(n\) vertices can be found in \(\mathcal{O}(n \log n)\).
@@ -158,10 +158,10 @@ Given a fixed strip, we denote \(N\) as the north-boundary of the strip and \(S\
 
 With the graph \(G_1\) decomposed into strips, as illustrated in Item~(b) of Figure~\ref{fig:mortar2}. The next step is, for each strip, to calculate the shortest paths, called \textit{columns}. Consider a strip with north and south boundaries, \(N\) and \(S\) respectively. We select vertices \(s_0, s_1, \dots\) in \(S\) as follows. We embed the north strip above the south strip, directing \(S\) and \(N\) from left to right. Let \(s_0\) be the leftmost vertex common to \(S\) and \(N\). By convention, the column \(C_0\) is defined as the shortest path between \(s_0\) and \(N\), in this case, an empty path.
 
-For \(i \geq 1\), find the first vertex in \(S\) (from left to right) such that the length of the path from \(s_{i-1}\) to \(s_i\) in \(S\) is greater than \(\epsilon\) times the length of the shortest path from \(s_i\) to \(N\) within the strip. That is, \(dist_S(s_{i-1}, s_i) > \epsilon \cdot dist_{strip}(s_i, N)\). Thus, column \(C_i\) is defined as the shortest path between \(s_i\) and \(N\) in the strip, as illustrated by Item~(c) of Figure~\ref{fig:mortar2}.
+For \(i \geq 1\), find the first vertex in \(S\) (from left to right) such that the cost of the path from \(s_{i-1}\) to \(s_i\) in \(S\) is greater than \(\epsilon\) times the cost of the shortest path from \(s_i\) to \(N\) within the strip. That is, \(dist_S(s_{i-1}, s_i) > \epsilon \cdot dist_{strip}(s_i, N)\). Thus, column \(C_i\) is defined as the shortest path between \(s_i\) and \(N\) in the strip, as illustrated by Item~(c) of Figure~\ref{fig:mortar2}.
 
 \begin{lemma}[\cite{klein2006}, Lemma 5.2]
-The sum of all column lengths in a strip is at most \(\epsilon^{-1} \cdot \ell(S)\).
+The sum of all column costs in a strip is at most \(\epsilon^{-1} \cdot c(S)\).
 \end{lemma}
 
 After having the columns calculated, for each strip, we have a set \(C_0, C_1, \dots, C_s\) of columns of the strip.
@@ -171,14 +171,14 @@ For \(\epsilon > 0\), let \(\kappa = \kappa(\epsilon) = 4 \epsilon ^ {-2} (1 + \
 % Let \(\mathcal{C}_i = C_i \cup C_{i+\kappa} \cup C_{i+2\kappa} \cup \dots\) for \(i \in \{0, 1, \dots, \kappa - 1\}\).
 Let \(\mathcal{C}_i = \bigcup_{j=0}^{\kappa-1} C_{i+j\kappa}\) for \(i \in \{0, 1, \dots, \kappa - 1\}\).
 
-Let \(i^\ast\) be the index that minimizes \(\ell(\mathcal{C}_i)\). We designate the columns of \(\mathcal{C}_i^\ast\) as \textbf{super-columns}.
+Let \(i^\ast\) be the index that minimizes \(c(\mathcal{C}_i)\). We designate the columns of \(\mathcal{C}_i^\ast\) as \textbf{super-columns}.
 
 \begin{lemma}[\cite{Borradaile2009b}, Lemma 6.5]
-The sum of the lengths of the supercolumns in a strip is at most \(\kappa^{-1}\) times the sum of the lengths of the columns in the strip.
+The sum of the costs of the supercolumns in a strip is at most \(\kappa^{-1}\) times the sum of the costs of the columns in the strip.
 \end{lemma}
 
 \begin{lemma}[\cite{Borradaile2009b}, Lemma 6.6] \label{borradaile_2009b_lemma_6_6}
-     The sum of the lengths of all the supercolumns over all strips is at most \(c \epsilon \opt\), where \(\epsilon > 0\) and \(c > 0\) depends on \(\epsilon\).
+     The sum of the costs of all the supercolumns over all strips is at most \(c \epsilon \opt\), where \(\epsilon > 0\) and \(c > 0\) depends on \(\epsilon\).
 \end{lemma}
 
 We define as the \textbf{Mortar Graph} \(MG\) of \(G\) the embedded planar subgraph generated by the edges of \(T_i\), the edges of the strips, and the edges of super-columns.
@@ -199,7 +199,7 @@ Item~(e) shows \(\mathcal{\mathcal{B}}^{+}(MG)\) with the bricks contracted into
 We note two properties derived from the results presented during the construction of \(MG\). First, let \(Q\) be the set of all terminals of \(G\), by construction, we have that \(Q \subseteq V(MG)\). The second property is presented below.
 
 \begin{lemma} \label{length_mg}
-     \(\ell(MG) \leq c \epsilon \sigma\) with \(c > 0\) constant.
+     \(c(MG) \leq c \epsilon \sigma\) with \(c > 0\) constant.
 \end{lemma}
 \begin{proof}
     The result follows from Theorem~\ref{theoremClustering} and Lemmas~\ref{strip_length} and~\ref{borradaile_2009b_lemma_6_6}.
@@ -236,12 +236,12 @@ The connection between a face \(f\) of \(MG\) and its respective brick \(B\) is 
 
 For each brick \(B\), we set some vertices of \(\partial B\) as \textbf{portals}. We define \(\theta = \theta(\epsilon) = 18 \cdot \alpha(\epsilon) \cdot \epsilon ^ {-2}\). Where \(\alpha(\epsilon)\) is a constant that will be defined later.
 
-For portal selection, we use the following greedy algorithm. An initial vertex \(v_0\) of \(\partial B\) is selected with uniform probability. Then we define \(v_1\) as the first vertex of \(\partial B\) clockwise such that \(\ell(\partial B[v_0, v_1]) > \ell(\partial B) / \theta\). This process is repeated for \(v_i\) in \(\partial B\) until \(v_0 \in V(\partial B (v_{i-1}, v_i))\).
+For portal selection, we use the following greedy algorithm. An initial vertex \(v_0\) of \(\partial B\) is selected with uniform probability. Then we define \(v_1\) as the first vertex of \(\partial B\) clockwise such that \(c(\partial B[v_0, v_1]) > c(\partial B) / \theta\). This process is repeated for \(v_i\) in \(\partial B\) until \(v_0 \in V(\partial B (v_{i-1}, v_i))\).
 
 Using the previous construction, we get the following properties given by \cite{Borradaile2009b}.
 
 \begin{lemma}[\cite{Borradaile2009b}, Lemma 7.1] \label{lemma:cobertura}
-(Cover property): For any vertex \(x \in \partial B\), there exists a portal \(y\) such that the \(x\)-to-\(y\)-subpath of \(\partial B\) has a maximum length \(\ell(\partial B) / \theta\).
+(Cover property): For any vertex \(x \in \partial B\), there exists a portal \(y\) such that the \(x\)-to-\(y\)-subpath of \(\partial B\) has a maximum cost \(c(\partial B) / \theta\).
 \end{lemma}
 
 \begin{lemma}[\cite{Borradaile2009b}, Lemma 7.2]
@@ -256,21 +256,21 @@ Finally, we proceed to prove Theorem~\ref{theorem:spanner}.
 
 We start by building a separate subgraph \(H_i\) for each \(T_i\). Initially, \(H_i\) is a Mortar Graph created from \(T_i\). Following that, for each brick \(B\) and a selection of its portals \(\Pi' \subseteq \Pi\), we add to \(H_i\) an optimal Steiner Tree that reaches \(\Pi'\) and uses only edges from the interior of \(B\) or its boundary. This can be done in polynomial time in \(\theta\) using the algorithm proposed in \cite{ericksonST}, since all terminals lie on the infinite face of a planar graph.
 
-Note that for fixed \(\epsilon\) and \(g\) there is at most a constant number of portals, hence a constant number of such Steiner Trees, and the length of each is at most the length of the boundary of the brick \(B\).
+Note that for fixed \(\epsilon\) and \(g\) there is at most a constant number of portals, hence a constant number of such Steiner Trees, and the cost of each is at most the cost of the boundary of the brick \(B\).
 
 We will leverage an auxiliary result to prove both spanner properties.
 
 \begin{lemma}\label{lemma:borradaile_10_1}
-    Let \(G\) be a planar embedded graph and let \(C\) be a subgraph of \(G\) that intersects a \(\epsilon\)-short path \(P\). There is a subpath of \(P\) spanning the vertices of \(C \cap P\) whose total length is \((1 + \epsilon) \ell(C)\)
+    Let \(G\) be a planar embedded graph and let \(C\) be a subgraph of \(G\) that intersects a \(\epsilon\)-short path \(P\). There is a subpath of \(P\) spanning the vertices of \(C \cap P\) whose total cost is \((1 + \epsilon) c(C)\)
 \end{lemma}
 \begin{proof}
-    Let \(P'\) be the shortest subpath of \(P\) that spans all the vertices of \(C \cap P\). There is a path \(Q\) in \(C\) that connects all vertices of \(C \cap P\). Since \(P\) is \(\epsilon\)-short \(\ell(P') \leq (1 + \epsilon)\ell(Q) \leq (1 + \epsilon)\ell(C)\)
+    Let \(P'\) be the shortest subpath of \(P\) that spans all the vertices of \(C \cap P\). There is a path \(Q\) in \(C\) that connects all vertices of \(C \cap P\). Since \(P\) is \(\epsilon\)-short \(c(P') \leq (1 + \epsilon)c(Q) \leq (1 + \epsilon)c(C)\)
 \end{proof}
 
 \begin{lemma} [\cite{Bateni}, Lemma 4.1] \label{bateni_4_1_forest}
     For any forest \(F\) in a brick \(B\), there exists a forest \(F'\) such that
 \begin{enumerate}
-    \item \(\ell(F') \leq (1 + \epsilon)\ell(F)\)
+    \item \(c(F') \leq (1 + \epsilon)c(F)\)
     \item \(F'\) crosses the boundary of \(B\) at most \(\alpha\) times
     \item any two vertices on \(N-\) or \(S-\)boundaries of \(B\) connected by \(F\) are also connected by \(F'\)
 \end{enumerate}
@@ -296,7 +296,7 @@ There can be two types of cleaving:
 \begin{corollary}\label{bateni_4_1_multicycle}
 For any collection of cycles \(M\) in a brick \(B\), there is a collection of cycles \(M'\) such that
 \begin{enumerate}
-    \item \(\ell(M') \leq (1 + c \epsilon)\ell(M)\)
+    \item \(c(M') \leq (1 + c \epsilon)c(M)\)
     \item \(M'\) crosses the boundary of \(B\) at most an \(\alpha\) (constant) number of times
     \item any two vertices on \(N-\) or \(S-\)boundaries of \(B\) connected by \(M\) are also connected by \(M'\)
 \end{enumerate}
@@ -327,14 +327,14 @@ For any collection of cycles \(M\) in a brick \(B\), there is a collection of cy
 
 Considering the final spanner \(H\) to be the union of all \(H_i\)'s, we proceed to prove that \(H\) indeed respects both properties of \textbf{quasi-optimality} and \textbf{shortness}.
 
-\begin{lemma}{{(Shortness property).}}\label{spanner_shortness_property} Given a graph \(G\) and a subgraph \(H\) of \(G\) constructed with the process above, the length of \(H\) is at most \(f(\epsilon, g) \opt\) for a certain function
+\begin{lemma}{{(Shortness property).}}\label{spanner_shortness_property} Given a graph \(G\) and a subgraph \(H\) of \(G\) constructed with the process above, the cost of \(H\) is at most \(f(\epsilon, g) \opt\) for a certain function
 \(f(\epsilon, g)\).
 \end{lemma}
 \begin{proof}
-Note that each \(H_i\) is constructed from \(MG_i\) (which by its turn is built from \(T_i\)), a set of portal edges connected to \(MG_i\), and a limited set of Steiner Trees inside the bricks. By Lemma~\ref{length_mg}, \(\ell(MG_i) \leq f(\epsilon, g) \ell(T_i)\). For each brick \(B\), we add at most \(2^{\theta}\) trees, each with length no more than \(\ell(\partial B)\). Since each edge of \(MG_i\) may appear in at most two bricks, the total length is bounded by \(2^{\theta + 1} \ell(MG_i)\). Therefore, \(\ell(H_i) \leq 2^{\theta + 1} \ell(MG_i) = f(\epsilon, g) \ell(T_i)\).
+Note that each \(H_i\) is constructed from \(MG_i\) (which by its turn is built from \(T_i\)), a set of portal edges connected to \(MG_i\), and a limited set of Steiner Trees inside the bricks. By Lemma~\ref{length_mg}, \(c(MG_i) \leq f(\epsilon, g) c(T_i)\). For each brick \(B\), we add at most \(2^{\theta}\) trees, each with cost no more than \(c(\partial B)\). Since each edge of \(MG_i\) may appear in at most two bricks, the total cost is bounded by \(2^{\theta + 1} c(MG_i)\). Therefore, \(c(H_i) \leq 2^{\theta + 1} c(MG_i) = f(\epsilon, g) c(T_i)\).
 
-By Theorem~\ref{theoremClustering}, the sum of the length of all \(T_i\) is no more than \((16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\).
-This implies that the sum of the length of all \(H_i\) is no more than \(f(\epsilon, g) (16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\).
+By Theorem~\ref{theoremClustering}, the sum of the cost of all \(T_i\) is no more than \((16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\).
+This implies that the sum of the cost of all \(H_i\) is no more than \(f(\epsilon, g) (16/\epsilon + 4) \opt_{\mathcal{D}}(G_{in})\).
 \end{proof}
 
 \begin{lemma}\label{spanner_quasi_optimality_property}
@@ -348,16 +348,16 @@ This implies that the sum of the length of all \(H_i\) is no more than \(f(\epsi
 
     Consider each \(H_i\) as formed in the process above, so each \(H_i\) is formed by a Mortar Graph built using \(T_i\) (a minimum spanning tree of \(C_i\) from Theorem~\ref{theoremClustering}), the portal edges and the set of Steiner Trees connecting the portals in each Brick.
 
-    Let \(M^\ast_i\) be an optimal solution for the SMCP considering \(\mathcal{D}_i\), i.e. \(\ell(M^\ast_i) = \opt_{\mathcal{D}_i}(G_{in})\). We add the set of all supercolumns in \(H_i\) to \(M^\ast_i\) to get \(M^1_i\). Recall that, by Lemma~\ref{borradaile_2009b_lemma_6_6}, the length of these supercolumns is at most \(c \epsilon \opt_{\mathcal{D}_i}(G_{in})\).
+    Let \(M^\ast_i\) be an optimal solution for the SMCP considering \(\mathcal{D}_i\), i.e. \(c(M^\ast_i) = \opt_{\mathcal{D}_i}(G_{in})\). We add the set of all supercolumns in \(H_i\) to \(M^\ast_i\) to get \(M^1_i\). Recall that, by Lemma~\ref{borradaile_2009b_lemma_6_6}, the cost of these supercolumns is at most \(c \epsilon \opt_{\mathcal{D}_i}(G_{in})\).
 
-    Next, we replace the intersection of \(M_i^1\) and each brick with another subgraph having the properties of  Corollary~\ref{bateni_4_1_multicycle}. Let \(M_i^2\) be the new subgraph. The length of the solution increases to no more than a \(1 + c \epsilon\) factor.
+    Next, we replace the intersection of \(M_i^1\) and each brick with another subgraph having the properties of  Corollary~\ref{bateni_4_1_multicycle}. Let \(M_i^2\) be the new subgraph. The cost of the solution increases to no more than a \(1 + c \epsilon\) factor.
 
-    From  Corollary~\ref{bateni_4_1_multicycle}, we know that \(M_i^2\) crosses each brick at most \(\alpha\) times, so we can ensure that moving these intersection points to the portals adds no more than a constant factor in the length.
+    From  Corollary~\ref{bateni_4_1_multicycle}, we know that \(M_i^2\) crosses each brick at most \(\alpha\) times, so we can ensure that moving these intersection points to the portals adds no more than a constant factor in the cost.
 
-    Consider a brick \(B\) with boundaries \(W, N, E, S\). Connect each intersection point of the brick to its closest portal. Each connection on a brick \(B\) moves by at most \(2 \ell(\partial B) / \theta\). Therefore, the total movement of each brick is at most \(\alpha 2 \ell(\partial B) / \theta\), which is no more than \(2 \epsilon^2 \ell(\partial B) / \gamma(\epsilon, g)\). Hence, the total additional length for all bricks of \(H_i\) is bounded by \(4 \epsilon^2 \ell(T_i)\). Let \(M_i^3\) be the resulting subgraph.
+    Consider a brick \(B\) with boundaries \(W, N, E, S\). Connect each intersection point of the brick to its closest portal. Each connection on a brick \(B\) moves by at most \(2 c(\partial B) / \theta\). Therefore, the total movement of each brick is at most \(\alpha 2 c(\partial B) / \theta\), which is no more than \(2 \epsilon^2 c(\partial B) / \gamma(\epsilon, g)\). Hence, the total additional cost for all bricks of \(H_i\) is bounded by \(4 \epsilon^2 c(T_i)\). Let \(M_i^3\) be the resulting subgraph.
 
-    Hence the length of \(M_i^3\) is at most \(4 \epsilon^2 \ell(T_i) + \ell(M_i^2)\). Considering that \(\ell(M_i^2) \leq (1 + \epsilon) \ell(M_i^1)\) and \(\ell(M_i^1) \leq \epsilon^2 \ell(T_i) + M^\ast_i\), we have that \(\ell(M_i^3) \leq 4 \epsilon^2 \ell(T_i) + (1 + \epsilon) \ell(M^\ast_i)  + \epsilon^2 \ell(T_i)\)
+    Hence the cost of \(M_i^3\) is at most \(4 \epsilon^2 c(T_i) + c(M_i^2)\). Considering that \(c(M_i^2) \leq (1 + \epsilon) c(M_i^1)\) and \(c(M_i^1) \leq \epsilon^2 c(T_i) + M^\ast_i\), we have that \(c(M_i^3) \leq 4 \epsilon^2 c(T_i) + (1 + \epsilon) c(M^\ast_i)  + \epsilon^2 c(T_i)\)
 
-    Let \(M' = \bigcup_i^k M_i^3\). Accounting that \(\sum_i^k \ell(T_i) \leq (4/\epsilon + 4) \opt\) (from Theorem~\ref{theoremClustering}), it holds that \[\ell(M') \leq \sum_i^k \left ( 4 \epsilon^2 \ell(T_i) + (1 + \epsilon) \ell(M^\ast_i)  + \epsilon^2 \ell(T_i) \right).\] 
-    Therefore, we can conclude that  \(\ell(M') \leq (1 + 21 \epsilon + 20 \epsilon^2) \opt = (1 + c'\epsilon) \opt\).
+    Let \(M' = \bigcup_i^k M_i^3\). Accounting that \(\sum_i^k c(T_i) \leq (4/\epsilon + 4) \opt\) (from Theorem~\ref{theoremClustering}), it holds that \[c(M') \leq \sum_i^k \left ( 4 \epsilon^2 c(T_i) + (1 + \epsilon) c(M^\ast_i)  + \epsilon^2 c(T_i) \right).\] 
+    Therefore, we can conclude that  \(c(M') \leq (1 + 21 \epsilon + 20 \epsilon^2) \opt = (1 + c'\epsilon) \opt\).
 \end{proof}
