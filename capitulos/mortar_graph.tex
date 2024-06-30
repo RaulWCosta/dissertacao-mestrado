@@ -10,19 +10,17 @@ Given a graph \(G\) with a genus of at most \(g\), a set of pairs of terminals \
 
 It is worth mentioning that the Quasi-optimatily property is also know in the literature as Spanning property.
 
-We formalize the concept of a \textbf{spanner} graph with the following Theorem.
-
-\begin{theorem}\label{theorem:spanner}
-Given \(\epsilon > 0\) fixed, a bounded-\textit{genus} graph \(G_{in} = (V_{in}, E_{in})\) and a set of pairs of terminals \(\mathcal{D}\), we can calculate in polynomial-time a spanner \(H\) of \(G_{in}\) for Steiner Multicycle with respect to \(\mathcal{D}\).
-\end{theorem}
+\begin{ftheo}\label{theorem:spanner}
+Given \(\epsilon > 0\) fixed, a bounded-\textit{genus} graph \(G_{in}\) with costs associted with its edges and a set of pairs of terminals \(\mathcal{D}\), we can calculate in polynomial-time a spanner \(H\) of \(G_{in}\) for Steiner Multicycle with respect to \(\mathcal{D}\).
+\end{ftheo}
 
 To build a spanner \(H\), we need to apply the PC-Partition technique introduced in Chapter~\ref{chapter:pc-partition}. This technique returns a set of components that will serve as the basis for constructing a new structure called \textit{Mortar Graph}.
 
-Throughout this chapter, for each component \(C_i\) obtained from Theorem~\ref{theoremClustering}, consider \(T_i\) as a spanning tree of \(C_i\).
+Throughout this chapter, for each component \(C_i\) obtained from Theorem~\ref{theoremClustering}, consider \(T_i\) as a minimum spanning tree of \(C_i\).
 
 \section{Mortar Graph}
 
-The \textit{Mortar Graph} was proposed in \cite{Borradaile2009b} for planar graphs and was later expanded in \cite{Borradaile2012} for bounded-genus graphs.
+The \textit{Mortar Graph} was proposed in~\cite{Borradaile2009b} for planar graphs and was later expanded in~\cite{Borradaile2012} for bounded-genus graphs.
 
 It is a grid-like subgraph that spans all terminals and has size \(\mathcal{O}(\opt)\). Each face of the Mortar Graph contains a subgraph named \textbf{brick}. The crossing between a brick and the rest of the graph can only be done through a limited set of vertices called \textbf{portals}, which bounds the number of possible solutions.
 
@@ -30,7 +28,7 @@ The Mortar Graph is built for each \(T_i\) obtained from the clustering step (Ch
 
 \subsection{Cut graph construction}
 
-Given a graph \(G\) of genus \(g\) embedded in a surface of same genus and a connected subgraph \(H\) of \(G\) we define the process of \textbf{cutting} \(G\) with \(H\) by duplicating every edge of \(H\), along with the vertices, and creating a new face in the embedding of the graph inside the duplicated edges of \(H\). This process is illustrated in Figure~\ref{fig:cut_graph_example}.
+Given a graph \(G\) of genus \(g\) embedded in a surface of same genus and a connected subgraph \(T\) of \(G\) we define the process of \textbf{cutting} \(G\) with \(T\) by duplicating every edge of \(T\), along with the vertices, and creating a new face in the embedding of the graph inside the duplicated edges of \(T\). This process is illustrated in Figure~\ref{fig:cut_graph_example}.
 
 \begin{figure}[h]
     \centering
@@ -55,9 +53,9 @@ Figure~\ref{fig:mortar5} illustrates the process of cutting a graph of genus gre
 \end{figure}
 
 
-\cite{Borradaile2012} observed that, given a planar graph \(G\) and a spanning tree \(T\) of \(G\). Then the set of edges \(E(G) - E(T)\) induces a spanning tree \(T^{\star}\) in the dual graph \(G^{\star}\). Furthermore, if \(T\) is a minimal spanning tree of \(G\), then \(T^{\star}\) is a maximal spanning tree of \(G^{\star}\). This result was derived by \citeauthor{Borradaile2012} from the Lemma~1 of \cite{EPPSTEIN199233}.
+\cite{Borradaile2012} observed that, given a planar graph \(G\) and a spanning tree \(T\) of \(G\), the set of edges \(E(G) - E(T)\) induces a spanning tree \(T^{\star}\) in the dual graph \(G^{\star}\). Furthermore, if \(T\) is a minimum spanning tree of \(G\), then \(T^{\star}\) is a maximum spanning tree of \(G^{\star}\). This result was derived by \citeauthor{Borradaile2012} from the Lemma~1 of~\cite{EPPSTEIN199233}.
 
-The result can be generalized for bounded \textit{genus} graphs: If \(T\) is a minimum spanning tree of \(G\) and \(T^{\star}\) the maximum spanning tree of \(G^{\star} - E(T)\), then \(T^{\star}\) is a maximum spanning tree of \(G^{\star}\) and the size of the set of remaining edges \(X := E(G) - E(T) - E(T^{\star})\) is \(g\), or the Eulerian \textit{genus} of \(G\), obtained by Euler's formula. \cite{Eppstein} define such a triple \((T, T^{\star}, X)\) as the \textit{tree-cotree decomposition} of \(G\), and shows that a cut graph can be generated from the decomposition.
+The result can be generalized for bounded \textit{genus} graphs: if \(T\) is a minimum spanning tree of \(G\) and \(T^{\star}\) is a maximum spanning tree of \(G^{\star} - E(T)\), then \(T^{\star}\) is a maximum spanning tree of \(G^{\star}\) and the size of the set of remaining edges \(X := E(G) - E(T) - E(T^{\star})\) is \(g\), or the Eulerian \textit{genus} of \(G\), obtained by Euler's formula. \cite{Eppstein} define such a triple \((T, T^{\star}, X)\) as the \textit{tree-cotree decomposition} of \(G\), and shows that a cut graph can be generated from this decomposition.
 
 \begin{figure}[H]
     \centering
@@ -85,9 +83,7 @@ The result can be generalized for bounded \textit{genus} graphs: If \(T\) is a m
     \Edge[opacity=1.0](C)(E)
     \Edge[opacity=0.3](D)(E)
 
-    
 
-    
     \Edge[opacity=0.3](F)(H)
     \Edge[opacity=0.3](H)(G)
     \Edge[opacity=0.3](G)(D)
@@ -100,28 +96,30 @@ The result can be generalized for bounded \textit{genus} graphs: If \(T\) is a m
     
 
 \end{tikzpicture}
-    \caption{Example of \(loop(T, e)\). The tree \(T\) is rooted at the vertex \(F\) and is represented by the black (non-opaque) edges. The edge \(e\) of the loop is represented in green and the paths between \(e\) and the vertex \(F\) are displayed in red. The \(loop(T, e)\) is composed of the union of the red and green edges.}
+    \caption{Example of \(loop(T, e)\). The tree \(T\) is rooted at the vertex \(F\) and is represented by the black (non-opaque) edges. The edge \(e\) is represented in green and the paths between \(e\) and the vertex \(F\) are displayed in red. The \(loop(T, e)\) is composed of the union of the red and green edges.}
     \label{fig:loop_T_e}
 \end{figure}
 
 
-Let \(T\) be a spanning tree rooted at a vertex \(r\), and let \(e\) be an edge not contained in \(T\). We say that \(loop(T, e)\) is the simple cycle formed by \(e\) and the paths between \(r\) and both ends of \(e\) (exemplified in Figure~\ref{fig:loop_T_e}). Based on the results from \citeauthor{Eppstein}, \cite{Borradaile2012} showed:
+Let \(T\) be a spanning tree rooted at a vertex \(r\), and let \(e\) be an edge not contained in \(T\). We say that \(loop(T, e)\) is the simple cycle formed by \(e\) and the paths between \(r\) and both ends of \(e\) (exemplified in Figure~\ref{fig:loop_T_e}). Based on the results from \citeauthor{Eppstein},~\cite{Borradaile2012} showed in the following result.
 
-\begin{lemma}[\cite{Borradaile2012}, Lemma 1]
-    Given a tree-cotree decomposition \((T, T^{\star}, X)\), \(\{loop(T, e): e \in X\}\), is a cut graph.
-\end{lemma}
+\begin{flemma}[\cite{Borradaile2012}, Lemma 1]
+    Given a tree-cotree decomposition \((T, T^{\star}, X)\), \(\{loop(T, e): e \in X\}\), induces a cut graph.
+\end{flemma}
 
-The construction of the cut graph follows from \cite{Borradaile2012}, with slight technical changes. We start with \(T_i\) (which is a minimum spanning tree of the component \(C_i\) calculated in Algorithm~\ref{algorithm:pc-partition}) and contract it to a vertex \(r\).
+The construction of the cut graph for our purposes follows from~\cite{Borradaile2012}, with slight technical changes. We start with \(T_i\), which is a minimum spanning tree of the component \(C_i\) calculated in Algorithm~\ref{algorithm:pc-partition}, and contract it to a vertex \(r\).
 
 We then find a shortest-path tree \(SPT\) rooted at \(r\), uncontract \(r\) back into \(T_i\) and set \(T := T_i \cup SPT\), where \(T\) is a spanning tree of \(G\). With that, we can then find a spanning tree \(T^\ast\) of \(G^\ast - E(T)\) using the results presented above.
 
 Let \(X := E(G) - E(T) - E(T^\ast)\). As the output cut graph we return \(CG := T_i \cup \{loop(T, e): e \in X\}\).
 
-We proceed to cut \(G\) using \(CG\) and duplicate each edge and vertex of \(CG\). Thus, generating a cycle \(\sigma\) internal to the clipping of \(CG\). After this process, let \(G_1\) be the planar graph obtained from \(G\). Finally, we invert the face \(\sigma\) in such a way that \(\sigma\) becomes the new external face of \(G_1\). From construction and Theorem~\ref{theoremClustering}, \(c(\sigma)\) is at most \(c \cdot \opt\) where \(c\) is a constant.
+We proceed to cut \(G\) using \(CG\) and duplicate each edge and vertex of \(CG\), thus, generating a cycle \(\sigma\) internal to \(CG\). After this process, let \(G_1\) be the planar graph obtained from \(G\). Finally, we invert the face \(\sigma\) in such a way that \(\sigma\) becomes the new external face of \(G_1\). From construction and Theorem~\ref{theoremClustering}, \(c(\sigma)\) is at most \(c \opt\) where \(c\) is a constant.
 
-\citeauthor{Borradaile2012} refers to the algorithm presented above as \textbf{Planarize algorithm} and formalizes the result with the Lemma:
+\citeauthor{Borradaile2012} refers to the algorithm presented above as \textbf{Planarize algorithm} and formalizes the result with the following lemma.
 
-\begin{lemma}[\cite{Borradaile2012}, Lemma 2]
+# TODOparei aqui
+
+\begin{flemma}[\cite{Borradaile2012}, Lemma 2]
     The algorithm \textbf{Planarize} returns a cut graph \(CG\) such that cutting \(G\) open along \(CG\) results in a planar graph \(G_p\) with face \(f_\sigma\) whose facial walk \(\sigma\)
 
     \begin{enumerate}
@@ -129,7 +127,7 @@ We proceed to cut \(G\) using \(CG\) and duplicate each edge and vertex of \(CG\
         \item contains all terminals (some terminals might appear more than once as multiple copies might be created during the cutting process); and
         \item has cost \(c(\sigma) \leq c \opt\) for \(c > 0\) constant.
     \end{enumerate}
-\end{lemma}
+\end{flemma}
 
 \subsection{Strips}
 

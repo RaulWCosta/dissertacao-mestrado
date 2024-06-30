@@ -34,6 +34,9 @@
 
 \usepackage[noend]{algpseudocode}
 
+\usepackage{mdframed}
+\usepackage{lipsum}
+
 \makeatletter
 % \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
@@ -72,6 +75,17 @@
 \algrenewcommand\algorithmicrequire{\textbf{Input:}}
 \algrenewcommand\algorithmicensure{\textbf{Output:}}
 
+\newenvironment{ftheo}
+  {\begin{mdframed}\begin{theorem}}
+  {\end{theorem}\end{mdframed}}
+
+\newenvironment{flemma}
+  {\begin{mdframed}\begin{lemma}}
+  {\end{lemma}\end{mdframed}}
+
+\newenvironment{fcorollary}
+  {\begin{mdframed}\begin{corollary}}
+  {\end{corollary}\end{mdframed}}
 
 \begin{document}
 
