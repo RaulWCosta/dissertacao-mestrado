@@ -1,4 +1,4 @@
-- minuto que parei da gravação: 1:10:30
+- minuto que parei da gravação: 1:22:30
 
 TODO?
 - titulo na primeira pagina em ingles
@@ -35,3 +35,7 @@ capitulo definicoes
 
 - checar se tem alguma referencia bibliografica que nao eh usada
 - definir ciclos que serao usados no trabalho
+- replace "demand" for "terminal"?
+- pag 61: nao ficou claro que esta falando de um algoritmo de aproximacao
+- no overview do algoritmo, quando descrever a construcao do spanner, adicionar uma explicacao do que motiva a necessidade do spanner
+- no capitulo 8, tambem comentar do algoritmo PTAS para bounded trewwidth
