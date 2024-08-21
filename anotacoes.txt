@@ -2,7 +2,6 @@
 
 TODO?
 - titulo na primeira pagina em ingles
-- mudar função de custo para \ell
 - reestruturar ordem da dissertação
 
 - criar PR separado para reordenar os capítulos
@@ -12,9 +11,7 @@ gravação:
 - na introdução, o problema eh tal, dado um grafo, com arestas, quero fazer tal coisa
 - colocar `1.1 algorithm overview` para frente, talvez na introdução da explicação do algoritmos PTAS?
 
-capitulo definicoes
-- padronizar V(G) e E(G)
-- renomear spanning property om outra coisa
+capitulo definicoes:
 - definição de passeio e ciclo nao ficou boa
 - nao redefinir ciclo no capitulo de definicoes
 - mais para frente explicar o que eh um ciclo para esse problema

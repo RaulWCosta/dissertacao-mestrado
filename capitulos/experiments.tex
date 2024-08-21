@@ -5,8 +5,7 @@ We ran computational experiments in two distinct algorithms on instances for the
 
 It is worth mentioning that we initially tried to run an exact solver to obtain the optimal solutions, but the execution time became prohibitive for this strategy.
 
-# TODO add as footnote
-All experiments were executed in an Intel Core i5 11400H with a 16Gb 3200MHz RAM. The code was compiled with Clang version 15.0.1 on a Windows 10 machine. You can see the code at: https://github.com/RaulWCosta/steiner-multicycle-problem-3-apx
+All experiments were executed in an Intel Core i5 11400H with a 16Gb 3200MHz RAM. The code was compiled with Clang version 15.0.1 on a Windows 10 machine\footnote{You can see the code at: https://github.com/RaulWCosta/steiner-multicycle-problem-3-apx}.
 
 The algorithms were implemented in C++ using the Graph library \cite{lemon} and the \cite{gurobi}.
 
@@ -22,8 +21,6 @@ The linear relaxation was implemented using \cite{Pereira2018TheSM} formulation.
 Where \(\delta(S)\) denotes the set of edges having exactly one endpoint in \(S\). The variable \(x_e\) indicates if an edge is used in the solution, Constraint~\eqref{form-pereira:2} assures that exactly one cycle covers each terminal, Constraint~\eqref{form-pereira:3} assures that vertices belonging to a terminal set \(T_a \in \mathcal{T}\) are connected, and Constraint~\eqref{form-pereira:4} allows each edge to be used at most twice.
 
 By relaxing the integrality Constraint~\eqref{form-pereira:4} we obtain the linear program used in the implementation. Note that the number of constraints~\eqref{form-pereira:3} is exponential. However, we managed to compute the relaxed LP in polynomial time by using Gomory-Hu trees to solve maximum flow problems between each pair of vertices in the same terminal set \(T_a\). This is the same strategy employed by \cite{Pereira2018TheSM} on their implementations.
-
-# TODO parei aqui
 
 \section{3-approximation Algorithm}
 

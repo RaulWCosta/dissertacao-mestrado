@@ -4,3 +4,11 @@
 out/
 todo.txt
 .DS_Store
+*.aux
+*.out
+*.toc
+*.loa
+*.lof
+*.lot
+*.bbl
+*.blg

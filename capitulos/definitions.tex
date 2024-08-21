@@ -106,8 +106,6 @@ The intuitive idea of ``drawing'' a planar graph into a ``plane'' is what we cal
 
 Formally, they define a \textbf{surface} as a 2-dimensional manifold. We will skip a more detailed presentation of the topological definitions and properties of this structure, as for the reader it suffices to know that a sphere is a surface, as well as a torus and other constructions formed by pushing additional ``holes'' in the sphere. The number of ``holes'' in the sphere is what we call the \textit{genus} of the surface.
 
-// TODO mencionar resultado que eh possivel determinar se um grafo eh planar em tempo polinomial
-
 Informally, we say that the \textbf{genus} of a graph is the smallest number \textit{g} such that the graph can be drawn on a sphere with \textit{g} holes without edges crossing. From this idea, a planar graph has genus 0.
 
 Interestingly, the problem of determining the genus of a graph is known to be \(\nonpoly\)-complete (\cite{THOMASSEN1989568}). However, as presented by \cite{LinearGenus}, the problem becomes treatable when the genus \textit{g} is fixed; that is, we can determine in polynomial time whether a graph can be embedded in a surface with genus \textit{g}, considering \textit{g} constant. As a secondary result, the authors also present a linear time algorithm, which computes the genus and constructs minimum genus embeddings of graphs of bounded treewidth. 
