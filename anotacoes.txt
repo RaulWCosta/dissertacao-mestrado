@@ -32,8 +32,7 @@ capitulo definicoes:
 
 - checar se tem alguma referencia bibliografica que nao eh usada
 - definir ciclos que serao usados no trabalho
-- replace "demand" for "terminal"?
-- pag 61: nao ficou claro que esta falando de um algoritmo de aproximacao
+
 - no overview do algoritmo, quando descrever a construcao do spanner, adicionar uma explicacao do que motiva a necessidade do spanner
-- no capitulo 8, tambem comentar do algoritmo PTAS para bounded trewwidth
 - TODO arrumar as referencias; colocar maiusculas nos nomes
+- colocar claims e provas em ambiente minipage com ~80% do comprimento total da página e centralizado

@@ -27,8 +27,6 @@ The algorithm is based on the one proposed by \cite{Bateni} for the Steiner Fore
 \section{PTAS for Graphs of Bounded Treewidth}
 \label{section:ptas_bounded_tree}
 
-% TODO Dar uma visao geral do algoritmo aqui
-
 \subsection{Groups}
 
 Given a set of vertices \(X\), a set of vertices \(S\) (a.k.a. central vertices) such that \(S \subseteq X\), and a number \(r\), we define a group \(\mathcal{G}_G(X, S, r)\), for some graph \(G\), as the union of \(S\) and those vertices of \(X\) that are at a distance in \(G\) of at most \(r\) from some vertex in \(S\).
@@ -170,9 +168,7 @@ Initially we set \(H = H^\ast\). Suppose there is a bag \(B_i\) whose partition 
 
 Let \(A_{i, j}\) be the subset of \(A_i\) connected by \(K_j\). By Lemma~\ref{groupLemma} and Corollary~\ref{groupCor} there is a set \(S_j \subseteq K_j\) of at most \(O(1 + 1/\epsilon)\) vertices of \(K_j\) such that \(A_{i,j} = \mathcal{G}_G(A_{i,j}, S_j, r_j)\), for some \(r_j \leq c(K_j)\).
 
-% TODO rever, escrita parece estranha
-Let \(\pi\) be the partition generated from the sequence \(((S_1, r_1), \dots, (S_p, r_p))\) and the partition \(\rho\).  
-Suppose that \(\pi \notin \Pi_i\).
+Let \(\pi\) be a partition generated from the sequence \(((S_1, r_1), \dots, (S_p, r_p))\) and the partition \(\rho\), as described before. Suppose that \(\pi \notin \Pi_i\).
 
 Let \(R_j\) and \(R'_j\) as defined in \(\Pi_i\) construction (i.e., \(R_j = \mathcal{G}_G(A_i, S_j, r_j)\)). Let \(\rho(j)\) be the class of \(\rho\) that contains \(j\). If for all \(1 \leq j \leq p\)  the vertices of \(A_{i,j}\) are contained in \(\bigcup_{j' \in \rho(j)}R'_{j'}\) then \(\pi \in \Pi_i\).
 Thus there is a vertex \(v \in A_{i,j}\) which is not in \(\bigcup_{j' \in \rho(j)}R'_{j'}\). As \(v \in R_j\) (since \(A_{i,j} \in R_j\)) then \(v \in R_{j^\ast}\) also hold for some \(K_{j^\ast} < K_j\) and \(j^\ast \not\in \rho(j)\).
@@ -268,7 +264,7 @@ With that at hand, we proceed to the main result of this chapter.
 \begin{ftheo}\label{dynamicProgramming}
 
 Let \(G\) be a graph with treewidth bounded by \(\kappa\). Let \(\epsilon > 0\) be a constant. Let \(\mathcal{D}\) be a set of terminal pairs. Let \(\Pi\) be a set of partitions of vertices of \(G\), built as described above.
-There exists a polynomial-time algorithm to find a multiset of edges \(M\) (i.e., a Steiner Multicycle), satisfying the following properties:
+There exists a polynomial-time algorithm to find a multiset of edges \(M\) (i.e., a collection of cycles), satisfying the following properties:
 \begin{enumerate}
     \item Every vertex \(v \in G\) is an endpoint of an even number of edges in \(M\).
     \item The subgraph induced by \(M\) connects all the terminal pairs of \(\mathcal{D}\).
@@ -499,8 +495,6 @@ The proposed PTAS algorithm is presented in Algorithm~\ref{smcp-ptas}.
 
 \end{algorithmic}
 \end{algorithm}
-
-% TODO padronizar com theo 6.5
 
 \begin{ftheo}
     The collection of cycles \(M\) produced by Algorithm~\ref{smcp-ptas} on input $(G_{in}, \mathcal{D})$ is a feasible solution for the SMCP and has cost at most \((1 + c' \epsilon) \opt\), with \(c'\) and \(\epsilon\) constants.

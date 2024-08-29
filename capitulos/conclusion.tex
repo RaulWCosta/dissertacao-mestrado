@@ -1,13 +1,14 @@
 \chapter{Conclusion}
 \label{chapter:conclusion}
 
-In this work, we first proposed a polynomial-time approximation scheme (PTAS) algorithm to solve the Steiner Multicycle Problem (SMCP) on graphs of bounded \textit{genus}. 
+In this work, we first proposed a polynomial-time approximation scheme (PTAS) algorithm to solve the Steiner Multicycle Problem (SMCP) on graphs of bounded \textit{treewidth}. From this result, we also generated a PTAS for the SMCP on graphs of bounded \textit{genus}.
+
 This PTAS was built upon ideas from various sources such as \cite{Borradaile2009b}, \cite{Borradaile2012}, and \cite{Bateni}, which we adapted to the Steiner Multicycle Problem, particularly to the restricted version R-SMCP. 
 As mentioned in the introduction, we can readily transform instances of SMCP into R-SMCP.
 The modifications of the algorithm proposed by~\citeauthor{Bateni} were mainly to extend their definitions and techniques to cycles. 
 In particular, it was necessary to adapt most proofs to guarantee that all vertices in the resulting graphs have even degree.   
 
-We also implemented the 3-approximation algorithm proposed by \cite{smcp_3apx}, which was tested on the same instances previously used by \cite{Pereira2018TheSM}. 
+We also implemented the 3-approximation algorithm proposed by \cite{smcp_3apx} for SMCP, which was tested on the same instances previously used by \cite{Pereira2018TheSM}. 
 % The algorithm was implemented in C++ using the Graph library \cite{lemon} and the Optimization library \cite{gurobi}.
 The experimental results showed that the 3-approximation consistently outperformed the theoretical bounds of solution quality. However, the results were still inferior in both quality and running time when compared to the heuristic proposed by \cite{Pereira2018TheSM}.
 One significant bottleneck in the algorithm's performance was the Gomory-Hu trees calculation on the 2-approximation for the SNDP, especially for larger instances.
