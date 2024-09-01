@@ -1,26 +1,10 @@
 - minuto que parei da gravação: 1:22:30
 
 TODO?
-- titulo na primeira pagina em ingles
-- reestruturar ordem da dissertação
-
-- criar PR separado para reordenar os capítulos
+- reestruturar ordem da dissertação; criar PR separado para reordenar os capítulos
 
 gravação:
-- no abstract, ressaltar resultado em bounded treewidth.
 - na introdução, o problema eh tal, dado um grafo, com arestas, quero fazer tal coisa
-- colocar `1.1 algorithm overview` para frente, talvez na introdução da explicação do algoritmos PTAS?
-
-capitulo definicoes:
-- definição de passeio e ciclo nao ficou boa
-- nao redefinir ciclo no capitulo de definicoes
-- mais para frente explicar o que eh um ciclo para esse problema
-    colocar a figura que exemplifica uma solução nessa parte
-
-- definir o que eh conexo
-
-- no paragrafo 2 da pag 7 definir o custo de um ciclo normal como a soma dos custos das arestas
-    ao inves disso pode so trocar a definicao de ciclo para passeio
 
 # trabahos relacionados
 - H-minor-free -> explicar quem é o H
@@ -31,7 +15,6 @@ capitulo definicoes:
 -------
 
 - checar se tem alguma referencia bibliografica que nao eh usada
-- definir ciclos que serao usados no trabalho
 
 - no overview do algoritmo, quando descrever a construcao do spanner, adicionar uma explicacao do que motiva a necessidade do spanner
 - TODO arrumar as referencias; colocar maiusculas nos nomes

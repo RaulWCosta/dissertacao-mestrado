@@ -23,13 +23,11 @@ The \textbf{degree} of a vertex \(v\) is the number of edges of \(G\) incident t
 
 We say that a graph \(H\) is a \textbf{subgraph} of \(G\) if \(V(H) \subseteq V(G)\) and \(E(H) \subseteq E(G)\), and denote this by \(H \subseteq G\). If for any pair of vertices \(v, w \in H \subset G\), the statement \(vw \in E(H)\) is valid if, and only if, \(vw \in E(G)\), then we say that \(H\) is an \textbf{induced subgraph} of \(G\), denoted as \(G[H]\). Moreover, we say that \(H\) is a \textbf{spanning subgraph} of \(G\) if \(V(H) = V(G)\).
 
-A \textbf{path} in a graph \(G\) is a sequence of distinct vertices \(P = (v_1, v_2, \dots, v_k)\), \(P \subseteq V(G)\), such that, for every pair of consecutive vertices of \(P\), there is an edge in \(E(G)\) that connects these vertices. That is, for every \(v_i , v_{i+1}\) in \(P\), there is \(v_i v _{i+1} \in E(G)\). The number of vertices in the path is its \textbf{length}, and a path of length \(k\) is denoted by \(P^k\).
+A \textbf{path} in a graph \(G\) is a sequence of distinct vertices \(P = (v_1, v_2, \dots, v_k)\), \(P \subseteq V(G)\), such that, for every pair of consecutive vertices of \(P\), there is an edge in \(E(G)\) that connects these vertices. That is, for every \(v_i , v_{i+1}\) in \(P\), there is \(v_i v _{i+1} \in E(G)\).
 
 Let \(C = (v_1, v_2 \dots, v_k)\) be a sequence of adjacent vertices such that \(|C| \geq 3\) and the endpoints of the sequence \(C\) are equal, that is, \(v_1 = v_k\), then we say that \(C\) is a \textbf{cycle}. The \textbf{length} of a cycle equals the number of edges in it. 
 
 A \textbf{walk} (of length \textit{k}) is a non-empty alternating sequence \((v_0, e_0, v_1, e_1, \dots, e_{k-1}, v_k)\) of vertices and edges such that \(e_i = \{v_i, v_{i+1}\}\) for all \(i < k\). In particular, in the case \(v_0 = v_k\), we call it a \textbf{closed walk}. Note that, in a walk, vertices and edges can be visited more than once.
-
-% In this work, the term ``cycle'' is used to denote a closed walk in a graph or, equivalently, the multiset of edges that form the walk. A noteworthy observation is that all vertices along the walk have even degrees, taking into consideration the repetitions of edges. Conversely, we call ``simple'' a cycle without edges repetition.
 
 Given \(u, v \in V(G)\), if there is a path between \(u\) and \(v\) in \(G\), we say that the vertices are \textbf{connected}.
 
@@ -84,6 +82,10 @@ To facilitate application in algorithms, we focus on a more restricted class of 
 \end{itemize}
 
 Given two bags \(B_i\) and \(B_j\), we say that \(B_j\) is a \textbf{descendant} of \(B_i\) if it is separated from the root bag by \(B_i\).
+
+\subsection{Cycles in the SMCP}
+
+In this work, we overload the term ``cycle'' to denote a closed walk in a graph or, equivalently, the multiset of edges that form the walk. A noteworthy observation is that all vertices along the walk have even degrees, taking into consideration the repetitions of edges. Conversely, we call ``simple'' a cycle without edges repetition.
 
 \section{Graph Planarity and Genus}
 
