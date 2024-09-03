@@ -3,19 +3,6 @@
 TODO?
 - reestruturar ordem da dissertação; criar PR separado para reordenar os capítulos
 
-gravação:
-- na introdução, o problema eh tal, dado um grafo, com arestas, quero fazer tal coisa
-
-# trabahos relacionados
-- H-minor-free -> explicar quem é o H
-
-# spanner
-- explicação de strips esta fora de ordem
-
 -------
 
-- checar se tem alguma referencia bibliografica que nao eh usada
-
 - no overview do algoritmo, quando descrever a construcao do spanner, adicionar uma explicacao do que motiva a necessidade do spanner
-- TODO arrumar as referencias; colocar maiusculas nos nomes
-- colocar claims e provas em ambiente minipage com ~80% do comprimento total da página e centralizado
