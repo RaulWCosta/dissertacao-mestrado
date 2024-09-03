@@ -1,8 +1,4 @@
-- minuto que parei da gravação: 1:22:30
+- minuto que parei da gravação: 1:35:00
 
-TODO?
+TODO
 - reestruturar ordem da dissertação; criar PR separado para reordenar os capítulos
-
--------
-
-- no overview do algoritmo, quando descrever a construcao do spanner, adicionar uma explicacao do que motiva a necessidade do spanner
