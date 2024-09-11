@@ -104,8 +104,6 @@ In simpler terms, the union of optimal solutions for each terminal set forms an 
 
 \subsection{Steiner Multicycle Problem} \label{subsection:steinermulticycle}
 
-% TODO reescrever para ficar diferente da introdução
-
 \cite{LINTZMAYER2020134} proposed the first PTAS for the \(\steinercycle\). The algorithm is a randomized PTAS restricted to the Euclidean plane. In this context, the Euclidean \(\steinercycle\) encompasses a set of terminal pairs distributed across a plane and aim to calculate the line segments that connect the points with the least cost, considering that the same line segment might be crossed more than once.
 
 The algorithm groups the terminal pairs in such a way that pairs that are far away from each other belong to different groups. The authors guarantee that the union of the optimal solution calculated in each group is bounded by a constant times the optimal solution when considering all terminal pairs. Then, for each group of terminal pairs, they create a square called \textbf{root dissection square}, which is a bounding box containing all terminal pairs of the group. This square has a cost of at most a constant times the optimal solution cost considering the terminals pairs in the square.
@@ -127,7 +125,5 @@ Let \(G'\) be the output of the 2-approximation for the SNDP. Consider \(T\) to 
 
 
 \cite{Borradaile2012} expanded the works of \cite{Borradaile2009b} and \cite{KleinTSP} to obtain PTASes in subset connectivity problems in bounded-genus graphs. To do that, the authors proposed two methods. The first method is a generalization of the Mortar Graph framework by \cite{KleinTSP}. The second applies the strategy proposed in \cite{Borradaile2009b}, but using the simpler tree decomposition instead of the parcel decomposition.
-
-% TODO escrever overview aqui
 
 In this work, we intend to expand on the results found by \cite{LINTZMAYER2020134} by proposing a PTAS for the \(\steinercycle\) in graphs with bounded-genus. To that end, we will use various techniques proposed by \cite{Bateni} and \cite{Borradaile2009b} for the Steiner Forest and Steiner Tree problems, respectively, such as the Mortar Graph, the Prize Collecting Clustering, and the spanner.

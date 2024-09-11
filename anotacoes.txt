@@ -1,4 +1,0 @@
-- minuto que parei da gravação: 1:35:00
-
-TODO
-- reestruturar ordem da dissertação; criar PR separado para reordenar os capítulos

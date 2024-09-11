@@ -1,9 +1,6 @@
 \chapter{Approximation Schemes for Steiner Multicycle Problem}
 \label{chapter:apx_schemes_for_smcp}
 
-% TODO ver onde colocar isso
-% Tambem realizar solicitados
-
 \section{Algorithm Overview}
 
 As we shall see, the proposed PTAS for \steinercycle\ is inspired by the PTAS for the Steiner Tree Problem due to \cite{Bateni}. Put briefly, the proposed algorithm for \steinercycle\ consists of the following steps:
@@ -50,8 +47,6 @@ If \(S_1\), \(S_2\), \(X_1\), \(X_2\) are subsets of \(V(G)\) and \(r_1, r_2 \in
 Let \(v \in \mathcal{G}_G(X_i, S_i, r_i)\) with $i \in \{1,2\}$. The result is valid if \(v \in S_i\). Suppose \(v \in X_i\), but \(v \not\in S_i\). Note that \(v \in X_1 \cup X_2\), and there is \(x \in S_i\) such that the distance between \(v\) and \(x\) in \(G\) is at most \(r_i\). Therefore, \(v\) belongs to \(\mathcal{G}_G(X_1 \cup X_2, S_1 \cup S_2, \max\{r_1, r_2\})\).
 
 \end{proof}
-
-% TODO adicionar exemplos nessa secao
 
 \subsection{Notation and definitions}
 
