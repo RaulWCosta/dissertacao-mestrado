@@ -23,9 +23,11 @@ The \textbf{degree} of a vertex \(v\) is the number of edges of \(G\) incident t
 
 We say that a graph \(H\) is a \textbf{subgraph} of \(G\) if \(V(H) \subseteq V(G)\) and \(E(H) \subseteq E(G)\), and denote this by \(H \subseteq G\). If for any pair of vertices \(v, w \in H \subset G\), the statement \(vw \in E(H)\) is valid if, and only if, \(vw \in E(G)\), then we say that \(H\) is an \textbf{induced subgraph} of \(G\), denoted as \(G[H]\). Moreover, we say that \(H\) is a \textbf{spanning subgraph} of \(G\) if \(V(H) = V(G)\).
 
+We define \(c \colon E(G) \to \mathbb{R}_\ge\), for \(e \in E(G)\) as the \textbf{cost} of \(e\). Naturally, \(c(H)\), for \(H \subseteq G\), is the sum of the cost of the edges of the subgraph \(H\). Let \(C = \{(v_1, v_2, \dots, v_k)\}\) be a cycle of \(G\). We define \(c(C) = \sum_{i=1}^{k-1} c(v_i v_{i+1})\).
+
 A \textbf{path} in a graph \(G\) is a sequence of distinct vertices \(P = (v_1, v_2, \dots, v_k)\), \(P \subseteq V(G)\), such that, for every pair of consecutive vertices of \(P\), there is an edge in \(E(G)\) that connects these vertices. That is, for every \(v_i , v_{i+1}\) in \(P\), there is \(v_i v _{i+1} \in E(G)\).
 
-Let \(C = (v_1, v_2 \dots, v_k)\) be a sequence of adjacent vertices such that \(|C| \geq 3\) and the endpoints of the sequence \(C\) are equal, that is, \(v_1 = v_k\), then we say that \(C\) is a \textbf{cycle}. The \textbf{length} of a cycle equals the number of edges in it. 
+Let \(C = (v_1, v_2 \dots, v_k)\) be a sequence of adjacent vertices such that \(|C| \geq 3\) and the endpoints of the sequence \(C\) are equal, that is, \(v_1 = v_k\), then we say that \(C\) is a \textbf{cycle}. The \textbf{cost} of a cycle equals the sum of the costs of its edges. 
 
 A \textbf{walk} (of length \textit{k}) is a non-empty alternating sequence \((v_0, e_0, v_1, e_1, \dots, e_{k-1}, v_k)\) of vertices and edges such that \(e_i = \{v_i, v_{i+1}\}\) for all \(i < k\). In particular, in the case \(v_0 = v_k\), we call it a \textbf{closed walk}. Note that, in a walk, vertices and edges can be visited more than once.
 
@@ -35,7 +37,7 @@ If there is a partition of \(V(G)\) into subsets \(V_1 , V_2 , \dots, V_w\) such
 
 Let \(e \in E(G)\). We define as \textbf{contracting} the operation on \(e\) which consists on replacing both endpoints of \(e\) with a new vertice \(v_e\) and connecting \(v_e\) to \(e\) endpoint's neighboors.
 
-We denote the graph obtained from \(G\) by \textbf{contracting} the edge \(e \in E(G)\) at a new vertex \(v_e\), which becomes adjacent to all old neighbors of the endpoint vertices of \(e\), as \(G / e\).
+We denote the graph obtained from \(G\) by contracting the edge \(e \in E(G)\) at a new vertex \(v_e\), which becomes adjacent to all old neighbors of the endpoint vertices of \(e\), as \(G / e\).
 
 Given a graph \(G\) and a subgraph \(H\) of \(G\), we \textbf{contract} \(H\) into a single vertex \(v\), generating a new graph \(G^\ast := G / H\). All vertices of \(G - H\) adjacent to at least two vertices from \(H\) are connected to \(v\) in \(G^\ast\) with multiple edges. We also define the process of \textbf{uncontracting} \(v\) as replacing it with the original subgraph \(H\) and reconstructing the previous connections with the neighboring vertices of \(H\) in \(G\).
 
@@ -43,11 +45,9 @@ Given a graph \(G\) and a graph \(H\), we say that \(H\) is a minor of \(G\) if,
 
 A collection \(\mathcal{S}\) is said to be \textbf{laminar} if and only if for any two sets \(C_1, C_2 \in \mathcal{S}\) we have \(C_1 \subseteq C_2\), or \(C_2 \subseteq C_1\), or \(C_1 \cap C_2 = \emptyset\). Suppose \(\mathcal{C}\) is a partition of a ground set \(V\). Then, \(\mathcal{C}(v)\) denotes, for each \(v \in V\), the set \(C \in \mathcal{C}\) that contains \(v\).
 
-We define \(c \colon E(G) \to \mathbb{R}_\ge\), for \(e \in E(G)\) as the \textbf{cost} of \(e\). Naturally, \(c(H)\), for \(H \subseteq G\), is the sum of the cost of the edges of the subgraph \(H\). Let \(C = \{(v_1, v_2, \dots, v_k)\}\) be a cycle of \(G\). We define \(c(C) = \sum_{i=1}^{k-1} c(v_i v_{i+1})\).
-
 For vertices \(v, w \in V(G)\) we define the \textbf{distance} between vertices $v$ and $w$, denoted by \(dist_G(v, w)\), as the cost of a shortest path between \(v\) and \(w\) that only uses edges of \(G\). If such a path does not exist, by convention, we consider \(dist_G(v, w) = +\infty\). We generalize the notation for distances between vertices and edges. Let \(v \in V(G)\) and \(uw \in E(G)\). Define the distance between the vertex \(v\) and the edge \(uw\) as \(dist_G(v, uw) := \min\{dist_G(v, u), dist_G(v, w)\} + c(uw)\).
 
-A graph \(F\) without cycles is a \textbf{forest}. A connected forest is a \textbf{tree}. Let \(T\) be a tree and \(v \in T\) a vertex. If \(d(v) = 1\), we say that \(v\) is a \textbf{leaf} of \(T\), all other vertices are called inner vertices of \(T\). A tree is rooted if one of its vertices has been chosen as \textbf{root}. Naturally, a forest's component is a tree. 
+A graph \(F\) without cycles is a \textbf{forest}. A connected forest is a \textbf{tree}. Let \(T\) be a tree and \(v \in T\) a vertex. If \(d(v) = 1\), we say that \(v\) is a \textbf{leaf} of \(T\), all other vertices are called inner vertices of \(T\). A tree is rooted if one of its vertices has been chosen as \textbf{root}. Naturally, each forest component is a tree. 
 
 Let \(T\) be a rooted tree with root \(r \in V(T)\), let \(v \in V(T)\). Note that there is only a single path between \(r\) and \(v\) in \(T\). Let \(P\) be this unique path between \(v\) and \(r\). We say that \(w \in V(T)\) is the \textbf{parent vertex} of \(v\) if \(w \in P\) and \(w \in N(v)\). Equivalently, we say that \(v\) is a \textbf{child vertex} of \(w\). Note that a vertex can have multiple children but only one parent.
 
