@@ -1,28 +1,11 @@
-\chapter{Approximation Schemes for Steiner Multicycle Problem}
-\label{chapter:apx_schemes_for_smcp}
+\chapter{PTAS for Graphs of Bounded Treewidth}
+\label{chapter:ptas_bounded_tree}
 
 \section{Algorithm Overview}
 
-As we shall see, the proposed PTAS for \steinercycle\ is inspired by the PTAS for the Steiner Tree Problem due to \cite{Bateni}. Put briefly, the proposed algorithm for \steinercycle\ consists of the following steps:
+The algorithm receives as input a graph \(G_{in}\) with bounded treewidth, and a set \(\mathcal{D} = \{T_1, \dots, T_k\}\) of terminal pairs. It begins by defining a polinomial sized subset of all possible solutions that organize the set of unpaired terminals (from the bottom-up in the dynamic programming tree) in valid ways. We provide a proof that this subset contains a solution not greater than a constant times \(\opt\). The algorithm then calculates the smallest solution, via a dynamic programming approach, that is contained on this subset and outputs it as result.
 
-\begin{enumerate}
-    \item The algorithm receives as input a graph \(G_{in}\) with bounded-genus, and a set \(\mathcal{D} = \{T_1, \dots, T_k\}\) of terminal pairs.
-
-    \item It begins by creating a spanner subgraph (i.e., a subgraph whose size is bounded by a constant time \(\opt\) and has a valid solution with a cost at most \((1 + \epsilon) \opt\) of \(G_{in}\). This is done with an auxiliary clustering algorithm provided by Theorem~\ref{chapter:pc-partition}.
-    
-    \item The edges of the spanner are split into \(k\)-disjoint sets, then the edges in the smallest set are contracted. After the contraction, the algorithm applies \citeauthor{Demaine2010}'s Theorem (\cite{Demaine2010} Theorem~1.1) to convert the spanner subgraph to a bounded treewidth graph.
-
-    \item A dynamic programming algorithm is used to solve the SMCP in the bounded treewidth graph generated in the previous step. During this process, the algorithm only considers a subset of the possible solutions that organize the set of unpaired terminals (from the bottom-up in the dynamic programming tree) in valid ways.
-
-    \item Finally, it constructs the final solution, i.e., the PTAS for bounded genus, by leveraging the solution in bounded-treewidth and the set of edges contracted in the previous step.
-\end{enumerate}
-
-In the next section, we present the framework and proofs for designing a PTAS for \(\steinercycle\) on graphs with limited treewidth. This will serve as the basis for the PTAS on graphs with bounded genera, which will also be presented in this chapter.
-
-\section{PTAS for Graphs of Bounded Treewidth}
-\label{section:ptas_bounded_tree}
-
-\subsection{Groups}
+\section{Groups}
 
 Given a set of vertices \(X\), a set of vertices \(S\) (a.k.a. central vertices) such that \(S \subseteq X\), and a number \(r\), we define a group \(\mathcal{G}_G(X, S, r)\), for some graph \(G\), as the union of \(S\) and those vertices of \(X\) that are at a distance in \(G\) of at most \(r\) from some vertex in \(S\).
 
@@ -48,7 +31,7 @@ Let \(v \in \mathcal{G}_G(X_i, S_i, r_i)\) with $i \in \{1,2\}$. The result is v
 
 \end{proof}
 
-\subsection{Notation and definitions}
+\section{Notation and definitions}
 
 Let  \((T, \mathcal{B})\) denote a nice tree decomposition of \(G\) with treewidth \(\kappa\). Let \(I\) be the set of nodes of \(T\), and let \(\mathcal{B} = \{B_i \colon i \in I\}\) be the set of bags of the decomposition.
 
@@ -81,7 +64,7 @@ Let \(G\) be a graph having no connected component consisting of a single edge. 
 
 \end{flemma}
 
-\subsection{Constructing the Partitions}
+\section{Constructing the Partitions}
 
 Let \(\Pi_i\) be a set of partitions of the active vertices \(A_i\), where $i \in I$.
 Let \(\Pi = \{\Pi_i\}_{i \in I}\) be a collection of such partitions.
@@ -211,7 +194,7 @@ Note that we are charging only to pairs \((K, K')\) having the property that \(K
 Since the modification always extends \(H\), the procedure terminates after a finite number of steps. By the end of this process, each partition \(\pi_i(M)\) belongs to the corresponding \(\Pi_i\), thus the solution \(M\) conforms to \(\Pi\) and its cost is at most \((1 + 2\kappa\epsilon) \cdot c(M^\ast)\).
 \end{proof}
 
-\subsection{Conforming Solutions}
+\section{Conforming Solutions}
 
 The primary strategy during the dynamic programming is to use Theorem~\ref{conformingPi} to bound the number of subsolutions we need to evaluate at each bag of the decomposition.
 
@@ -455,66 +438,3 @@ Item (4) is naturally derived from Theorem~\ref{conformingPi} and the constructi
 \end{proof}
 
 \end{proof}
-
-
-\section{PTAS for Graphs of Bounded Genus}
-\label{section:ptas_bounded_genus}
-
-We can now prove the main result of this work, which is a PTAS for the Steiner Multicycle Problem on graphs with bounded genus.
-
-First, we state an auxiliary result from \cite{Demaine2010}.
-
-\begin{ftheo}[\cite{Demaine2010} Theorem 1.1] \label{demaineResult}
-    For a fixed genus \(g\), and any integer \(k \geq 2\) and for every graph \(G\) of Euler genus at most \(g\), the edges of \(G\) can be partitioned into \(k\) sets such that contracting the edges in any of the sets results in a graph of treewidth \(\mathcal{O}((g + 1)^2k)\). Furthermore, such a partition can be found in \(\mathcal{O}((g+ 1)^{5/2} n^{3/2} \log{n})\) time.
-\end{ftheo}
-
-The proposed PTAS algorithm is presented in Algorithm~\ref{smcp-ptas}.
-
-\begin{algorithm}
-\caption{SMCP-PTAS}
-\label{smcp-ptas}
-\begin{algorithmic}[1]
-
-\Require Graph \(G_{in}\) of bounded-genus \(g\), a set of terminal pairs \(\mathcal{D}\), and a constant \(1 \geq \epsilon > 0\).
-\Ensure A collection of cycles satisfying \(\mathcal{D}\) whose cost is at most \((1 + c' \epsilon) \opt\)
-\State  \(\epsilon' \gets \epsilon / 6\)
-\State  \(k \gets \max\left \{ f(g, \epsilon')/{\epsilon'}, \: 2\right \}\); \(f(g, \epsilon')\) as in Lemma~\ref{spanner_shortness_property} \label{alg_smcp_ptas:k}
-\State Construct a spanner \(H\) of \(G_{in}\) \label{alg_smcp_ptas:SpannerCall}
-\State Use Theorem~\ref{demaineResult} to partition the edges of \(H\) into \(E_1, \dots, E_k\) \label{alg_smcp_ptas:partDemaine}
-\State  \(j^\ast \gets \arg\min\limits_{j \in \{1,\ldots,k\}} c(E_j)\)
-\State Find a \((1 + k \epsilon)\) collection of cycles (multiset of edges) \(M^\ast\) with respect to \(\mathcal{D}_i\) in \(H/E_{j^\ast}\) using Theorem~\ref{dynamicProgramming}, and with \(k\) constant \label{alg_smcp_ptas:dp}
-\State \(M \gets M^\ast \cup E_{j^\ast}\)
-\State \Return  \(M\)
-
-\end{algorithmic}
-\end{algorithm}
-
-\begin{ftheo}
-    The collection of cycles \(M\) produced by Algorithm~\ref{smcp-ptas} on input $(G_{in}, \mathcal{D})$ is a feasible solution for the SMCP and has cost at most \((1 + c' \epsilon) \opt\), with \(c'\) and \(\epsilon\) constants.
-\end{ftheo}
-\begin{proof}
-
-    In the line~\ref{alg_smcp_ptas:SpannerCall} of Algorithm~\ref{smcp-ptas}, we construct a spanner \(H\) of \(G_{in}\), which respects the properties described in Lemma~\ref{spanner_quasi_optimality_property} and Lemma~\ref{spanner_shortness_property}, that is:
-
-    \begin{itemize}
-        \item \(c(H) \leq f(g, \epsilon) \opt\), with \(f(g, \epsilon)\) being a constant that depends on \(\epsilon\) and the genus \(g\) of \(G_{in}\);
-        \item \(\opt_{\mathcal{D}}(H) \leq (1 + c \epsilon) \opt_{\mathcal{D}} (G_{in})\).
-    \end{itemize}
-
-    Note that Lemma~\ref{spanner_quasi_optimality_property} implies that there is a feasible solution for the SMCP contained in \(H\).
-
-    In line~\ref{alg_smcp_ptas:partDemaine}, we proceed to partition \(H\) using Theorem~\ref{demaineResult}. We choose \(k\) such that \(k = \max( \frac{f(g, \epsilon)}{\epsilon}, 2)\) where \(f(g, \epsilon)\) is the constant from Lemma~\ref{spanner_shortness_property}. 
-    
-    From Lemma~\ref{demaineResult}, by splitting \(H\) into \(k\) edges sets, we have \(c(E_{j^\ast}) \leq \epsilon \opt\). Moreover, contracting \(E_{j^\ast}\) from \(H\) produces a graph of treewidth \(\mathcal{O}((g +1)^2 k)\).
-
-    Before contracting \(H\) with \(E_{j^\ast}\), we need to do a small treatment of the terminals contained in \(E_{j^\ast}\). We create a new vertex for each terminal in \(E_{j^\ast}\) and connect it to the terminal with a new edge of cost zero. This new vertex will serve as a ``temporary'' terminal in \(H / E_{j^\ast}\). Note that this process does not increase the cost of the final solution, as all added edges have cost zero.
-
-    In line~\ref{alg_smcp_ptas:dp} of Algorithm~\ref{smcp-ptas}, we can find a solution \(M^\ast\) in \(H / E_{j^\ast}\) via Theorem~\ref{dynamicProgramming} and Theorem~\ref{demaineResult}. The cost of \(M^\ast\) is at most \((1 + 2 \kappa \epsilon) \opt\), with \(\kappa = \kappa(\epsilon) = 4 \epsilon ^ {-2} (1 + \epsilon ^ {-1})\).
-
-    Finally, we join the solution \(M^\ast\) with the edges in \(E_{j^\ast}\). To guarantee the feasibility of the union as a solution, we duplicate each edge in \(E_{j^\ast}\). Note that the cost of \(E_{j^\ast}\) accounting for the duplication is at most \(2 \frac{c(H)}{k}\), which equals \(2 \frac{f(g, \epsilon) c(G_{in})}{f(g, \epsilon) / \epsilon} = 2 \epsilon \cdot c(G_{in})\).
-
-    From Theorem~\ref{dynamicProgramming}, we have that \(c(M^\ast) \leq (1 + 2 \kappa \epsilon \opt)\). So \(c(M^\ast \cup E_{j^\ast}) \leq (1 + (2 \kappa + 2) \epsilon) \opt\) holds, and by considering a constant \(c' = 2 \kappa + 2\), we have \(c(M) \leq (1 + c' \epsilon) \opt\).
-
-\end{proof}
-
-The running time of the algorithm, excluding the bounded-treewidth PTAS, is bounded by \(\mathcal{O}(n^2 \log n)\). Moreover, the running time of the current procedure for solving bounded-treewidth instances is bounded by a polynomial, where \(k\) and \(\epsilon\) appear in the exponent.
