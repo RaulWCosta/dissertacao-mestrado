@@ -36,7 +36,7 @@ Given an \(\epsilon > 0\), a graph \(G_{in}\), a cost function associated with e
 
 The last condition implies that we can solve the problem in each \(C_i\) separately and still guarantee an approximation with a small factor.
 
-We start proving Theorem~\ref{theoremClustering} by applying a 4-approximation algorithm in \(G_{in}\) (for instance, the algorithm for SMCP provided by \cite{Pereira2018TheSM}). Clearly, this construction satisfies the first two properties, since by definition an SMCP solution covers all sets, and for each set \(\mathcal{D}_i\) a component in the solution connects all of its terminal pairs. To guarantee the last two properties, we need to employ the \textbf{PC-clustering} algorithm, which is presented in Sub-section~\ref{subsection:pc_clustering}.
+We start proving Theorem~\ref{theoremClustering} by applying a 4-approximation algorithm in \(G_{in}\) (for instance, the algorithm for SMCP provided by \cite{Pereira2018TheSM}). Clearly, this construction satisfies the first two properties, since by definition an SMCP solution covers all sets, and for each set \(\mathcal{D}_i\) a component in the solution connects all of its terminal pairs. To guarantee the last two properties, we need to employ the \textbf{PC-clustering} algorithm, which is presented in Section~\ref{subsection:pc_clustering}.
 
 \subsection{Prize-Collecting Clustering}~\label{subsection:pc_clustering}
 
