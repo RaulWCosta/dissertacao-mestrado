@@ -15,7 +15,7 @@ One significant bottleneck in the algorithm's performance was the Gomory-Hu tree
 We believe further improvements are possible, mainly by employing a more robust algorithm in the short-cutting step and by applying a better strategy to verify the flow between terminal pairs in the 2-approximation for the SNDP step.
 In particular, for practical implementations, it might be worth considering using a heuristic instead of the 2-approximation in the SNDP step of the algorithm. This heuristic could significantly improve the algorithm's performance, despite loosing theoretical guarantees of the quality of the solutions.
 
-For future works, we propose expanding the PTAS for bounded-genus graphs algorithm to encompass a more diverse class of graphs, such as H-minor-free graphs. A possible path to achieve this is to use a nearly light subset \((1 + \epsilon)\)-spanner as proposed by \cite{light_spanners_tsp}.
+For future works, we propose expanding the PTAS for bounded genus graphs algorithm to encompass a more diverse class of graphs, such as H-minor-free graphs. A possible path to achieve this is to use a nearly light subset \((1 + \epsilon)\)-spanner as proposed by \cite{light_spanners_tsp}.
 
 % implementar a aproximação
 Another research direction is to implement the proposed PTAS and carry out computational experiments, as \cite{TazariLargeConstants} and \cite{implementationPTASeuclidianTSP} proposed for the Steiner Tree and Euclidean TSP problems, respectively.
