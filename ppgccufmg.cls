@@ -559,7 +559,7 @@
     \@documenttype{} presented to the Graduate Program in \@course{} of the
     \ppgcc@university{} in partial fulfillment of the requirements for the
     degree of \@degree{} in \@course.}
-  \def\ppgcc@acknowledgments{Acknowledgments}
+  \def\ppgcc@acknowledgments{Agradecimentos}
   \def\ppgcc@keywordsname{Keywords}
 
   \let\ppgcc@set@phddocproj\relax
@@ -815,8 +815,8 @@
 \def\ppgcc@fc@check{%
   \ppgcc@fc@checkparamerr{ppgcc@authorrev}{o nome reverso do autor}{authorrev}
     {\authorrev}
-  \ppgcc@fc@checkparamwarn{ppgcc@cutter}{o c�digo ``cutter''}{cutter}{\cutter}
-  \ppgcc@fc@checkparamwarn{ppgcc@cdu}{o c�digo CDU}{cdu}{\cdu}
+  \ppgcc@fc@checkparamwarn{ppgcc@cutter}{o c\'odigo ``cutter''}{cutter}{\cutter}
+  \ppgcc@fc@checkparamwarn{ppgcc@cdu}{o c\'odigo CDU}{cdu}{\cdu}
 }
 
 \def\ppgcc@titlenobreak{%
@@ -973,7 +973,7 @@
         Se a imagem da folha de aprova\c{c}\~ao precisar ser ajustada, use:\par
         \texttt{approval=[}\emph{ajuste}\texttt{][}\emph{escala}\texttt{]\{}%
         \emph{nome do arquivo}\texttt{\}}\par
-        onde \emph{ajuste} � uma dist\^ancia para deslocar a imagem para baixo\par
+        onde \emph{ajuste} \`a uma dist\^ancia para deslocar a imagem para baixo\par
         e \emph{escala} \'e um fator de escala para a imagem. Por exemplo:\par
         \texttt{approval=[-2cm][0.9]\{}\emph{nome do arquivo}\texttt{\}}\par
         desloca a imagem 2cm para cima e a escala em 90\%.\par
