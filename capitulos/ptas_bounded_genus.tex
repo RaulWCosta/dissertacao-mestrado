@@ -1,8 +1,6 @@
 \chapter{PTAS for Graphs of Bounded Genus}
 \label{chapter:ptas_bounded_genus}
 
-\section{Algorithm Overview}
-
 As we shall see, the proposed PTAS for \steinercycle\ is inspired by the PTAS for the Steiner Tree Problem due to \cite{Bateni}. Put briefly, the proposed algorithm for \steinercycle\ consists of the following steps:
 
 \begin{enumerate}
@@ -12,10 +10,12 @@ As we shall see, the proposed PTAS for \steinercycle\ is inspired by the PTAS fo
 
     \item The edges of the spanner are split into \(k\)-disjoint sets, then the edges in the smallest set are contracted. After the contraction, the algorithm applies \citeauthor{Demaine2010}'s Theorem (\cite{Demaine2010} Theorem~1.1) to convert the spanner subgraph to a bounded treewidth graph.
 
-    \item The algorithm then applies the PTAS for bounded treewidth graphs, which is presented in Chapter~\ref{chapter:ptas_bounded_tree}. This step returns a solution with cost of at most a costant times \(\opt\).
+    \item The algorithm then applies the PTAS for bounded treewidth graphs presented in Chapter~\ref{chapter:ptas_bounded_tree}. This step returns a solution with cost of at most a costant times \(\opt\).
 
     \item Finally, it constructs the final solution, i.e., the PTAS for bounded genus, by leveraging the solution in bounded treewidth and the set of edges contracted in the previous step.
 \end{enumerate}
+
+Similarly to the Chapter~\ref{chapter:ptas_bounded_tree}, we start this chapter by introducing some tooling that will be used in the proof of the PTAS.
 
 \section{Prize Collecting Partition}
 \label{section:pc-partition}

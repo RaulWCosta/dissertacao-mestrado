@@ -1,9 +1,9 @@
 \chapter{PTAS for Graphs of Bounded Treewidth}
 \label{chapter:ptas_bounded_tree}
 
-\section{Algorithm Overview}
-
 The algorithm receives as input a graph \(G_{in}\) with bounded treewidth, and a set \(\mathcal{D} = \{T_1, \dots, T_k\}\) of terminal pairs. It begins by defining a polinomial sized subset of all possible solutions. We provide a proof that this subset contains a solution not greater than a constant times \(\opt\). The algorithm then calculates the smallest solution, via a dynamic programming approach, that is contained on this subset and outputs it as result.
+
+We begin the chapter by presenting some tooling, that will be used in the construction of the subset of solutions mentioned before. We then proceed to the dynamic programming algorithm, which is the core of the PTAS.
 
 \section{Groups}
 
