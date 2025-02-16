@@ -1,6 +1,5 @@
 *.log
 *.dvi
-main.pdf
 out/
 todo.txt
 .DS_Store
