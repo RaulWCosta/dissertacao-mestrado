@@ -4,3 +4,6 @@ compile:
 	bibtex main
 	pdflatex main.tex
 	pdflatex main.tex
+
+clean:
+	rm -f *.aux *.bbl *.blg *.log *.out *.toc *.lof *.lot *.pdf *.loa capitulos/*.aux
