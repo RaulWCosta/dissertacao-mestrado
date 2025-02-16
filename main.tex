@@ -1,7 +1,7 @@
 \documentclass[
-%	msc, %% Para dissertações de mestrado, OU
+	msc, %% Para dissertações de mestrado, OU
 %	mscproposta, %% Para propostas de dissertação de mestrado, OU
-	phd, %% Para teses de doutorado, OU
+	% phd, %% Para teses de doutorado, OU
 %	phdproposta, %% Para propostas de tese de doutorado
 %	portugues %% Para documentos em português, OU
 	english %% Para documentos em inglês
@@ -27,7 +27,7 @@
 \usepackage{graphicx}
 \usepackage{pgfplots}
 
-\usepackage[square]{natbib}
+\usepackage{natbib}
 
 \usepackage{tikz, tikz-network}
 
@@ -135,14 +135,14 @@
 		folhadeaprovacao={folhadeaprovacao.pdf},
 		resumo={resumo.tex}, %% Resumo em português
 		abstracten={abstract.tex}, %% Abstract em inglês
-		palavraschave={Algoritmos de Aproximação, Teoria de Grafos, Otimização, e Complexidade Computacional}, %% Palavras-chave do resumo
-		keywords={Approximation Algorithms, Graph Theory, Optimization, and Computational Complexity}, %% Palavras-chave do abstract
+		palavraschave={Algoritmos de aproximação, teoria dos grafos, genus limitado, Multiciclos de Steiner, experimentos computacionais}, %% Palavras-chave do resumo
+		keywords={Approximation algorithm, graph theory, bounded genus, Steiner Multicycle, computational experiments}, %% Palavras-chave do abstract
 		dedicatoria={dedicatoria.tex}, %% Arquivo .tex contendo a dedicatória
 		agradecimentos={agradecimentos.tex},
 		% epigrafe={Truth and lie are opposite things.},
 		% epigrafeautor={Unkown},
-		% listadefiguras={sim}, %% Remova (ou comente) este parâmetro para remover a lista de figuras
-		% listadetabelas={sim}, %% Remova (ou comente) este parâmetro para remover a lista de tabelas
+		listadefiguras={sim}, %% Remova (ou comente) este parâmetro para remover a lista de figuras
+		listadetabelas={sim}, %% Remova (ou comente) este parâmetro para remover a lista de tabelas
 		listascustomizadas={\listofalgorithms} %% Lista customizada (e.g., glossário, lista de algoritmos). 
 	}
 	
@@ -160,13 +160,13 @@
 		\bibliographystyle{plain}
 		\bibliography{referencias}
 		
-		\begin{apendices}
-			\chapter{Um apêndice}
-				\lipsum[1-3]
+		% \begin{apendices}
+		% 	\chapter{Um apêndice}
+		% 		\lipsum[1-3]
 				
-			\chapter{Outro Apêndice}
-				\lipsum[4-6]
+		% 	\chapter{Outro Apêndice}
+		% 		\lipsum[4-6]
 				
-		\end{apendices}
+		% \end{apendices}
 		
 \end{document}

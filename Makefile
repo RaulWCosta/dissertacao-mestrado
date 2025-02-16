@@ -6,4 +6,4 @@ compile:
 	pdflatex main.tex
 
 clean:
-	rm -f *.aux *.bbl *.blg *.log *.out *.toc *.lof *.lot *.pdf *.loa capitulos/*.aux
+	rm -f *.aux *.bbl *.blg *.log *.out *.toc *.lof *.lot main.pdf *.loa capitulos/*.aux
